@@ -1,7 +1,9 @@
 package imagicthecat.fundamentalchemistry;
 
+import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
+import imagicthecat.fundamentalchemistry.shared.Molecule;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -30,13 +32,34 @@ public class FundamentalChemistry
   public static final String MODID = "fundamentalchemistry";
   public static final String VERSION = "0.1";
   
-  public static Block block_test;
-  
   @SidedProxy(clientSide="imagicthecat.fundamentalchemistry.client.ClientEventHandler", serverSide="imagicthecat.fundamentalchemistry.server.ServerEventHandler")
   public static ForgeEventHandler event_handler;
   
   @Instance(FundamentalChemistry.MODID)
   public static FundamentalChemistry instance;
+
+  // blocks
+  
+  public static Block block_test;
+  
+  // API
+  
+  public static BiMap<String, Integer> elements = new BiMap<String, Integer>();
+  public static BiMap<String, Molecule> molecules = new BiMap<String, Molecule>();
+  
+  // register atomic element
+  public static void registerElement(String name, int atomic_number)
+  {
+  	elements.put(name, atomic_number);
+  }
+ 
+  // register molecule
+  public static void registerMolecule(String name, String notation)
+  {
+  	molecules.put(name, Molecule.fromNotation(notation));
+  }
+  
+  // events
   
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
@@ -48,6 +71,13 @@ public class FundamentalChemistry
   @EventHandler
   public void init(FMLInitializationEvent event)
   {
+  	registerElement("C", 6);
+  	registerElement("H", 1);
+  	registerElement("O", 8);
+  	
+  	registerMolecule("water", "H2O");
+  	registerMolecule("dioxygen", "O2");
+  	
     MinecraftForge.EVENT_BUS.register(event_handler);
     //CapabilityManager.INSTANCE.register(IStrings.class, new StringsStorage(), Strings.class);
   	
