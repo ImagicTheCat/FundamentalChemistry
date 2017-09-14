@@ -1,0 +1,16 @@
+[
+{
+  "modid": "fundamentalchemistry",
+  "name": "Fundamental Chemistry",
+  "description": "Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ImagicTheCat"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
