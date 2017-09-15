@@ -13,6 +13,7 @@ Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)
 * Can be connected to other laser relays to transfer atoms and molecules.
 * Laser relays can be connected to machines or placed on the world to increase the transfer distance.
 * Laser relays can be connected to an unlimited number of relays in range.
+* Connected machines drain things from the laser network when needed.
 
 #### Item breaker
 

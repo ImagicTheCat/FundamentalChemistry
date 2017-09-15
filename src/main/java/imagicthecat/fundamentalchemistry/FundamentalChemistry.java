@@ -1,10 +1,13 @@
 package imagicthecat.fundamentalchemistry;
 
+import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
 import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
+import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -14,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -41,6 +45,7 @@ public class FundamentalChemistry
   // blocks
   
   public static Block block_test;
+  public static Block block_laser_relay;
   
   // API
   
@@ -65,7 +70,10 @@ public class FundamentalChemistry
   public void preInit(FMLPreInitializationEvent event)
   {
    	block_test = new BlockTest();
+   	block_laser_relay = new BlockLaserRelay();
    	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
+   	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
+   	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
   }
 
   @EventHandler
@@ -79,18 +87,18 @@ public class FundamentalChemistry
   	registerMolecule("dioxygen", "O2");
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
-    //CapabilityManager.INSTANCE.register(IStrings.class, new StringsStorage(), Strings.class);
-  	
-		GameRegistry.addRecipe(new ItemStack(block_test),
-		  "A A",
-		  " B ",
-		  "A A",
-		  'A', Blocks.cobblestone, 'B', Items.redstone
-		);
 		
     if(FMLCommonHandler.instance().getSide() == Side.CLIENT){
+    	//inventory renderers
+    	
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_test), 0, new ModelResourceLocation("fundamentalchemistry:test", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_laser_relay), 0, new ModelResourceLocation("fundamentalchemistry:laser_relay", "inventory"));
+	  	
+	  	//tile entity renderers
+	  	 
+      ClientRegistry.bindTileEntitySpecialRenderer(TileLaserRelay.class, new TileLaserRelayRenderer());
     }
   }
   
