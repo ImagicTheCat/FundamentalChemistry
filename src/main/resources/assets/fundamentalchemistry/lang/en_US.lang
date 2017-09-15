@@ -2,3 +2,5 @@ tile.test.name=Test
 tile.laser_relay.name=Laser Relay
 tile.periodic_storage.name=Periodic Storage
 tile.molecular_storage.name=Molecular Storage
+tile.item_breaker.name=Item Breaker
+container.item_breaker=Item Breaker
