@@ -38,11 +38,13 @@ public class Molecule {
 		return toNotation();
 	}
 	
-	public boolean equals(Molecule rhs)
+	@Override
+	public boolean equals(Object o)
 	{
-		return atoms.equals(rhs.atoms);
+		return (o instanceof Molecule && atoms.equals(((Molecule)o).atoms));
 	}
 	
+	@Override
 	public int hashCode()
 	{
 		return atoms.hashCode();

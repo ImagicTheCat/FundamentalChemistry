@@ -7,6 +7,7 @@ import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
 import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.block.BlockMolecularStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockPeriodicStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
@@ -55,6 +56,7 @@ public class FundamentalChemistry
   public static Block block_test;
   public static Block block_laser_relay;
   public static Block block_periodic_storage;
+  public static Block block_molecular_storage;
   
   // API
   
@@ -81,9 +83,11 @@ public class FundamentalChemistry
    	block_test = new BlockTest();
    	block_laser_relay = new BlockLaserRelay();
    	block_periodic_storage = new BlockPeriodicStorage();
+   	block_molecular_storage = new BlockMolecularStorage();
    	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
    	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
+  	GameRegistry.registerBlock(block_molecular_storage, "fundamentalchemistry:molecular_storage");
    	
    	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
@@ -110,6 +114,8 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_laser_relay), 0, new ModelResourceLocation("fundamentalchemistry:laser_relay", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_periodic_storage), 0, new ModelResourceLocation("fundamentalchemistry:periodic_storage", "inventory"));
+	  		  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_molecular_storage), 0, new ModelResourceLocation("fundamentalchemistry:molecular_storage", "inventory"));
 	  	
 	  	//tile entity renderers
 	  	 

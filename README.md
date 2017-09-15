@@ -1,5 +1,7 @@
 # FundamentalChemistry
-Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)
+Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation).
+
+The mod doesn't seek realism, it's about taking inspiration from our modern times the same way we take inspiration from ancient era (like water/fire/wind/earth elements, etc).
 
 ## WIP 
 
@@ -7,7 +9,7 @@ Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)
 
 ## Concept
 
-* Follow the periodic table.
+* Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 
 ### Blocks
