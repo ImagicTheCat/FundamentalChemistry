@@ -95,7 +95,7 @@ public class TileLaserRelay extends TileEntity {
 		
 		TileChemicalStorage storage = getAttachedStorage();
 		
-		if(storage != null){
+		if(storage != null && storage.storage != out){ 
 			ChemicalStorage chems = storage.storage;
 			
 			//fetch storage
@@ -106,8 +106,7 @@ public class TileLaserRelay extends TileEntity {
 			else if(mode == LaserRelayFetch.ATOMS){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addAtoms(chems);
-				chems.take(transfer);
-				out.add(transfer);
+				out.add(chems.take(transfer));
 			}
 			else if(mode == LaserRelayFetch.MOLECULES){
 				ChemicalStorage transfer = new ChemicalStorage();

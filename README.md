@@ -1,6 +1,10 @@
 # FundamentalChemistry
 Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)
 
+## WIP 
+
+![Laser Relay tests](https://i.imgur.com/WicW5if.jpg)
+
 ## Concept
 
 * Follow the periodic table.
@@ -48,3 +52,4 @@ This is an hard task.
 
 "Snatch" atoms to decrease their proton/electron number (the amount is given by the item used).
 This is an hard task.
+

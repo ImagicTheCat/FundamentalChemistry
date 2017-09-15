@@ -30,7 +30,6 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		// TODO Auto-generated method stub
 		return new TileLaserRelay();
 	}
 	

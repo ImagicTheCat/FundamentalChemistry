@@ -41,7 +41,7 @@ public class ChemicalStorage {
 		for(Map.Entry<Integer, Integer> entry : storage.atoms.entrySet()){
 			Integer p_amount = atoms.get(entry.getKey());
 			if(p_amount != null)
-				atoms.replace(entry.getKey(), p_amount+entry.getValue());
+				atoms.put(entry.getKey(), p_amount+entry.getValue());
 			else
 				atoms.put(entry.getKey(), entry.getValue());
 		}
@@ -54,7 +54,7 @@ public class ChemicalStorage {
 		for(Map.Entry<Molecule, Integer> entry : storage.molecules.entrySet()){
 			Integer p_amount = molecules.get(entry.getKey());
 			if(p_amount != null)
-				molecules.replace(entry.getKey(), p_amount+entry.getValue());
+				molecules.put(entry.getKey(), p_amount+entry.getValue());
 			else
 				molecules.put(entry.getKey(), entry.getValue());
 		}
@@ -74,7 +74,7 @@ public class ChemicalStorage {
 				if(amount <= 0)
 					molecules.remove(entry.getKey());
 				else
-					molecules.replace(entry.getKey(), amount);
+					molecules.put(entry.getKey(), amount);
 				
 				chems.molecules.put(entry.getKey(), taken);
 			}
@@ -89,7 +89,7 @@ public class ChemicalStorage {
 				if(amount <= 0)
 					atoms.remove(entry.getKey());
 				else
-					atoms.replace(entry.getKey(), amount);
+					atoms.put(entry.getKey(), amount);
 				
 				chems.atoms.put(entry.getKey(), taken);
 			}
