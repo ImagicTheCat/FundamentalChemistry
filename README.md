@@ -12,6 +12,11 @@ Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation)
 
 ### Blocks
 
+#### Versatile generator
+
+* A powerful generator to power the laser network and the machines.
+* Not only combustion, this generator can be used in many ways, like draining power directly from the environment.
+
 #### Laser relay
 
 * Can be connected to other laser relays to transfer atoms and molecules.
