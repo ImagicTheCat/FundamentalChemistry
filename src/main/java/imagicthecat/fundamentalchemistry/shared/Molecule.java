@@ -33,6 +33,11 @@ public class Molecule {
 		return r;
 	}
 	
+	public String toString()
+	{
+		return toNotation();
+	}
+	
 	public boolean equals(Molecule rhs)
 	{
 		return atoms.equals(rhs.atoms);

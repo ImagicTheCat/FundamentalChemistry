@@ -2,6 +2,7 @@ package imagicthecat.fundamentalchemistry;
 
 import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
 import imagicthecat.fundamentalchemistry.shared.BiMap;
+import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;

@@ -1,12 +1,14 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
@@ -16,6 +18,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.Constants;
 
 public class TileLaserRelay extends TileEntity {
@@ -72,6 +75,70 @@ public class TileLaserRelay extends TileEntity {
 		}
 		
 		return false;
+	}
+	
+	// get the maximum of chemicals possible in the network, following the given mode
+	public void fetch(ChemicalStorage out, LaserRelayFetch mode)
+	{
+		fetch(out, null, mode, new HashSet<BlockPos>());
+	}
+	
+	// get the maximum of chemicals possible in the network, trying to fulfill the request
+	public void fetch(ChemicalStorage out, ChemicalStorage request)
+	{
+		fetch(out, new ChemicalStorage(request), LaserRelayFetch.REQUEST, new HashSet<BlockPos>());
+	}
+	
+	public void fetch(ChemicalStorage out, ChemicalStorage request, LaserRelayFetch mode, Set<BlockPos> dones)
+	{
+		dones.add(pos); //prevents circular fetch
+		
+		TileChemicalStorage storage = getAttachedStorage();
+		
+		if(storage != null){
+			ChemicalStorage chems = storage.storage;
+			
+			//fetch storage
+			if(mode == LaserRelayFetch.ALL){
+				out.add(chems);
+				chems.clear();
+			}
+			else if(mode == LaserRelayFetch.ATOMS){
+				ChemicalStorage transfer = new ChemicalStorage();
+				transfer.addAtoms(chems);
+				chems.take(transfer);
+				out.add(transfer);
+			}
+			else if(mode == LaserRelayFetch.MOLECULES){
+				ChemicalStorage transfer = new ChemicalStorage();
+				transfer.addMolecules(chems);
+				out.add(chems.take(transfer));
+			}
+			else if(mode == LaserRelayFetch.REQUEST && request != null){
+				ChemicalStorage taken = chems.take(request);
+				request.take(taken); //part of the request done, sub what is taken
+				out.add(taken);
+			}
+		}
+		else{ // continue
+			for(BlockPos pos : inputs){
+				TileEntity te = this.worldObj.getTileEntity(pos);
+				if(te != null && te instanceof TileLaserRelay && !dones.contains(pos)){
+					TileLaserRelay ent = (TileLaserRelay)te;
+					ent.fetch(out, request, mode, dones);
+				}
+			}
+		}
+	}
+	
+	// return the chemical storage attached to the relay, or null (currently under the laser relay)
+	public TileChemicalStorage getAttachedStorage()
+	{
+		TileEntity te = this.worldObj.getTileEntity(this.pos.add(0, -1, 0));
+		if(te != null && te instanceof TileChemicalStorage)
+			return (TileChemicalStorage)te;
+		
+		return null;
 	}
 	
 	public void destroy() //called when the relay is destroyed
