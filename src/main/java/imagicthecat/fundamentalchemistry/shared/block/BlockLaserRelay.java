@@ -2,6 +2,7 @@ package imagicthecat.fundamentalchemistry.shared.block;
 
 import java.util.Random;
 
+import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class BlockLaserRelay extends Block implements ITileEntityProvider{
@@ -37,29 +39,18 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 			IBlockState state, EntityPlayer player, EnumFacing side, float hitX,
 			float hitY, float hitZ) 
 	{
-		if(!world.isRemote){
-			TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
+		TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
+		PlayerProperties props = (PlayerProperties)player.getExtendedProperties(PlayerProperties.ID);
 			
-			NBTTagCompound tag = player.getEntityData();
-			if(tag.hasKey("fch:link")){ // already linking, try to link to this one
-				int[] coords = tag.getIntArray("fch:link");
-				if(coords.length == 3){
-					BlockPos ppos = new BlockPos(coords[0], coords[1], coords[2]);
-					if(ent.toggleConnectFrom(ppos))
-						player.addChatMessage(new ChatComponentText("Linked/unlinked "+ppos+" to "+pos+"."));
-					else
-						player.addChatMessage(new ChatComponentText("Couldn't link "+ppos+" to "+pos+"."));
-				}
-				
-				tag.removeTag("fch:link");
+		if(props != null){
+			if(props.p_link != null){ // already linking, try to link to this one
+				if(!world.isRemote)
+					ent.toggleConnectFrom(props.p_link);
+					
+				props.p_link = null;
 			}
 			else{ //not linking, add current coords
-				int[] coords = new int[3];
-				coords[0] = pos.getX();
-				coords[1] = pos.getY();
-				coords[2] = pos.getZ();
-				
-				tag.setIntArray("fch:link", coords);
+				props.p_link = new BlockPos(pos);
 			}
 		}
 		
@@ -68,11 +59,11 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 	}
 	
 	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+	public void breakBlock(World world, BlockPos pos, IBlockState state) // event when block is destroyed and before tile entity is removed
 	{
-		if(!world.isRemote){
-			TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
-			ent.check();
-		}
+		TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
+		ent.destroy();
+		
+		super.breakBlock(world, pos, state);
 	}
 }

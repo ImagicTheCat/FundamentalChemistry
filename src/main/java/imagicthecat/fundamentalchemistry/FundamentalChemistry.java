@@ -41,6 +41,10 @@ public class FundamentalChemistry
   
   @Instance(FundamentalChemistry.MODID)
   public static FundamentalChemistry instance;
+  
+  // config
+  
+  public static float MAX_RELAY_DISTANCE = 200f;
 
   // blocks
   

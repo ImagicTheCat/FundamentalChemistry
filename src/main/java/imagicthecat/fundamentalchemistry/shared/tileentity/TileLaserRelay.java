@@ -1,5 +1,7 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
+import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,10 +20,20 @@ import net.minecraftforge.common.util.Constants;
 
 public class TileLaserRelay extends TileEntity {
 	public Set<BlockPos> inputs;
+	public Set<BlockPos> outputs;
 	
 	public TileLaserRelay()
 	{
 		inputs = new HashSet<BlockPos>();
+		outputs = new HashSet<BlockPos>();
+	}
+	
+	public void toUpdate()
+	{
+		if(!this.worldObj.isRemote){
+			this.worldObj.markBlockForUpdate(this.pos);
+			this.markDirty();
+		}
 	}
 	
 	//try to toggle connect the laser relay to another one, return true on success
@@ -40,15 +52,20 @@ public class TileLaserRelay extends TileEntity {
 	public boolean toggleConnectFrom(BlockPos pos)
 	{
 		TileEntity te = this.getWorld().getTileEntity(pos);
-		if(te != null && te instanceof TileLaserRelay){
-			if(!pos.equals(this.pos)){ //prevents self linking
-				if(!inputs.contains(pos))
+		if(te != null && te instanceof TileLaserRelay){ //is a laser relay
+			TileLaserRelay ent = (TileLaserRelay)te;
+			if(!pos.equals(this.pos) && this.pos.distanceSq(pos.getX(), pos.getY(), pos.getZ()) <= FundamentalChemistry.MAX_RELAY_DISTANCE){ //prevents self linking and check distance
+				if(!inputs.contains(pos)){ 
 					inputs.add(pos);
-				else
+					ent.outputs.add(this.pos);
+				}
+				else{ //break the link
 					inputs.remove(pos);
-				
-				this.worldObj.markBlockForUpdate(this.pos);
-				this.markDirty();
+					ent.outputs.remove(this.pos);
+				}
+			
+				this.toUpdate();
+				ent.toUpdate();
 				
 				return true;
 			}
@@ -57,24 +74,28 @@ public class TileLaserRelay extends TileEntity {
 		return false;
 	}
 	
-	//check inputs, remove if invalid
-	public void check()
+	public void destroy() //called when the relay is destroyed
 	{
-		System.out.println("check!");
+		//remove links
 		
-		List<BlockPos> rmlist = new ArrayList<BlockPos>();
+		//remove inputs
 		for(BlockPos pos : inputs){
 			TileEntity te = this.getWorld().getTileEntity(pos);
-			if(te == null || !(te instanceof TileLaserRelay))
-				rmlist.add(pos);
+			if(te != null && te instanceof TileLaserRelay){ //is a laser relay
+				TileLaserRelay ent = (TileLaserRelay)te;
+				ent.outputs.remove(this.pos);
+				ent.toUpdate();
+			}
 		}
 		
-		for(BlockPos pos : rmlist)
-			inputs.remove(pos);
-		
-		if(rmlist.size() > 0){
-			this.worldObj.markBlockForUpdate(this.pos);
-			this.markDirty();
+		//remove outputs
+		for(BlockPos pos : outputs){
+			TileEntity te = this.getWorld().getTileEntity(pos);
+			if(te != null && te instanceof TileLaserRelay){ //is a laser relay
+				TileLaserRelay ent = (TileLaserRelay)te;
+				ent.inputs.remove(this.pos);
+				ent.toUpdate();
+			}
 		}
 	}
 	

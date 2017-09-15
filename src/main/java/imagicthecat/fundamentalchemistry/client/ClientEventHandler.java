@@ -2,7 +2,9 @@ package imagicthecat.fundamentalchemistry.client;
 
 import org.lwjgl.opengl.GL11;
 
+import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
+import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,6 +12,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -59,6 +62,17 @@ public class ClientEventHandler extends ForgeEventHandler{
 		GL11.glLineWidth(3);
 
 		GL11.glBegin(GL11.GL_LINES);
+		
+		//display link process
+		PlayerProperties props = (PlayerProperties)player.getExtendedProperties(PlayerProperties.ID);
+
+		if(props != null && props.p_link != null 
+				&& props.p_link.distanceSq(x,y+1,z) <= FundamentalChemistry.MAX_RELAY_DISTANCE-1f){ //distance check with some margin
+			GlStateManager.color(0f,1f,0.5f,1f);
+			GL11.glVertex3d(props.p_link.getX()+0.5, props.p_link.getY()+0.5, props.p_link.getZ()+0.5);
+			GlStateManager.color(0f,0.5f,1f,1f);
+			GL11.glVertex3d(x, y+1, z);
+		}
 
 		for(TileEntity te : world.loadedTileEntityList){
 			if(te instanceof TileLaserRelay){
