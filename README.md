@@ -12,6 +12,12 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 
+### Items
+
+#### Vibrant catalyst stone
+
+Item (made of diamond, obsidian and stone) used in most of the other crafts.
+
 ### Blocks
 
 #### Versatile generator

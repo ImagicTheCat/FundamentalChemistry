@@ -21,6 +21,20 @@ public class ChemicalStorage {
 		atoms = new HashMap<Integer, Integer>(chems.atoms);
 	}
 	
+	//construct storage by copying atoms and molecules (they can be null to represent emptiness)
+	public ChemicalStorage(Map<Integer, Integer> atoms, Map<Molecule, Integer> molecules)
+	{
+		if(atoms != null)
+			this.atoms = new HashMap<Integer, Integer>(atoms);
+		else
+			this.atoms = new HashMap<Integer, Integer>();
+		
+		if(molecules != null)
+			this.molecules = new HashMap<Molecule, Integer>(molecules);
+		else
+			this.molecules = new HashMap<Molecule, Integer>();
+	}
+	
 	public void clear()
 	{
 		molecules.clear();

@@ -6,6 +6,7 @@ import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.init.Blocks;
@@ -80,22 +81,22 @@ public class TileLaserRelay extends TileEntity {
 	// get the maximum of chemicals possible in the network, following the given mode
 	public void fetch(ChemicalStorage out, LaserRelayFetch mode)
 	{
-		fetch(out, null, mode, new HashSet<BlockPos>());
+		fetch(out, null, mode, new HashSet<BlockPos>(), true);
 	}
 	
 	// get the maximum of chemicals possible in the network, trying to fulfill the request
 	public void fetch(ChemicalStorage out, ChemicalStorage request)
 	{
-		fetch(out, new ChemicalStorage(request), LaserRelayFetch.REQUEST, new HashSet<BlockPos>());
+		fetch(out, new ChemicalStorage(request), LaserRelayFetch.REQUEST, new HashSet<BlockPos>(), true);
 	}
 	
-	public void fetch(ChemicalStorage out, ChemicalStorage request, LaserRelayFetch mode, Set<BlockPos> dones)
+	public void fetch(ChemicalStorage out, ChemicalStorage request, LaserRelayFetch mode, Set<BlockPos> dones, boolean first_ignore_storage)
 	{
 		dones.add(pos); //prevents circular fetch
 		
 		TileChemicalStorage storage = getAttachedStorage();
 		
-		if(storage != null && storage.storage != out){ 
+		if(storage != null && !first_ignore_storage){ 
 			ChemicalStorage chems = storage.storage;
 			
 			//fetch storage
@@ -113,6 +114,22 @@ public class TileLaserRelay extends TileEntity {
 				transfer.addMolecules(chems);
 				out.add(chems.take(transfer));
 			}
+			else if(mode == LaserRelayFetch.ANY_ATOM){
+				ChemicalStorage transfer = new ChemicalStorage();
+				
+				if(out.atoms.isEmpty() && !chems.atoms.isEmpty()){
+					transfer.atoms.put(chems.atoms.entrySet().iterator().next().getKey(), 1);
+					out.add(chems.take(transfer));
+				}
+			}
+			else if(mode == LaserRelayFetch.ANY_MOLECULE){
+				ChemicalStorage transfer = new ChemicalStorage();
+
+				if(out.molecules.isEmpty() && !chems.molecules.isEmpty()){
+					transfer.molecules.put(chems.molecules.entrySet().iterator().next().getKey(), 1);
+					out.add(chems.take(transfer));
+				}
+			}
 			else if(mode == LaserRelayFetch.REQUEST && request != null){
 				ChemicalStorage taken = chems.take(request);
 				request.take(taken); //part of the request done, sub what is taken
@@ -124,7 +141,7 @@ public class TileLaserRelay extends TileEntity {
 				TileEntity te = this.worldObj.getTileEntity(pos);
 				if(te != null && te instanceof TileLaserRelay && !dones.contains(pos)){
 					TileLaserRelay ent = (TileLaserRelay)te;
-					ent.fetch(out, request, mode, dones);
+					ent.fetch(out, request, mode, dones, false);
 				}
 			}
 		}

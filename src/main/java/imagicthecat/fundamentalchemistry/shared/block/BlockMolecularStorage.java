@@ -46,9 +46,6 @@ public class BlockMolecularStorage extends Block implements ITileEntityProvider 
 		if(!world.isRemote){
 			if(player.isSneaking())
 				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
-			else{
-				ent.storage.molecules.put(Molecule.fromNotation("H2O"),100);
-			}
 		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,

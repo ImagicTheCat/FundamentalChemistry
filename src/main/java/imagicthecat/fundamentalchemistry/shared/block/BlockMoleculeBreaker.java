@@ -3,36 +3,37 @@ package imagicthecat.fundamentalchemistry.shared.block;
 import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
-import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
+import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeBreaker;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
-
-	public BlockPeriodicStorage() {
+public class BlockMoleculeBreaker extends Block implements ITileEntityProvider{
+	public BlockMoleculeBreaker() {
 	  super(Material.rock);
 	  this.setHardness(1.5f);
-	  this.setUnlocalizedName("periodic_storage");
+	  this.setUnlocalizedName("molecule_breaker");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(CreativeTabs.tabBlock);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		TileChemicalStorage ent = new TileChemicalStorage();
-		return ent;
+		return new TileMoleculeBreaker();
 	}
 	
 	@Override
@@ -40,12 +41,6 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 			IBlockState state, EntityPlayer player, EnumFacing side, float hitX,
 			float hitY, float hitZ) 
 	{
-		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
-		
-		if(!world.isRemote){
-			if(player.isSneaking())
-				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
-		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
 				hitZ);
@@ -60,10 +55,7 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
 		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS); //schedule next update
 		
-		// take all atoms 
-		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
-		TileLaserRelay relay = ent.getAttachedRelay();
-		if(relay != null)
-			relay.fetch(ent.storage, LaserRelayFetch.ATOMS);
+		TileMoleculeBreaker ent = (TileMoleculeBreaker)world.getTileEntity(pos);
+		ent.tick();
 	}
 }

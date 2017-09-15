@@ -1,5 +1,6 @@
 package imagicthecat.fundamentalchemistry;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
@@ -12,11 +13,13 @@ import imagicthecat.fundamentalchemistry.shared.Molecule;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.block.BlockMolecularStorage;
+import imagicthecat.fundamentalchemistry.shared.block.BlockMoleculeBreaker;
 import imagicthecat.fundamentalchemistry.shared.block.BlockPeriodicStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeBreaker;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -63,12 +66,13 @@ public class FundamentalChemistry
   public static Block block_periodic_storage;
   public static Block block_molecular_storage;
   public static Block block_item_breaker;
+  public static Block block_molecule_breaker;
   
   // API
   
   public static BiMap<String, Integer> elements = new BiMap<String, Integer>();
   public static BiMap<String, Molecule> molecules = new BiMap<String, Molecule>();
-  public static BiMap<ItemStack, Map<Molecule, Integer>> item_compositions = new BiMap<ItemStack, Map<Molecule, Integer>>();
+  public static BiMap<Item, Map<Molecule, Integer>> item_compositions = new BiMap<Item, Map<Molecule, Integer>>();
   
   // register atomic element
   public static void registerElement(String name, int atomic_number)
@@ -83,9 +87,31 @@ public class FundamentalChemistry
   }
   
   // register item composition
-  public static void registerItemComposition(ItemStack item, Map<Molecule, Integer> molecules)
+  public static void registerItemComposition(Item item, Map<Molecule, Integer> molecules)
   {
   	item_compositions.put(item,  molecules);
+  }
+  
+  // register item composition (using format "<number> <molecule_name>", "<number> <molecule_name>",...)
+  public static void registerItemComposition(Item item, String... strings)
+  {
+  	Map<Molecule, Integer> _molecules = new HashMap<Molecule, Integer>();
+  	for(String str : strings){
+  		String[] parts = str.split(" ");
+  		if(parts.length == 2){
+  			Molecule m = molecules.get(parts[1]);
+  			if(m != null){
+  				try{
+  					int amount = Integer.parseInt(parts[0]);
+  					if(amount > 0)
+  						_molecules.put(m, amount);
+  				
+  				}catch(NumberFormatException e){}
+  			}
+  		}
+  	}
+  	
+  	item_compositions.put(item,  _molecules);
   }
   
   // events
@@ -98,15 +124,18 @@ public class FundamentalChemistry
    	block_periodic_storage = new BlockPeriodicStorage();
    	block_molecular_storage = new BlockMolecularStorage();
    	block_item_breaker = new BlockItemBreaker();
+   	block_molecule_breaker = new BlockMoleculeBreaker();
    	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
    	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
   	GameRegistry.registerBlock(block_molecular_storage, "fundamentalchemistry:molecular_storage");
   	GameRegistry.registerBlock(block_item_breaker, "fundamentalchemistry:item_breaker");
+  	GameRegistry.registerBlock(block_molecule_breaker, "fundamentalchemistry:molecule_breaker");
    	
    	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
    	GameRegistry.registerTileEntity(TileItemBreaker.class, "fundamentalchemistry:item_breaker");
+   	GameRegistry.registerTileEntity(TileMoleculeBreaker.class, "fundamentalchemistry:molecule_breaker");
   }
 
   @EventHandler
@@ -118,6 +147,10 @@ public class FundamentalChemistry
   	
   	registerMolecule("water", "H2O");
   	registerMolecule("dioxygen", "O2");
+  	registerMolecule("metal_carbon", "C40");
+  	
+  	registerItemComposition(Items.water_bucket, "10 water");
+  	registerItemComposition(Items.iron_ingot, "5 metal_carbon");
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
     NetworkRegistry.INSTANCE.registerGuiHandler(FundamentalChemistry.instance, new ForgeGuiHandler());
@@ -135,6 +168,8 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_molecular_storage), 0, new ModelResourceLocation("fundamentalchemistry:molecular_storage", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_item_breaker), 0, new ModelResourceLocation("fundamentalchemistry:item_breaker", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_molecule_breaker), 0, new ModelResourceLocation("fundamentalchemistry:molecule_breaker", "inventory"));
 	  	
 	  	//tile entity renderers
 	  	 

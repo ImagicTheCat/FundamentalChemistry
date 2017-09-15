@@ -15,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -63,5 +64,8 @@ public class BlockItemBreaker extends Block implements ITileEntityProvider{
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
 		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS); //schedule next update
+		
+		TileItemBreaker ent = (TileItemBreaker)world.getTileEntity(pos);
+		ent.tick();
 	}
 }
