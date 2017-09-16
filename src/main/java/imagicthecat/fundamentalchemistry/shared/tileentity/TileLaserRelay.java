@@ -101,25 +101,24 @@ public class TileLaserRelay extends TileEntity {
 			
 			//fetch storage
 			if(mode == LaserRelayFetch.ALL){
-				out.add(chems);
-				chems.clear();
+				chems.add(out.add(chems.take(new ChemicalStorage(chems)))); //take everything, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.ATOMS){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addAtoms(chems);
-				out.add(chems.take(transfer));
+				chems.add(out.add(chems.take(transfer))); //take atoms, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.MOLECULES){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addMolecules(chems);
-				out.add(chems.take(transfer));
+				chems.add(out.add(chems.take(transfer))); //take molecules, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.ANY_ATOM){
 				ChemicalStorage transfer = new ChemicalStorage();
 				
 				if(out.atoms.isEmpty() && !chems.atoms.isEmpty()){
 					transfer.atoms.put(chems.atoms.entrySet().iterator().next().getKey(), 1);
-					out.add(chems.take(transfer));
+					chems.add(out.add(chems.take(transfer))); //take any/one atom, return overflow to origin
 				}
 			}
 			else if(mode == LaserRelayFetch.ANY_MOLECULE){
@@ -127,13 +126,13 @@ public class TileLaserRelay extends TileEntity {
 
 				if(out.molecules.isEmpty() && !chems.molecules.isEmpty()){
 					transfer.molecules.put(chems.molecules.entrySet().iterator().next().getKey(), 1);
-					out.add(chems.take(transfer));
+					chems.add(out.add(chems.take(transfer))); //take any/one molecule, return overflow to origin
 				}
 			}
 			else if(mode == LaserRelayFetch.REQUEST && request != null){
 				ChemicalStorage taken = chems.take(request);
 				request.take(taken); //part of the request done, sub what is taken
-				out.add(taken);
+				chems.add(out.add(taken)); //return request overflow to origin
 			}
 		}
 		else{ // continue

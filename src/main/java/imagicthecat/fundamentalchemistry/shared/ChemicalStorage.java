@@ -11,14 +11,21 @@ public class ChemicalStorage {
 	public Map<Molecule, Integer> molecules; //molecule => amount
 	public Map<Integer, Integer> atoms; //atomic number => amount
 	
+	public int max_atoms; // max number of atoms per type (only applied by add methods)
+	public int max_molecules; // max number of molecules per type (only applied by add methods)
+	
 	public ChemicalStorage()
 	{
+		max_atoms = -1;
+		max_molecules = -1;
 		molecules = new HashMap<Molecule, Integer>();
 		atoms = new HashMap<Integer, Integer>();
 	}
 	
 	public ChemicalStorage(ChemicalStorage chems)
 	{
+		max_atoms = chems.max_atoms;
+		max_molecules = chems.max_molecules;
 		molecules = new HashMap<Molecule, Integer>(chems.molecules);
 		atoms = new HashMap<Integer, Integer>(chems.atoms);
 	}
@@ -26,6 +33,9 @@ public class ChemicalStorage {
 	//construct storage by copying atoms and molecules (they can be null to represent emptiness)
 	public ChemicalStorage(Map<Integer, Integer> atoms, Map<Molecule, Integer> molecules)
 	{
+		max_atoms = -1;
+		max_molecules = -1;
+		
 		if(atoms != null)
 			this.atoms = new HashMap<Integer, Integer>(atoms);
 		else
@@ -83,37 +93,94 @@ public class ChemicalStorage {
 		atoms.clear();
 	}
 	
-	// add a storage content to this one
-	public void add(ChemicalStorage storage)
+	public boolean isEmpty()
 	{
-		addAtoms(storage);
-		addMolecules(storage);
+		for(Map.Entry<Integer, Integer> entry : atoms.entrySet()){
+			if(entry.getValue() > 0)
+				return false;
+		}
+		
+		for(Map.Entry<Molecule, Integer> entry : molecules.entrySet()){
+			if(entry.getValue() > 0)
+				return false;
+		}
+		
+		return true;
 	}
 	
-	// add a storage content to this one
-	public void addAtoms(ChemicalStorage storage)
+	// add atom, return overflow
+	public int addAtom(Integer atomic_number, Integer amount)
 	{
-		//atoms
+		int overflow = 0;
+		
+		Integer p_amount = atoms.get(atomic_number);
+		int new_amount = amount;
+		if(p_amount != null)
+			new_amount += p_amount;
+		if(max_atoms >= 0 && new_amount > max_atoms){ //handle overflow
+			overflow = new_amount-max_atoms;
+			new_amount = max_atoms;
+		}
+		
+		atoms.put(atomic_number, new_amount);
+		
+		return overflow;
+	}
+	
+	// add molecule, return overflow
+	
+	public int addMolecule(Molecule molecule, Integer amount)
+	{
+		int overflow = 0;
+		
+		Integer p_amount = molecules.get(molecule);
+		int new_amount = amount;
+		if(p_amount != null)
+			new_amount += p_amount;
+		if(max_molecules >= 0 && new_amount > max_molecules){ //handle overflow
+			overflow = new_amount-max_molecules;
+			new_amount = max_molecules;
+		}
+		
+		molecules.put(molecule, new_amount);
+		
+		return overflow;
+	}
+	
+	// add a storage content to this one (return overflow)
+	public ChemicalStorage add(ChemicalStorage storage)
+	{
+		return new ChemicalStorage(addAtoms(storage).atoms, addMolecules(storage).molecules);
+	}
+	
+	// add a storage content to this one (return overflow)
+	public ChemicalStorage addAtoms(ChemicalStorage storage)
+	{
+		ChemicalStorage overflow = new ChemicalStorage();
+		
+		// atoms
 		for(Map.Entry<Integer, Integer> entry : storage.atoms.entrySet()){
-			Integer p_amount = atoms.get(entry.getKey());
-			if(p_amount != null)
-				atoms.put(entry.getKey(), p_amount+entry.getValue());
-			else
-				atoms.put(entry.getKey(), entry.getValue());
+			int of = addAtom(entry.getKey(), entry.getValue());
+			if(of > 0)
+				overflow.addAtom(entry.getKey(), of);
 		}
+		
+		return overflow;
 	}
 	
 	// add a storage content to this one
-	public void addMolecules(ChemicalStorage storage)
+	public ChemicalStorage addMolecules(ChemicalStorage storage)
 	{
-		//molecules
+		ChemicalStorage overflow = new ChemicalStorage();
+		
+		// molecules
 		for(Map.Entry<Molecule, Integer> entry : storage.molecules.entrySet()){
-			Integer p_amount = molecules.get(entry.getKey());
-			if(p_amount != null)
-				molecules.put(entry.getKey(), p_amount+entry.getValue());
-			else
-				molecules.put(entry.getKey(), entry.getValue());
+			int of = addMolecule(entry.getKey(), entry.getValue());
+			if(of > 0)
+				overflow.addMolecule(entry.getKey(), of);
 		}
+		
+		return overflow;
 	}
 	
 	// take a specific quantity from the storage (defined by a storage), will return the asked quantity or less

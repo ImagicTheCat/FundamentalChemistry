@@ -36,6 +36,9 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 		line_index = 0;
 		lines = new String[0];
 		buffer = new ChemicalStorage();
+		
+		this.storage.max_atoms = 100;
+		this.storage.max_molecules = 100;
 	}
 	
 	//do machine work
@@ -52,20 +55,19 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 			//build atoms request
 			ChemicalStorage request = new ChemicalStorage();
 			ChemicalStorage cscheme = new ChemicalStorage(scheme.atoms, null);
-			request.addAtoms(cscheme); // base scheme
-			request.take(buffer); // sub already buffered
-			
-			relay.fetch(buffer, request); // do request
-			
-			if(buffer.containsAtoms(cscheme)){ // process
-				buffer.take(cscheme); // take reagents
+			if(new ChemicalStorage(this.storage).addMolecule(scheme, 1) == 0){ //check storage no overflow	
+				request.addAtoms(cscheme); // base scheme
+				request.take(buffer); // sub already buffered
 				
-				// output
-				ChemicalStorage r = new ChemicalStorage(); 
-				r.molecules.put(scheme, 1);
+				relay.fetch(buffer, request); // do request
 				
-				this.storage.addMolecules(r);
-				this.markDirty();
+				if(buffer.containsAtoms(cscheme)){ // process
+					buffer.take(cscheme); // take reagents
+					
+					// output
+					this.storage.addMolecule(scheme, 1);
+					this.markDirty();
+				}
 			}
 		}
 	}

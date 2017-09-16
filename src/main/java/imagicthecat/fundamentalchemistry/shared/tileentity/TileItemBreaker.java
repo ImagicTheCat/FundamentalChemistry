@@ -24,6 +24,8 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 
 	public TileItemBreaker()
 	{
+		this.storage.max_atoms = 100;
+		this.storage.max_molecules = 100;
 	}
 	
 	//do machine work
@@ -35,8 +37,17 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 			//find composition
 			Map<Molecule, Integer> molecules = FundamentalChemistry.item_compositions.get(stack.getItem());
 			if(molecules != null){
-				this.storage.add(new ChemicalStorage(null, molecules));
-				this.markDirty();
+				if(new ChemicalStorage(this.storage).add(new ChemicalStorage(null, molecules)).isEmpty()){ //check storage overflow first
+					this.storage.add(new ChemicalStorage(null, molecules));
+					this.markDirty();
+				}
+				else{ //reverse stack decrement
+					ItemStack pstack = this.getStackInSlot(0);
+					if(pstack != null)
+						stack.stackSize += pstack.stackSize;
+
+					this.setInventorySlotContents(0, stack);
+				}
 			}
 		}
 	}

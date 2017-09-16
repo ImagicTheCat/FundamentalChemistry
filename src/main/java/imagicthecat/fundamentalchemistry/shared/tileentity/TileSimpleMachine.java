@@ -25,7 +25,6 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 	
 	public TileSimpleMachine()
 	{
-		
 	}
 	
 	//do machine work

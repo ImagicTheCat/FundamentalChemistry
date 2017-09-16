@@ -7,6 +7,7 @@ import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TilePeriodicStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -31,8 +32,7 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		TileChemicalStorage ent = new TileChemicalStorage();
-		return ent;
+		return new TilePeriodicStorage();
 	}
 	
 	@Override

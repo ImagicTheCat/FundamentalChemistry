@@ -12,6 +12,10 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 
+Notes:
+
+* A machine stops working when his own storage is full (for a specific chemical to produce).
+
 ### Items
 
 #### Vibrant catalyst stone
@@ -52,6 +56,10 @@ Machine to break item into molecules.
 #### Molecule breaker
 
 Machine to break molecules into atoms.
+
+Technical notes:
+
+* Since the breaker will fetch any molecule, if its own chemical container is full, the molecule will get stuck in the machine until the container has available space.
 
 #### Molecular storage
 

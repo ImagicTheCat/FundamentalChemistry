@@ -22,8 +22,10 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileMolecularStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeBreaker;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TilePeriodicStorage;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -144,6 +146,8 @@ public class FundamentalChemistry
    	
    	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
+   	GameRegistry.registerTileEntity(TileMolecularStorage.class, "fundamentalchemistry:molecular_storage");
+   	GameRegistry.registerTileEntity(TilePeriodicStorage.class, "fundamentalchemistry:periodic_storage");
    	GameRegistry.registerTileEntity(TileItemBreaker.class, "fundamentalchemistry:item_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeBreaker.class, "fundamentalchemistry:molecule_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeAssembler.class, "fundamentalchemistry:molecule_assembler");

@@ -13,6 +13,15 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 public class TileMoleculeBreaker extends TileChemicalStorage {
+	ChemicalStorage buffer;
+	
+	public TileMoleculeBreaker()
+	{
+		buffer = new ChemicalStorage();
+		
+		this.storage.max_atoms = 100;
+		this.storage.max_molecules = 100;
+	}
 	
 	//do machine work
 	public void tick()
@@ -21,14 +30,19 @@ public class TileMoleculeBreaker extends TileChemicalStorage {
 		if(relay != null){
 			//fetch a molecule from the network
 			
-			ChemicalStorage taken = new ChemicalStorage();
-			relay.fetch(taken, LaserRelayFetch.ANY_MOLECULE);
+			if(buffer.isEmpty()) // nothing in the buffer, request any molecule
+				relay.fetch(buffer, LaserRelayFetch.ANY_MOLECULE);
 			
-			if(!taken.molecules.isEmpty()){
+			if(!buffer.molecules.isEmpty()){
 				//break the molecule
-				Molecule m = taken.molecules.entrySet().iterator().next().getKey();
-				this.storage.addAtoms(new ChemicalStorage(m.atoms, null));
-				this.markDirty();
+				Molecule m = buffer.molecules.entrySet().iterator().next().getKey();
+				
+				if(new ChemicalStorage(this.storage).addAtoms(new ChemicalStorage(m.atoms, null)).isEmpty()){ //check storage overflow first
+					//output
+					this.storage.addAtoms(new ChemicalStorage(m.atoms, null));
+					this.markDirty();
+					buffer.clear();
+				}
 			}
 		}
 	}
