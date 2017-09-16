@@ -112,6 +112,33 @@ public class ChemicalStorage {
 		return chems;
 	}
 	
+	public boolean contains(ChemicalStorage storage)
+	{
+		return containsAtoms(storage) && containsMolecules(storage);
+	}
+	
+	public boolean containsAtoms(ChemicalStorage storage)
+	{
+		for(Map.Entry<Integer, Integer> entry : storage.atoms.entrySet()){
+			Integer amount = atoms.get(entry.getKey());
+			if(amount == null || amount < entry.getValue())
+				return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean containsMolecules(ChemicalStorage storage)
+	{
+		for(Map.Entry<Molecule, Integer> entry : storage.molecules.entrySet()){
+			Integer amount = molecules.get(entry.getKey());
+			if(amount == null || amount < entry.getValue())
+				return false;
+		}
+		
+		return true;
+	}
+	
 	public String toString()
 	{
 		String r = "\n== Chemical Storage ==\n= Atoms";
