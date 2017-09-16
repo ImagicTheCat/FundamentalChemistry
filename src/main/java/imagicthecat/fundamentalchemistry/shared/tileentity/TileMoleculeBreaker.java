@@ -28,34 +28,9 @@ public class TileMoleculeBreaker extends TileChemicalStorage {
 				//break the molecule
 				Molecule m = taken.molecules.entrySet().iterator().next().getKey();
 				this.storage.addAtoms(new ChemicalStorage(m.atoms, null));
+				this.markDirty();
 			}
 		}
 	}
-	
-  @Override
-  public void writeToNBT(NBTTagCompound tag) 
-  {
-  	super.writeToNBT(tag);
-  }
-  
-  @Override
-  public void readFromNBT(NBTTagCompound tag)
-  {
-    super.readFromNBT(tag);
-  }
-  
-  @Override
-  public Packet getDescriptionPacket() 
-  {
-    NBTTagCompound tag = new NBTTagCompound();
-    writeToNBT(tag);
-    return new S35PacketUpdateTileEntity(this.pos, 1, tag);
-  }
-  
-  @Override
-  public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
-  {
-    readFromNBT(pkt.getNbtCompound());
-  }
 }
 

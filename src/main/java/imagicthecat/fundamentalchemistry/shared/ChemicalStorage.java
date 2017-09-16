@@ -5,6 +5,8 @@ import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 public class ChemicalStorage {
 	public Map<Molecule, Integer> molecules; //molecule => amount
 	public Map<Integer, Integer> atoms; //atomic number => amount
@@ -33,6 +35,46 @@ public class ChemicalStorage {
 			this.molecules = new HashMap<Molecule, Integer>(molecules);
 		else
 			this.molecules = new HashMap<Molecule, Integer>();
+	}
+	
+	// read data from a NBTTagCompound
+	public void read(NBTTagCompound tag)
+	{
+		// read atoms
+		NBTTagCompound atoms = tag.getCompoundTag("atoms");
+		if(atoms != null){
+			for(String key : atoms.getKeySet()){
+				try{
+					this.atoms.put(Integer.parseInt(key.substring(1)), atoms.getInteger(key));
+				}catch(NumberFormatException e){}
+			}
+		}
+		
+		// read molecules
+		NBTTagCompound molecules = tag.getCompoundTag("molecules");
+		if(molecules != null){
+			for(String key : molecules.getKeySet()){
+				Molecule m = Molecule.fromNotation(key);
+				if(m != null)
+					this.molecules.put(m, molecules.getInteger(key));
+			}
+		}
+	}
+	
+	// write data to a NBTTagCompound
+	public void write(NBTTagCompound tag)
+	{
+		// write atoms
+		NBTTagCompound atoms = new NBTTagCompound();
+		for(Map.Entry<Integer, Integer> entry : this.atoms.entrySet())
+			atoms.setInteger("a"+entry.getKey(), entry.getValue());
+		tag.setTag("atoms", atoms);
+		
+		// write molecules
+		NBTTagCompound molecules = new NBTTagCompound();
+		for(Map.Entry<Molecule, Integer> entry : this.molecules.entrySet())
+			molecules.setInteger(entry.getKey().toNotation(), entry.getValue());
+		tag.setTag("molecules", molecules);
 	}
 	
 	public void clear()

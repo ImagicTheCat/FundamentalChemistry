@@ -56,20 +56,6 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
     if(tag.hasKey("items"))
     	this.setInventorySlotContents(0, ItemStack.loadItemStackFromNBT(tag.getCompoundTag("items")));
   }
-  
-  @Override
-  public Packet getDescriptionPacket() 
-  {
-    NBTTagCompound tag = new NBTTagCompound();
-    writeToNBT(tag);
-    return new S35PacketUpdateTileEntity(this.pos, 1, tag);
-  }
-  
-  @Override
-  public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
-  {
-    readFromNBT(pkt.getNbtCompound());
-  }
 
 	@Override
 	public String getName() {
@@ -139,6 +125,7 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 			}
 			
 			input = stack;
+			this.markDirty();
 		}
 	}
 

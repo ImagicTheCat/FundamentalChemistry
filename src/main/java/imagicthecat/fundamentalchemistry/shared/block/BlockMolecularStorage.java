@@ -64,7 +64,9 @@ public class BlockMolecularStorage extends Block implements ITileEntityProvider 
 		// take all atoms 
 		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
 		TileLaserRelay relay = ent.getAttachedRelay();
-		if(relay != null)
+		if(relay != null){
 			relay.fetch(ent.storage, LaserRelayFetch.MOLECULES);
+			ent.markDirty();
+		}
 	}
 }

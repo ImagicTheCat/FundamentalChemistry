@@ -34,8 +34,10 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 		if(stack != null && stack.stackSize == 1){
 			//find composition
 			Map<Molecule, Integer> molecules = FundamentalChemistry.item_compositions.get(stack.getItem());
-			if(molecules != null)
+			if(molecules != null){
 				this.storage.add(new ChemicalStorage(null, molecules));
+				this.markDirty();
+			}
 		}
 	}
 

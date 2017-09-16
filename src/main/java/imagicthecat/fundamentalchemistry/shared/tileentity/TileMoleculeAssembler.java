@@ -65,6 +65,7 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 				r.molecules.put(scheme, 1);
 				
 				this.storage.addMolecules(r);
+				this.markDirty();
 			}
 		}
 	}
