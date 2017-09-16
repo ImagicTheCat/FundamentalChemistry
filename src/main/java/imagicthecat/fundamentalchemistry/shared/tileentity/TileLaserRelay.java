@@ -113,6 +113,11 @@ public class TileLaserRelay extends TileEntity {
 				transfer.addMolecules(chems);
 				chems.add(out.add(chems.take(transfer))); //take molecules, return overflow to origin
 			}
+			else if(mode == LaserRelayFetch.ENERGY){
+				ChemicalStorage transfer = new ChemicalStorage();
+				transfer.addEnergy(chems);
+				chems.add(out.add(chems.take(transfer))); //take energy, return overflow to origin
+			}
 			else if(mode == LaserRelayFetch.ANY_ATOM){
 				ChemicalStorage transfer = new ChemicalStorage();
 				

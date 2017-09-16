@@ -10,24 +10,30 @@ import net.minecraft.nbt.NBTTagCompound;
 public class ChemicalStorage {
 	public Map<Molecule, Integer> molecules; //molecule => amount
 	public Map<Integer, Integer> atoms; //atomic number => amount
+	public int energy;
 	
 	public int max_atoms; // max number of atoms per type (only applied by add methods)
 	public int max_molecules; // max number of molecules per type (only applied by add methods)
+	public int max_energy; // max number of energy unit (only applied by add methods)
 	
 	public ChemicalStorage()
 	{
 		max_atoms = -1;
 		max_molecules = -1;
+		max_energy = -1;
 		molecules = new HashMap<Molecule, Integer>();
 		atoms = new HashMap<Integer, Integer>();
+		energy = 0;
 	}
 	
 	public ChemicalStorage(ChemicalStorage chems)
 	{
 		max_atoms = chems.max_atoms;
 		max_molecules = chems.max_molecules;
+		max_energy = chems.max_energy;
 		molecules = new HashMap<Molecule, Integer>(chems.molecules);
 		atoms = new HashMap<Integer, Integer>(chems.atoms);
+		energy = chems.energy;
 	}
 	
 	//construct storage by copying atoms and molecules (they can be null to represent emptiness)
@@ -35,6 +41,8 @@ public class ChemicalStorage {
 	{
 		max_atoms = -1;
 		max_molecules = -1;
+		max_energy = -1;
+		energy = 0;
 		
 		if(atoms != null)
 			this.atoms = new HashMap<Integer, Integer>(atoms);
@@ -45,6 +53,26 @@ public class ChemicalStorage {
 			this.molecules = new HashMap<Molecule, Integer>(molecules);
 		else
 			this.molecules = new HashMap<Molecule, Integer>();
+	}
+	
+	//construct storage by copying atoms, molecules and energy (they can be null to represent emptiness)
+	public ChemicalStorage(Map<Integer, Integer> atoms, Map<Molecule, Integer> molecules, int energy)
+	{
+		max_atoms = -1;
+		max_molecules = -1;
+		max_energy = -1;
+		
+		if(atoms != null)
+			this.atoms = new HashMap<Integer, Integer>(atoms);
+		else
+			this.atoms = new HashMap<Integer, Integer>();
+		
+		if(molecules != null)
+			this.molecules = new HashMap<Molecule, Integer>(molecules);
+		else
+			this.molecules = new HashMap<Molecule, Integer>();
+		
+		this.energy = energy;
 	}
 	
 	// read data from a NBTTagCompound
@@ -69,6 +97,9 @@ public class ChemicalStorage {
 					this.molecules.put(m, molecules.getInteger(key));
 			}
 		}
+		
+		// read energy
+		energy = tag.getInteger("energy");
 	}
 	
 	// write data to a NBTTagCompound
@@ -85,16 +116,23 @@ public class ChemicalStorage {
 		for(Map.Entry<Molecule, Integer> entry : this.molecules.entrySet())
 			molecules.setInteger(entry.getKey().toNotation(), entry.getValue());
 		tag.setTag("molecules", molecules);
+		
+		// write energy
+		tag.setInteger("energy", energy);
 	}
 	
 	public void clear()
 	{
 		molecules.clear();
 		atoms.clear();
+		energy = 0;
 	}
 	
 	public boolean isEmpty()
 	{
+		if(energy > 0)
+			return false;
+		
 		for(Map.Entry<Integer, Integer> entry : atoms.entrySet()){
 			if(entry.getValue() > 0)
 				return false;
@@ -104,7 +142,7 @@ public class ChemicalStorage {
 			if(entry.getValue() > 0)
 				return false;
 		}
-		
+
 		return true;
 	}
 	
@@ -128,7 +166,6 @@ public class ChemicalStorage {
 	}
 	
 	// add molecule, return overflow
-	
 	public int addMolecule(Molecule molecule, Integer amount)
 	{
 		int overflow = 0;
@@ -147,10 +184,33 @@ public class ChemicalStorage {
 		return overflow;
 	}
 	
+	// add energy, return overflow
+	public int addEnergy(int amount)
+	{
+		int overflow = 0;
+		
+		int new_amount = energy+amount;
+		if(max_energy >= 0 && new_amount > max_energy){ //handle overflow
+			overflow = new_amount-max_energy;
+			new_amount = max_energy;
+		}
+		
+		return overflow;
+	}
+	
 	// add a storage content to this one (return overflow)
 	public ChemicalStorage add(ChemicalStorage storage)
 	{
-		return new ChemicalStorage(addAtoms(storage).atoms, addMolecules(storage).molecules);
+		return new ChemicalStorage(addAtoms(storage).atoms, addMolecules(storage).molecules, addEnergy(storage).energy);
+	}
+	
+	// api consistency function
+	public ChemicalStorage addEnergy(ChemicalStorage storage)
+	{
+		ChemicalStorage overflow = new ChemicalStorage();
+		overflow.energy = addEnergy(storage.energy);
+		
+		return overflow;
 	}
 	
 	// add a storage content to this one (return overflow)
@@ -218,12 +278,17 @@ public class ChemicalStorage {
 			}
 		}
 		
+		//energy
+		int taken = Math.min(energy, storage.energy);
+		energy -= taken;
+		chems.energy = taken;
+		
 		return chems;
 	}
 	
 	public boolean contains(ChemicalStorage storage)
 	{
-		return containsAtoms(storage) && containsMolecules(storage);
+		return containsAtoms(storage) && containsMolecules(storage) && containsEnergy(storage);
 	}
 	
 	public boolean containsAtoms(ChemicalStorage storage)
@@ -248,9 +313,14 @@ public class ChemicalStorage {
 		return true;
 	}
 	
+	public boolean containsEnergy(ChemicalStorage storage)
+	{
+		return energy >= storage.energy;
+	}
+	
 	public String toString()
 	{
-		String r = "\n== Chemical Storage ==\n= Atoms";
+		String r = "\n== Chemical Storage ("+energy+" E) ==\n= Atoms";
 		for(Map.Entry<Integer, Integer> entry : atoms.entrySet()){
 			String name = FundamentalChemistry.elements.invget(entry.getKey());
 			if(name != null)
