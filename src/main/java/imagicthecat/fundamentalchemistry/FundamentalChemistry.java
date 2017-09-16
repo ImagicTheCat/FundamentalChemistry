@@ -10,6 +10,7 @@ import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
+import imagicthecat.fundamentalchemistry.shared.block.BlockEnergyStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
@@ -19,6 +20,7 @@ import imagicthecat.fundamentalchemistry.shared.block.BlockMoleculeBreaker;
 import imagicthecat.fundamentalchemistry.shared.block.BlockPeriodicStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileEnergyStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
@@ -71,6 +73,7 @@ public class FundamentalChemistry
   public static Block block_laser_relay;
   public static Block block_periodic_storage;
   public static Block block_molecular_storage;
+  public static Block block_energy_storage;
   public static Block block_item_breaker;
   public static Block block_molecule_breaker;
   public static Block block_molecule_assembler;
@@ -131,6 +134,7 @@ public class FundamentalChemistry
    	block_laser_relay = new BlockLaserRelay();
    	block_periodic_storage = new BlockPeriodicStorage();
    	block_molecular_storage = new BlockMolecularStorage();
+   	block_energy_storage = new BlockEnergyStorage();
    	block_item_breaker = new BlockItemBreaker();
    	block_molecule_breaker = new BlockMoleculeBreaker();
    	block_molecule_assembler = new BlockMoleculeAssembler();
@@ -139,6 +143,7 @@ public class FundamentalChemistry
    	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
   	GameRegistry.registerBlock(block_molecular_storage, "fundamentalchemistry:molecular_storage");
+  	GameRegistry.registerBlock(block_energy_storage, "fundamentalchemistry:energy_storage");
   	GameRegistry.registerBlock(block_item_breaker, "fundamentalchemistry:item_breaker");
   	GameRegistry.registerBlock(block_molecule_breaker, "fundamentalchemistry:molecule_breaker");
   	GameRegistry.registerBlock(block_molecule_assembler, "fundamentalchemistry:molecule_assembler");
@@ -148,6 +153,7 @@ public class FundamentalChemistry
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
    	GameRegistry.registerTileEntity(TileMolecularStorage.class, "fundamentalchemistry:molecular_storage");
    	GameRegistry.registerTileEntity(TilePeriodicStorage.class, "fundamentalchemistry:periodic_storage");
+   	GameRegistry.registerTileEntity(TileEnergyStorage.class, "fundamentalchemistry:energy_storage");
    	GameRegistry.registerTileEntity(TileItemBreaker.class, "fundamentalchemistry:item_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeBreaker.class, "fundamentalchemistry:molecule_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeAssembler.class, "fundamentalchemistry:molecule_assembler");
@@ -182,6 +188,8 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_periodic_storage), 0, new ModelResourceLocation("fundamentalchemistry:periodic_storage", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_molecular_storage), 0, new ModelResourceLocation("fundamentalchemistry:molecular_storage", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_energy_storage), 0, new ModelResourceLocation("fundamentalchemistry:energy_storage", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_item_breaker), 0, new ModelResourceLocation("fundamentalchemistry:item_breaker", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()

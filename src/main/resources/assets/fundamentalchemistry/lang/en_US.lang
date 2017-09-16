@@ -2,6 +2,7 @@ tile.test.name=Test
 tile.laser_relay.name=Laser Relay
 tile.periodic_storage.name=Periodic Storage
 tile.molecular_storage.name=Molecular Storage
+tile.energy_storage.name=Energy Storage
 tile.item_breaker.name=Item Breaker
 tile.molecule_breaker.name=Molecule Breaker
 tile.molecule_assembler.name=Molecule Assembler
