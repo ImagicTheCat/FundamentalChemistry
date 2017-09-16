@@ -32,6 +32,11 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 * Laser relays can be connected to an unlimited number of relays in range.
 * Connected machines drain things from the laser network when needed.
 
+Technical notes:
+
+* Things are taken by input requests (nothing move if nothing needs it).
+* Fetching things in a laser network from a relay will not go further the chemical containers (machines, storages, etc). This means that if a storage is connected behind a machine, unless there is another way, only this machine will be able to fetch the storage.
+
 #### Item breaker
 
 Machine to break item into molecules.

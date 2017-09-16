@@ -6,6 +6,7 @@ import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeAssembler;
@@ -23,19 +24,19 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class BlockMoleculeAssembler extends Block implements ITileEntityProvider{
+public class BlockItemAssembler extends Block implements ITileEntityProvider{
 
-	public BlockMoleculeAssembler() {
+	public BlockItemAssembler() {
 	  super(Material.rock);
 	  this.setHardness(1.5f);
-	  this.setUnlocalizedName("molecule_assembler");
+	  this.setUnlocalizedName("item_assembler");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(CreativeTabs.tabBlock);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileMoleculeAssembler();
+		return new TileItemAssembler();
 	}
 	
 	@Override
@@ -53,7 +54,6 @@ public class BlockMoleculeAssembler extends Block implements ITileEntityProvider
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
 	  InventoryHelper.dropInventoryItems(world, pos, (TileSimpleMachine)world.getTileEntity(pos));
-	  
 	  super.breakBlock(world, pos, blockstate);
 	}
 	

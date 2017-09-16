@@ -47,7 +47,8 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 		
 		Molecule scheme = getNextScheme();
 		TileLaserRelay relay = this.getAttachedRelay();
-		if(scheme != null && relay != null){
+		if(scheme != null && relay != null 
+				&& FundamentalChemistry.molecules.invget(scheme) != null){ // check if the molecule scheme is registered (is possible)
 			//build atoms request
 			ChemicalStorage request = new ChemicalStorage();
 			ChemicalStorage cscheme = new ChemicalStorage(scheme.atoms, null);
