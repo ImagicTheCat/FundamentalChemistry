@@ -25,9 +25,13 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 * A powerful generator to power the laser network and the machines.
 * Not only combustion, this generator can be used in many ways, like draining power directly from the environment.
 
-#### Energy Storage
+#### Energy storage
 
 * Store generated energy.
+
+#### Versatile extractor
+
+* Extract molecules directly from the environment.
 
 #### Laser relay
 
