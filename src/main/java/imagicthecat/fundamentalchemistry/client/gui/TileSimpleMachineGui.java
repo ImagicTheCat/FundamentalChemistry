@@ -1,21 +1,21 @@
 
 package imagicthecat.fundamentalchemistry.client.gui;
 
-import imagicthecat.fundamentalchemistry.shared.container.TileItemBreakerContainer;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
+import imagicthecat.fundamentalchemistry.shared.container.TileSimpleMachineContainer;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class TileItemBreakerGui extends GuiContainer{
+public class TileSimpleMachineGui extends GuiContainer{
 	
-	private TileItemBreaker ent;
+	private TileSimpleMachine ent;
 	private IInventory player_inv;
 
-	public TileItemBreakerGui(IInventory player_inv, TileItemBreaker ent) {
-		super(new TileItemBreakerContainer(player_inv, ent));
+	public TileSimpleMachineGui(IInventory player_inv, TileSimpleMachine ent) {
+		super(new TileSimpleMachineContainer(player_inv, ent));
 		
 		this.ent = ent;
 		this.player_inv = player_inv;
@@ -28,7 +28,7 @@ public class TileItemBreakerGui extends GuiContainer{
 	protected void drawGuiContainerBackgroundLayer(float partialTicks,
 			int mouseX, int mouseY) {
     GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-    this.mc.getTextureManager().bindTexture(new ResourceLocation("fundamentalchemistry:textures/gui/container/item_breaker.png"));
+    this.mc.getTextureManager().bindTexture(new ResourceLocation("fundamentalchemistry:textures/gui/container/simple_machine.png"));
     this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 	}
 	

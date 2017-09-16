@@ -1,16 +1,17 @@
 package imagicthecat.fundamentalchemistry.shared.container;
 
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
+
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class TileItemBreakerContainer extends Container {
-	private TileItemBreaker ent;
+public class TileSimpleMachineContainer extends Container {
+	private TileSimpleMachine ent;
 	
-	public TileItemBreakerContainer(IInventory player_inv, TileItemBreaker ent)
+	public TileSimpleMachineContainer(IInventory player_inv, TileSimpleMachine ent)
 	{
 		this.ent = ent;
 
