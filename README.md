@@ -30,6 +30,13 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 * A powerful generator to power the laser network and the machines.
 * Not only combustion, this generator can be used in many ways, like draining power directly from the environment (wind, water flowing, heat source below).
 
+Technical notes:
+
+* Produce 1E per adjacent flowing water.
+* Produce 1E if in contact with air (only adjacent).
+* Produce a variable amount of energy depending of the heat source under the generator.
+* Produce a variable amount of energy depending of the fuel used.
+
 #### Energy storage
 
 * Store generated energy.
@@ -40,8 +47,8 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 
 Technical notes:
 
-* Consume 2E to extract air.
-* Consume 3E to extract water.
+* Consume 2E to extract adjacent air.
+* Consume 3E to extract adjacent water.
 
 #### Laser relay
 
