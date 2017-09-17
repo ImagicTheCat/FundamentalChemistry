@@ -31,7 +31,7 @@ public class BlockItemAssembler extends Block implements ITileEntityProvider{
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("item_assembler");
 	  this.setTickRandomly(true);
-	  this.setCreativeTab(CreativeTabs.tabBlock);
+	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
 
 	@Override

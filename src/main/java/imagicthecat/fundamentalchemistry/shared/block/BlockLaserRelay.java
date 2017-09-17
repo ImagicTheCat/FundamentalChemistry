@@ -2,6 +2,7 @@ package imagicthecat.fundamentalchemistry.shared.block;
 
 import java.util.Random;
 
+import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.block.Block;
@@ -25,7 +26,7 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
     this.setHardness(1.5f);
     this.setUnlocalizedName("laser_relay");
     this.setTickRandomly(true);
-    this.setCreativeTab(CreativeTabs.tabBlock);
+    this.setCreativeTab(FundamentalChemistry.tab);
   }
 
 	@Override

@@ -1,6 +1,7 @@
 package imagicthecat.fundamentalchemistry.shared.block;
 
 
+import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -22,7 +23,7 @@ public class BlockTest extends Block implements ITileEntityProvider{
     super(Material.rock);
     this.setHardness(1.5f);
     this.setUnlocalizedName("test");
-    this.setCreativeTab(CreativeTabs.tabBlock);
+    this.setCreativeTab(FundamentalChemistry.tab);
   }
 
 	@Override

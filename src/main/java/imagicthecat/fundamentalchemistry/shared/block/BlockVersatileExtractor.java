@@ -23,7 +23,7 @@ public class BlockVersatileExtractor extends Block implements ITileEntityProvide
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("versatile_extractor");
 	  this.setTickRandomly(true);
-	  this.setCreativeTab(CreativeTabs.tabBlock);
+	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
 
 	@Override

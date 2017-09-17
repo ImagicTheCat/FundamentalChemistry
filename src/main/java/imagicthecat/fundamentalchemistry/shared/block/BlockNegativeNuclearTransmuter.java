@@ -24,7 +24,7 @@ public class BlockNegativeNuclearTransmuter extends Block implements ITileEntity
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("negative_nuclear_transmuter");
 	  this.setTickRandomly(true);
-	  this.setCreativeTab(CreativeTabs.tabBlock);
+	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
 
 	@Override

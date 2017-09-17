@@ -7,6 +7,7 @@ import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
 import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Command;
+import imagicthecat.fundamentalchemistry.shared.ForgeCreativeTab;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
@@ -39,6 +40,7 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileGenerato
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -74,6 +76,10 @@ public class FundamentalChemistry
   
   public static float MAX_RELAY_DISTANCE = 200f;
   public static int RELAY_TICKS = 40;
+  
+  // creative tab 
+
+	public static final CreativeTabs tab = new ForgeCreativeTab();
 
   // blocks
   
@@ -150,6 +156,8 @@ public class FundamentalChemistry
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
+
+      
    	block_test = new BlockTest();
    	block_laser_relay = new BlockLaserRelay();
    	block_periodic_storage = new BlockPeriodicStorage();

@@ -28,7 +28,7 @@ public class BlockEnergyStorage extends Block implements ITileEntityProvider {
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("energy_storage");
 	  this.setTickRandomly(true);
-	  this.setCreativeTab(CreativeTabs.tabBlock);
+	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
 
 	@Override
