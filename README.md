@@ -102,6 +102,7 @@ Assemble molecules to form items.
 Technical notes:
 
 * Consume (atomsum) E.
+* The produced items are dropped on the ground or added to an adjacent chest.
 
 #### Positive nuclear transmuter
 
