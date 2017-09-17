@@ -48,7 +48,7 @@ public class TileVersatileGenerator extends TileSimpleMachine implements IInvent
 		ItemStack stack = decrStackSize(0,1);
 		if(stack != null && stack.stackSize == 1){
 			int burn_time = TileEntityFurnace.getItemBurnTime(stack);	
-			int energy = (int) Math.ceil(burn_time/100.f);
+			int energy = (int) Math.ceil(burn_time/50.f);
 			
 			if(burn_time > 0 && new ChemicalStorage(this.storage).addEnergy(energy) == 0){ //check storage no overflow first
 				this.storage.addEnergy(energy);
@@ -68,7 +68,7 @@ public class TileVersatileGenerator extends TileSimpleMachine implements IInvent
 			this.storage.addEnergy(1);
 		
 		//water movement
-		this.storage.addEnergy(countMovingWater()*2);
+		this.storage.addEnergy(countMovingWater());
 		
 		//heat source
 		this.storage.addEnergy(getHeatSource());

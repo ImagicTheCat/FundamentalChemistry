@@ -35,7 +35,7 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 
 #### Versatile extractor
 
-* Extract molecules directly from the environment.
+* Extract molecules directly from the environment (air, water).
 
 #### Laser relay
 
