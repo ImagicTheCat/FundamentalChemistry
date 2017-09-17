@@ -190,9 +190,10 @@ public class TileLaserRelay extends TileEntity {
   public void writeToNBT(NBTTagCompound tag) 
   {
   	super.writeToNBT(tag);
-  	NBTTagList list = new NBTTagList();
+  	
   	
   	//save inputs pos
+  	NBTTagList list = new NBTTagList();
   	
   	for(BlockPos pos : inputs){
   		int[] coords = new int[3];
@@ -203,6 +204,19 @@ public class TileLaserRelay extends TileEntity {
   	}
   	
   	tag.setTag("in", list);
+  	
+  	//save outputs pos
+  	list = new NBTTagList();
+  	
+  	for(BlockPos pos : outputs){
+  		int[] coords = new int[3];
+  		coords[0] = pos.getX();
+  		coords[1] = pos.getY();
+  		coords[2] = pos.getZ();
+  		list.appendTag(new NBTTagIntArray(coords));
+  	}
+  	
+  	tag.setTag("out", list);
   }
   
   @Override
@@ -219,6 +233,16 @@ public class TileLaserRelay extends TileEntity {
     	
     	if(coords.length == 3)
     		inputs.add(new BlockPos(coords[0], coords[1], coords[2]));
+    }
+    
+    // read outputs pos
+    
+    list = tag.getTagList("out", Constants.NBT.TAG_INT_ARRAY);
+    for(int i = 0; i < list.tagCount(); i++){
+    	int[] coords = list.getIntArrayAt(i);
+    	
+    	if(coords.length == 3)
+    		outputs.add(new BlockPos(coords[0], coords[1], coords[2]));
     }
   }
   

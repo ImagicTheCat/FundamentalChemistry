@@ -85,11 +85,17 @@ public class ClientEventHandler extends ForgeEventHandler{
 					TileEntity ce = te.getWorld().getTileEntity(pos);
 					if(ce != null && ce instanceof TileLaserRelay && (player.getPosition().distanceSq(pos.getX(),pos.getY(),pos.getZ()) <= 500 
 							|| player.getPosition().distanceSq(cpos.getX(),cpos.getY(),cpos.getZ()) <= 500)){
+						//add height shift if it is a circular connections
+						TileLaserRelay cent = (TileLaserRelay)ce;
+						float shift = 0;
+						if(cent.inputs.contains(cpos) && cpos.hashCode() < pos.hashCode())
+							shift = 0.15f;
+						
 						//draw connection
 						GlStateManager.color(0f,0.5f,1f,1f);
-						GL11.glVertex3d(cpos.getX()+0.5, cpos.getY()+0.5, cpos.getZ()+0.5);
+						GL11.glVertex3d(cpos.getX()+0.5, cpos.getY()+0.5-shift, cpos.getZ()+0.5);
 						GlStateManager.color(0f,1f,0.5f,1f);
-						GL11.glVertex3d(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+						GL11.glVertex3d(pos.getX()+0.5, pos.getY()+0.5-shift, pos.getZ()+0.5);
 					}
 				}
 			}
