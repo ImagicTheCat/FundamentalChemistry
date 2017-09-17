@@ -7,7 +7,9 @@ tile.item_breaker.name=Item Breaker
 tile.molecule_breaker.name=Molecule Breaker
 tile.molecule_assembler.name=Molecule Assembler
 tile.item_assembler.name=Item Assembler
+tile.versatile_generator.name=Versatile Generator
 
 container.item_breaker=Item Breaker
 container.molecule_assembler=Molecule Assembler
 container.item_assembler=Item Assembler
+container.versatile_generator=Versatile Generator

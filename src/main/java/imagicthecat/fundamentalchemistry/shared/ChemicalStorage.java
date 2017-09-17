@@ -195,6 +195,8 @@ public class ChemicalStorage {
 			new_amount = max_energy;
 		}
 		
+		energy = new_amount;
+		
 		return overflow;
 	}
 	
