@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "fundamentalchemistry:blocks/negative_nuclear_transmuter"
+  }
+}

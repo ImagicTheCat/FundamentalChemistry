@@ -80,10 +80,30 @@ Assemble molecules to form items.
 #### Positive nuclear transmuter
 
 "Punch" atoms to increase their proton/electron number (the amount is given by the item used).
-This is an hard task.
+This is an hard task. See nuclear transmutation.
 
 #### Negative nuclear transmuter
 
 "Snatch" atoms to decrease their proton/electron number (the amount is given by the item used).
-This is an hard task.
+This is an hard task. See nuclear transmutation.
 
+### Nuclear transmutation
+
+* Using a catalyst, it is possible to increase or decrease the atomic number of an atom.
+* The chance of success is defined by the power of the catalyst as `50+power*10 % clamped to 99%`.
+* The atom and the catalyst are lost on failure, an atom of atomic number += or -= power is produced on success (if possible).
+
+Following those rules, it is easier to transmute atoms with big jumps (5 by 5) than small jumps like the quantum (1 by 1) which will cause 40% loss per transmutation.
+
+Examples: 
+* doing +1 +1 +1 +1 +1 +1 +1 +1 +1 (+9) => 0.60^9 => ~1% success
+* doing +5 +5 -1 (+9) => 0.99*0.99*0.60 => ~60% success
+* doing +5 +4 (+9) => 0.99*0.90 => ~90% success
+
+#### Catalysts
+
+* `cobblestone` power 1 => 60% chance => ~2.5 reactions per unit
+* `redstone` power 2 => 70% chance => ~3.33 reactions per unit
+* `iron_ingot` power 3 => 80% chance => ~5 reactions per unit
+* `gold_ingot` power 4 => 90% chance => ~10 reactions per unit
+* `diamond` power 5 => 99% chance => ~100 reactions per unit

@@ -13,7 +13,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 public class TileMoleculeBreaker extends TileChemicalStorage {
-	ChemicalStorage buffer;
+	protected ChemicalStorage buffer;
 	
 	public TileMoleculeBreaker()
 	{

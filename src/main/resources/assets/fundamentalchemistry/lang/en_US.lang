@@ -9,8 +9,12 @@ tile.molecule_assembler.name=Molecule Assembler
 tile.item_assembler.name=Item Assembler
 tile.versatile_generator.name=Versatile Generator
 tile.versatile_extractor.name=Versatile Extractor
+tile.positive_nuclear_transmuter.name=Positive Nuclear Transmuter
+tile.negative_nuclear_transmuter.name=Negative Nuclear Transmuter
 
 container.item_breaker=Item Breaker
 container.molecule_assembler=Molecule Assembler
 container.item_assembler=Item Assembler
 container.versatile_generator=Versatile Generator
+container.positive_nuclear_transmuter=Positive Nuclear Transmuter
+container.negative_nuclear_transmuter=Negative Nuclear Transmuter

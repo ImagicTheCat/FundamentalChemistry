@@ -17,7 +17,9 @@ import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.block.BlockMolecularStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockMoleculeAssembler;
 import imagicthecat.fundamentalchemistry.shared.block.BlockMoleculeBreaker;
+import imagicthecat.fundamentalchemistry.shared.block.BlockNegativeNuclearTransmuter;
 import imagicthecat.fundamentalchemistry.shared.block.BlockPeriodicStorage;
+import imagicthecat.fundamentalchemistry.shared.block.BlockPositiveNuclearTransmuter;
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileGenerator;
@@ -29,7 +31,9 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMolecularStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeBreaker;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileNegativeNuclearTransmuter;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TilePeriodicStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TilePositiveNuclearTransmuter;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileGenerator;
 import net.minecraft.block.Block;
@@ -84,12 +88,15 @@ public class FundamentalChemistry
   public static Block block_item_assembler;
   public static Block block_versatile_generator;
   public static Block block_versatile_extractor;
+  public static Block block_positive_nuclear_transmuter;
+  public static Block block_negative_nuclear_transmuter;
   
   // API
   
   public static BiMap<String, Integer> elements = new BiMap<String, Integer>();
   public static BiMap<String, Molecule> molecules = new BiMap<String, Molecule>();
   public static BiMap<Item, Map<Molecule, Integer>> item_compositions = new BiMap<Item, Map<Molecule, Integer>>();
+  public static Map<Item, Integer> nuclear_transmuter_catalysts = new HashMap<Item, Integer>();
   
   // register atomic element
   public static void registerElement(String name, int atomic_number)
@@ -131,6 +138,13 @@ public class FundamentalChemistry
   	item_compositions.put(item,  _molecules);
   }
   
+  // register nuclear transmuter catalyst 
+  // power: commonly 1-5 (50+power*10 % clamped to 99% chance of success to produce atom with this power variation) 
+  public static void registerNuclearTransmuterCatalyst(Item item, int power)
+  {
+  	nuclear_transmuter_catalysts.put(item, power);
+  }
+  
   // events
   
   @EventHandler
@@ -147,6 +161,8 @@ public class FundamentalChemistry
    	block_item_assembler = new BlockItemAssembler();
    	block_versatile_generator = new BlockVersatileGenerator();
    	block_versatile_extractor = new BlockVersatileExtractor();
+   	block_positive_nuclear_transmuter = new BlockPositiveNuclearTransmuter();
+   	block_negative_nuclear_transmuter = new BlockNegativeNuclearTransmuter();
    	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
    	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
@@ -158,6 +174,8 @@ public class FundamentalChemistry
   	GameRegistry.registerBlock(block_item_assembler, "fundamentalchemistry:item_assembler");
   	GameRegistry.registerBlock(block_versatile_generator, "fundamentalchemistry:versatile_generator");
   	GameRegistry.registerBlock(block_versatile_extractor, "fundamentalchemistry:versatile_extractor");
+  	GameRegistry.registerBlock(block_positive_nuclear_transmuter, "fundamentalchemistry:positive_nuclear_transmuter");
+  	GameRegistry.registerBlock(block_negative_nuclear_transmuter, "fundamentalchemistry:negative_nuclear_transmuter");
    	
    	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
@@ -170,11 +188,19 @@ public class FundamentalChemistry
    	GameRegistry.registerTileEntity(TileItemAssembler.class, "fundamentalchemistry:item_assembler");
    	GameRegistry.registerTileEntity(TileVersatileGenerator.class, "fundamentalchemistry:versatile_generator");
    	GameRegistry.registerTileEntity(TileVersatileExtractor.class, "fundamentalchemistry:versatile_extractor");
+   	GameRegistry.registerTileEntity(TilePositiveNuclearTransmuter.class, "fundamentalchemistry:positive_nuclear_transmuter");
+   	GameRegistry.registerTileEntity(TileNegativeNuclearTransmuter.class, "fundamentalchemistry:negative_nuclear_transmuter");
   }
 
   @EventHandler
   public void init(FMLInitializationEvent event)
   {
+  	registerNuclearTransmuterCatalyst(Item.getItemFromBlock(Blocks.cobblestone), 1);
+  	registerNuclearTransmuterCatalyst(Items.redstone, 2);
+  	registerNuclearTransmuterCatalyst(Items.iron_ingot, 3);
+  	registerNuclearTransmuterCatalyst(Items.gold_ingot, 4);
+  	registerNuclearTransmuterCatalyst(Items.diamond, 5);
+  	
   	registerElement("C", 6);
   	registerElement("H", 1);
   	registerElement("O", 8);
@@ -188,6 +214,7 @@ public class FundamentalChemistry
   	
   	registerItemComposition(Items.water_bucket, "10 water");
   	registerItemComposition(Items.iron_ingot, "5 metal_carbon");
+  	
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
     NetworkRegistry.INSTANCE.registerGuiHandler(FundamentalChemistry.instance, new ForgeGuiHandler());
@@ -217,6 +244,10 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_versatile_generator), 0, new ModelResourceLocation("fundamentalchemistry:versatile_generator", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_versatile_extractor), 0, new ModelResourceLocation("fundamentalchemistry:versatile_extractor", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_positive_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:positive_nuclear_transmuter", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(Item.getItemFromBlock(block_negative_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:negative_nuclear_transmuter", "inventory"));
 	  	
 	  	//tile entity renderers
 	  	 

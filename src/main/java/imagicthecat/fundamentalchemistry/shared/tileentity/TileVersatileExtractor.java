@@ -51,7 +51,6 @@ public class TileVersatileExtractor extends TileChemicalStorage {
 		return rand.nextInt(100)+1 <= percent;
 	}
 	
-	
 	BlockPos findWater()
 	{
 		if(isStaticWater(this.pos.add(1,0,0)))
