@@ -63,7 +63,7 @@ Technical notes:
 
 #### Molecular storage
 
-Store molecules.
+Store molecules. 
 
 #### Periodic storage
 
@@ -97,8 +97,8 @@ Following those rules, it is easier to transmute atoms with big jumps (5 by 5) t
 
 Examples: 
 * doing +1 +1 +1 +1 +1 +1 +1 +1 +1 (+9) => 0.60^9 => ~1% success
-* doing +5 +5 -1 (+9) => 0.99*0.99*0.60 => ~60% success
-* doing +5 +4 (+9) => 0.99*0.90 => ~90% success
+* doing +5 +5 -1 (+9) => 0.99x0.99x0.60 => ~60% success
+* doing +5 +4 (+9) => 0.99x0.90 => ~90% success
 
 #### Catalysts
 

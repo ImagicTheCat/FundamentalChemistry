@@ -40,11 +40,10 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 			ItemStack stack = this.decrStackSize(0, 1);
 			if(stack != null && stack.stackSize == 1){
 				Integer catalyst_power = FundamentalChemistry.nuclear_transmuter_catalysts.get(stack.getItem());
+				boolean consume = false; 
 						
 				if(!buffer.atoms.isEmpty() && catalyst_power != null){ //available atom, available catalyst
 					Integer new_atom = buffer.atoms.entrySet().iterator().next().getKey()+catalyst_power*factor;
-					
-					boolean consume = false; 
 					
 					if(new ChemicalStorage(this.storage).addAtom(new_atom, 1) == 0){ //check storage no overflow
 						// do transmutation
@@ -59,15 +58,15 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 						
 						buffer.clear();
 					}
-					
-					if(!consume){
-						//reverse stack decrement
-						ItemStack pstack = this.getStackInSlot(0);
-						if(pstack != null)
-							stack.stackSize += pstack.stackSize;
+				}
+				
+				if(!consume){
+					//reverse stack decrement
+					ItemStack pstack = this.getStackInSlot(0);
+					if(pstack != null)
+						stack.stackSize += pstack.stackSize;
 
-						this.setInventorySlotContents(0, stack);
-					}
+					this.setInventorySlotContents(0, stack);
 				}
 			}
 		}

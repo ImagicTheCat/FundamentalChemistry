@@ -3,11 +3,13 @@ package imagicthecat.fundamentalchemistry.shared.block;
 import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TilePeriodicStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -45,6 +47,8 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 		if(!world.isRemote){
 			if(player.isSneaking())
 				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
+			else
+		    player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
@@ -60,12 +64,7 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
 		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS); //schedule next update
 		
-		// take all atoms 
-		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
-		TileLaserRelay relay = ent.getAttachedRelay();
-		if(relay != null){
-			relay.fetch(ent.storage, LaserRelayFetch.ATOMS);
-			ent.markDirty();
-		}
+		TileSimpleMachine ent = (TileSimpleMachine)world.getTileEntity(pos);
+		ent.tick();
 	}
 }
