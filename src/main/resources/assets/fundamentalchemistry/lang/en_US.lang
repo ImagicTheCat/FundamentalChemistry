@@ -22,3 +22,5 @@ container.item_assembler=Item Assembler
 container.versatile_generator=Versatile Generator
 container.positive_nuclear_transmuter=Positive Nuclear Transmuter
 container.negative_nuclear_transmuter=Negative Nuclear Transmuter
+
+item.vibrant_catalyst_stone.name=Vibrant Catalyst Stone

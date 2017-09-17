@@ -24,6 +24,7 @@ import imagicthecat.fundamentalchemistry.shared.block.BlockPositiveNuclearTransm
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileGenerator;
+import imagicthecat.fundamentalchemistry.shared.item.ItemVibrantCatalystStone;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileEnergyStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAssembler;
@@ -97,6 +98,10 @@ public class FundamentalChemistry
   public static Block block_positive_nuclear_transmuter;
   public static Block block_negative_nuclear_transmuter;
   
+  // items
+  
+  public static Item item_vibrant_catalyst_stone;
+  
   // API
   
   public static BiMap<String, Integer> elements = new BiMap<String, Integer>();
@@ -156,8 +161,8 @@ public class FundamentalChemistry
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
-
-      
+  	//blocks
+  	
    	block_test = new BlockTest();
    	block_laser_relay = new BlockLaserRelay();
    	block_periodic_storage = new BlockPeriodicStorage();
@@ -171,6 +176,7 @@ public class FundamentalChemistry
    	block_versatile_extractor = new BlockVersatileExtractor();
    	block_positive_nuclear_transmuter = new BlockPositiveNuclearTransmuter();
    	block_negative_nuclear_transmuter = new BlockNegativeNuclearTransmuter();
+   	
    	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
    	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
@@ -198,27 +204,134 @@ public class FundamentalChemistry
    	GameRegistry.registerTileEntity(TileVersatileExtractor.class, "fundamentalchemistry:versatile_extractor");
    	GameRegistry.registerTileEntity(TilePositiveNuclearTransmuter.class, "fundamentalchemistry:positive_nuclear_transmuter");
    	GameRegistry.registerTileEntity(TileNegativeNuclearTransmuter.class, "fundamentalchemistry:negative_nuclear_transmuter");
+   	
+   	//items
+   	
+   	item_vibrant_catalyst_stone = new ItemVibrantCatalystStone();
+   	
+   	GameRegistry.registerItem(item_vibrant_catalyst_stone, "fundamentalchemistry:vibrant_catalyst_stone");
   }
 
   @EventHandler
   public void init(FMLInitializationEvent event)
   {
+  	// recipes
+  	
+		GameRegistry.addRecipe(new ItemStack(item_vibrant_catalyst_stone, 8),
+			" S ",
+			"SDS",
+			" O ",
+			'D', Items.diamond, 'O', Blocks.obsidian, 'S', Blocks.stone
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_laser_relay),
+				"   ",
+				" V ",
+				"SSS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_energy_storage),
+			"SSS",
+			"SCS",
+			"SVS",
+			'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust
+		);
+
+		GameRegistry.addRecipe(new ItemStack(block_periodic_storage),
+				"SSS",
+				"SCS",
+				"SVS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_molecular_storage),
+				"SSS",
+				"SCS",
+				"SVS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_versatile_generator),
+				"SCS",
+				"CVC",
+				"SCS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_versatile_extractor),
+				"SCS",
+				"CVC",
+				"SCS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_item_breaker),
+				"SCS",
+				"SVS",
+				"CSC",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_molecule_breaker),
+				"SCS",
+				"SVS",
+				"CSC",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_item_assembler),
+				"SSS",
+				"CVC",
+				"SCS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_molecule_assembler),
+				"SSS",
+				"CVC",
+				"SCS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_negative_nuclear_transmuter),
+				"CCC",
+				"RVR",
+				"SSS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot, 'R', Blocks.redstone_block
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_positive_nuclear_transmuter),
+				"CRC",
+				"RVR",
+				"SRS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot, 'R', Blocks.redstone_block
+		);
+  	
+  	// catalysts
+  	
   	registerNuclearTransmuterCatalyst(Item.getItemFromBlock(Blocks.cobblestone), 1);
   	registerNuclearTransmuterCatalyst(Items.redstone, 2);
   	registerNuclearTransmuterCatalyst(Items.iron_ingot, 3);
   	registerNuclearTransmuterCatalyst(Items.gold_ingot, 4);
   	registerNuclearTransmuterCatalyst(Items.diamond, 5);
   	
+  	// atoms
+  	
   	registerElement("C", 6);
   	registerElement("H", 1);
   	registerElement("O", 8);
   	registerElement("N", 7);
+  	
+  	// molecules
   	
   	registerMolecule("water", "H2O");
   	registerMolecule("dioxygen", "O2");
   	registerMolecule("nitrogen", "N2");
   	registerMolecule("carbon_dioxide", "CO2");
   	registerMolecule("metal_carbon", "C40");
+  	
+  	// item compositions
   	
   	registerItemComposition(Items.water_bucket, "10 water");
   	registerItemComposition(Items.iron_ingot, "5 metal_carbon");
@@ -256,6 +369,8 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_positive_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:positive_nuclear_transmuter", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(Item.getItemFromBlock(block_negative_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:negative_nuclear_transmuter", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(item_vibrant_catalyst_stone, 0, new ModelResourceLocation("fundamentalchemistry:vibrant_catalyst_stone", "inventory"));
 	  	
 	  	//tile entity renderers
 	  	 
