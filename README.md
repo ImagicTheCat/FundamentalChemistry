@@ -61,7 +61,7 @@ Machine to break item into molecules.
 
 Technical notes:
 
-* Consume <atomsum> E.
+* Consume (atomsum) E.
 
 #### Molecule breaker
 
@@ -70,7 +70,7 @@ Machine to break molecules into atoms.
 Technical notes:
 
 * Since the breaker will fetch any molecule, if its own chemical container is full, the molecule will get stuck in the machine until the container has available space.
-* Consume <protonsum> E.
+* Consume (protonsum) E.
 
 #### Molecular storage
 
@@ -86,7 +86,7 @@ Assemble atoms to form molecules.
 
 Technical notes:
 
-* Consume <protonsum> E.
+* Consume (protonsum) E.
 
 #### Item assembler
 
@@ -94,7 +94,7 @@ Assemble molecules to form items.
 
 Technical notes:
 
-* Consume <atomsum> E.
+* Consume (atomsum) E.
 
 #### Positive nuclear transmuter
 
@@ -111,7 +111,7 @@ This is an hard task. See nuclear transmutation.
 * Using a catalyst, it is possible to increase or decrease the atomic number of an atom.
 * The chance of success is defined by the power of the catalyst as `50+power*10 % clamped to 99%`.
 * The atom and the catalyst are lost on failure, an atom of atomic number += or -= power is produced on success (if possible).
-* Consume <catalyst_power> E per transmutation.
+* Consume (catalyst_power) E per transmutation.
 
 Following those rules, it is easier to transmute atoms with big jumps (5 by 5) than small jumps like the quantum (1 by 1) which will cause 40% loss per transmutation.
 
