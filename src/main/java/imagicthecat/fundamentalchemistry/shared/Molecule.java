@@ -17,6 +17,25 @@ public class Molecule {
 		atoms = new HashMap<Integer, Integer>();
 	}
 	
+	public int countAtoms()
+	{
+		int sum = 0;
+		for(Map.Entry<Integer, Integer> entry : atoms.entrySet())
+			sum += entry.getValue();
+			
+		return sum;
+	}
+
+	public int countProtons()
+	{
+		int sum = 0;
+		for(Map.Entry<Integer, Integer> entry : atoms.entrySet())
+			sum += entry.getKey()*entry.getValue();
+			
+		return sum;
+	}
+	
+	
 	public String toNotation()
 	{
 		String r = "";

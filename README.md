@@ -27,7 +27,7 @@ Item (made of diamond, obsidian and stone) used in most of the other crafts.
 #### Versatile generator
 
 * A powerful generator to power the laser network and the machines.
-* Not only combustion, this generator can be used in many ways, as draining power directly from the environment (wind, water flowing, heat source below).
+* Not only combustion, this generator can be used in many ways, like draining power directly from the environment (wind, water flowing, heat source below).
 
 #### Energy storage
 

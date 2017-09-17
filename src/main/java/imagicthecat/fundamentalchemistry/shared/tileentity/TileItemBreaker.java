@@ -34,20 +34,41 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 		//break one item of the input stack
 		ItemStack stack = decrStackSize(0,1);
 		if(stack != null && stack.stackSize == 1){
+			boolean consume = false;
+			
 			//find composition
 			Map<Molecule, Integer> molecules = FundamentalChemistry.item_compositions.get(stack.getItem());
 			if(molecules != null){
-				if(new ChemicalStorage(this.storage).add(new ChemicalStorage(null, molecules)).isEmpty()){ //check storage overflow first
+				//compute energy/products
+				ChemicalStorage products = new ChemicalStorage(null, molecules);
+				ChemicalStorage required_energy = new ChemicalStorage();
+				required_energy.addEnergy(products.countAtoms());
+				
+				//fetch energy
+				TileLaserRelay relay = this.getAttachedRelay();
+				if(relay != null){
+					ChemicalStorage request = new ChemicalStorage();
+					request.addEnergy(required_energy);
+					request.take(buffer);
+					
+					relay.fetch(buffer, request);
+				}
+				
+				if(buffer.contains(required_energy) //check energy
+						&& new ChemicalStorage(this.storage).add(products).isEmpty()){ //check storage no overflow 
+					buffer.take(required_energy);
 					this.storage.add(new ChemicalStorage(null, molecules));
 					this.markDirty();
+					consume = true;
 				}
-				else{ //reverse stack decrement
-					ItemStack pstack = this.getStackInSlot(0);
-					if(pstack != null)
-						stack.stackSize += pstack.stackSize;
+			}
+			
+			if(!consume){ //reverse stack decrement
+				ItemStack pstack = this.getStackInSlot(0);
+				if(pstack != null)
+					stack.stackSize += pstack.stackSize;
 
-					this.setInventorySlotContents(0, stack);
-				}
+				this.setInventorySlotContents(0, stack);
 			}
 		}
 	}

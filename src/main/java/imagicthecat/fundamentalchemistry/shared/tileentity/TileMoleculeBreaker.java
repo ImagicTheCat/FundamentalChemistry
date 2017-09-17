@@ -13,12 +13,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 public class TileMoleculeBreaker extends TileChemicalStorage {
-	protected ChemicalStorage buffer;
-	
 	public TileMoleculeBreaker()
 	{
-		buffer = new ChemicalStorage();
-		
 		this.storage.max_atoms = 100;
 		this.storage.max_molecules = 100;
 	}
@@ -30,18 +26,33 @@ public class TileMoleculeBreaker extends TileChemicalStorage {
 		if(relay != null){
 			//fetch a molecule from the network
 			
-			if(buffer.isEmpty()) // nothing in the buffer, request any molecule
+			if(this.buffer.molecules.isEmpty()) // nothing in the buffer, request any molecule
 				relay.fetch(buffer, LaserRelayFetch.ANY_MOLECULE);
 			
-			if(!buffer.molecules.isEmpty()){
-				//break the molecule
-				Molecule m = buffer.molecules.entrySet().iterator().next().getKey();
+			if(!this.buffer.molecules.isEmpty()){
+				Molecule m = this.buffer.molecules.entrySet().iterator().next().getKey();
+				ChemicalStorage reagents = new ChemicalStorage();
+				reagents.addMolecule(m, 1);
+				ChemicalStorage products = new ChemicalStorage(m.atoms, null);
 				
-				if(new ChemicalStorage(this.storage).addAtoms(new ChemicalStorage(m.atoms, null)).isEmpty()){ //check storage overflow first
+				//compute energy
+				ChemicalStorage required_energy = new ChemicalStorage();
+				required_energy.addEnergy(m.countProtons());
+				
+				//fetch energy
+				ChemicalStorage request = new ChemicalStorage();
+				request.addEnergy(required_energy);
+				request.take(buffer);
+				relay.fetch(buffer, request);
+
+			  //break the molecule
+				if(this.buffer.containsEnergy(required_energy) &&  //check energy
+						new ChemicalStorage(this.storage).addAtoms(products).isEmpty()){ //check storage no overflow
 					//output
-					this.storage.addAtoms(new ChemicalStorage(m.atoms, null));
+					this.buffer.take(reagents);
+					this.buffer.take(required_energy);
+					this.storage.addAtoms(products);
 					this.markDirty();
-					buffer.clear();
 				}
 			}
 		}

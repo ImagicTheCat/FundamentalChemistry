@@ -10,10 +10,12 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileChemicalStorage extends TileEntity  {
 	public ChemicalStorage storage;
+	protected ChemicalStorage buffer; //used to store things when fetching required elements to process
 	
 	public TileChemicalStorage()
 	{
 		storage = new ChemicalStorage();
+		buffer = new ChemicalStorage();
 	}
 	
 	// return the relay attached to the storage, or null (currently above the storage)
@@ -30,14 +32,26 @@ public class TileChemicalStorage extends TileEntity  {
   public void writeToNBT(NBTTagCompound tag) 
   {
   	super.writeToNBT(tag);
-  	storage.write(tag);
+  	
+  	NBTTagCompound tstorage = new NBTTagCompound();
+  	storage.write(tstorage);
+  	
+  	NBTTagCompound tbuffer = new NBTTagCompound();
+  	buffer.write(tbuffer);
+  	
+  	tag.setTag("storage", tstorage);
+  	tag.setTag("buffer", tbuffer);
   }
   
   @Override
   public void readFromNBT(NBTTagCompound tag)
   {
     super.readFromNBT(tag);
-    storage.read(tag);
+    
+    NBTTagCompound tstorage = tag.getCompoundTag("storage");
+    storage.read(tstorage);
+    NBTTagCompound tbuffer = tag.getCompoundTag("buffer");
+    buffer.read(tbuffer);
   }
 	
   @Override

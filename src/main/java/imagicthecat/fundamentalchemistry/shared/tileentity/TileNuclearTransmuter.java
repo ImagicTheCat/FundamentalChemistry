@@ -15,12 +15,10 @@ import net.minecraft.util.BlockPos;
 public class TileNuclearTransmuter extends TileSimpleMachine {
 	protected int factor; // direction/factor of the transmutation
 	private Random rand;
-	protected ChemicalStorage buffer;
 	
 	public TileNuclearTransmuter(int factor)
 	{
 		this.factor = factor;
-		buffer = new ChemicalStorage();
 		
 		this.storage.max_atoms = 100;
 		rand = new Random();
@@ -34,7 +32,7 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 		if(relay != null){
 			//fetch an atom from the network
 			
-			if(buffer.isEmpty()) // nothing in the buffer, request any molecule
+			if(this.buffer.atoms.isEmpty()) // nothing in the buffer, request any molecule
 				relay.fetch(buffer, LaserRelayFetch.ANY_ATOM);
 			
 			ItemStack stack = this.decrStackSize(0, 1);
@@ -42,10 +40,22 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 				Integer catalyst_power = FundamentalChemistry.nuclear_transmuter_catalysts.get(stack.getItem());
 				boolean consume = false; 
 						
-				if(!buffer.atoms.isEmpty() && catalyst_power != null){ //available atom, available catalyst
+				if(!this.buffer.atoms.isEmpty() && catalyst_power != null){ //available atom, available catalyst
+					//prepare request
+					ChemicalStorage required = new ChemicalStorage();
+					required.addAtom(this.buffer.atoms.entrySet().iterator().next().getKey(), 1); //add processed atom
+					required.addEnergy(catalyst_power); //required energy
+					
+					//fetch energy
+					ChemicalStorage request = new ChemicalStorage();
+					request.add(required);
+					request.take(this.buffer);
+					relay.fetch(this.buffer, request);
+					
 					Integer new_atom = buffer.atoms.entrySet().iterator().next().getKey()+catalyst_power*factor;
 					
-					if(new ChemicalStorage(this.storage).addAtom(new_atom, 1) == 0){ //check storage no overflow
+					if(this.buffer.contains(required) && //check required chemicals (atom and energy)
+							new ChemicalStorage(this.storage).addAtom(new_atom, 1) == 0){ //check storage no overflow
 						// do transmutation
 						if(chance(Math.min(catalyst_power*10+50, 99))){ // operation chance check
 							if(FundamentalChemistry.elements.invget(new_atom) != null){ // check if the new atom exists
@@ -56,7 +66,7 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 						else // consume catalyst on failure
 							consume = true;
 						
-						buffer.clear();
+						this.buffer.take(required); //take reagents
 					}
 				}
 				

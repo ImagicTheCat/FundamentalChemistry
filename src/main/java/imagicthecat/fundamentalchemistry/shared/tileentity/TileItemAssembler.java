@@ -29,11 +29,8 @@ import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class TileItemAssembler extends TileSimpleMachine implements IInventory{
-	ChemicalStorage buffer;
-	
 	public TileItemAssembler()
 	{
-		buffer = new ChemicalStorage();
 	}
 	
 	//do machine work
@@ -51,15 +48,16 @@ public class TileItemAssembler extends TileSimpleMachine implements IInventory{
 			if(scheme != null){
 				//build molecules request
 				ChemicalStorage request = new ChemicalStorage();
-				ChemicalStorage cscheme = new ChemicalStorage(null, scheme);
+				ChemicalStorage required = new ChemicalStorage(null, scheme); //required molecules
+				required.addEnergy(required.countAtoms()); //required energy
 				
-				request.addMolecules(cscheme); // base scheme
-				request.take(buffer); // sub already buffered
+				//fetch required
+				request.add(required); // base scheme
+				request.take(this.buffer); // sub already buffered
+				relay.fetch(this.buffer, request); // do request
 				
-				relay.fetch(buffer, request); // do request
-				
-				if(buffer.containsMolecules(cscheme)){ // process
-					buffer.take(cscheme); // take reagents
+				if(this.buffer.contains(required)){ // process
+					this.buffer.take(required); // take reagents
 					
 					// output
 					TileEntityChest chest = getAttachedChest();

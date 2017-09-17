@@ -320,6 +320,19 @@ public class ChemicalStorage {
 		return energy >= storage.energy;
 	}
 	
+	public int countAtoms()
+	{
+		int sum = 0;
+		
+		for(Map.Entry<Molecule, Integer> entry : molecules.entrySet())
+			sum += entry.getKey().countAtoms()*entry.getValue();
+
+		for(Map.Entry<Integer, Integer> entry : atoms.entrySet())
+			sum += entry.getValue();
+		
+		return sum;
+	}
+	
 	public String toString()
 	{
 		String r = "\n== Chemical Storage ("+energy+" E) ==\n= Atoms";
