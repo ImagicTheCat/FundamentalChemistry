@@ -56,4 +56,9 @@ public class TileMolecularStorage extends TileSimpleMachine {
 		
 		return null;
 	}
+	
+	@Override
+	public String getName() {
+		return "container.molecular_storage";
+	}
 }

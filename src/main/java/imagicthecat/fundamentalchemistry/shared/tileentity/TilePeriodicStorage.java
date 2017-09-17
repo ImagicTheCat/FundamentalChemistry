@@ -55,4 +55,9 @@ public class TilePeriodicStorage extends TileSimpleMachine {
 		
 		return null;
 	}
+	
+	@Override
+	public String getName() {
+		return "container.periodic_storage";
+	}
 }
