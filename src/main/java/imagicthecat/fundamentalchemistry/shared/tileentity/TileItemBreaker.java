@@ -37,7 +37,7 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 			boolean consume = false;
 			
 			//find composition
-			Map<Molecule, Integer> molecules = FundamentalChemistry.item_compositions.get(stack.getItem());
+			Map<Molecule, Integer> molecules = FundamentalChemistry.getItemComposition(stack.getItem());
 			if(molecules != null){
 				//compute energy/products
 				ChemicalStorage products = new ChemicalStorage(null, molecules);

@@ -44,7 +44,7 @@ public class TileItemAssembler extends TileSimpleMachine implements IInventory{
 		TileLaserRelay relay = this.getAttachedRelay();
 		if(stack != null && stack.stackSize > 0 && relay != null){
 			//get item scheme
-			Map<Molecule, Integer> scheme = FundamentalChemistry.item_compositions.get(stack.getItem());
+			Map<Molecule, Integer> scheme = FundamentalChemistry.getItemComposition(stack.getItem());
 			if(scheme != null){
 				//build molecules request
 				ChemicalStorage request = new ChemicalStorage();

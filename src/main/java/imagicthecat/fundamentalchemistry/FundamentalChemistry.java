@@ -1,8 +1,17 @@
 package imagicthecat.fundamentalchemistry;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import scala.reflect.io.Path;
 import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
 import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
@@ -46,6 +55,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -55,6 +68,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -106,8 +120,9 @@ public class FundamentalChemistry
   
   public static BiMap<String, Integer> elements = new BiMap<String, Integer>();
   public static BiMap<String, Molecule> molecules = new BiMap<String, Molecule>();
-  public static BiMap<Item, Map<Molecule, Integer>> item_compositions = new BiMap<Item, Map<Molecule, Integer>>();
+  public static Map<Item, Map<Molecule, Integer>> item_compositions = new HashMap<Item, Map<Molecule, Integer>>();
   public static Map<Item, Integer> nuclear_transmuter_catalysts = new HashMap<Item, Integer>();
+  public static Map<Item, ItemStack[]> ingredients = new HashMap<Item, ItemStack[]>();
   
   // register atomic element
   public static void registerElement(String name, int atomic_number)
@@ -127,7 +142,7 @@ public class FundamentalChemistry
   	item_compositions.put(item,  molecules);
   }
   
-  // register item composition (using format "<number> <molecule_name>", "<number> <molecule_name>",...)
+  // register item composition (using format "<number> <molecule_name>", "<number> <molecule_name>", ...)
   public static void registerItemComposition(Item item, String... strings)
   {
   	Map<Molecule, Integer> _molecules = new HashMap<Molecule, Integer>();
@@ -156,7 +171,123 @@ public class FundamentalChemistry
   	nuclear_transmuter_catalysts.put(item, power);
   }
   
+  // get item composition
+  public static Map<Molecule, Integer> getItemComposition(Item item)
+  {
+  	if(item == null)
+  		return null;
+  	
+  	// return registered composition
+  	Map<Molecule, Integer> registered = item_compositions.get(item);
+  	if(registered != null)
+  		return registered;
+  	
+  	// try to deduce composition using ingredients (crafting recipes)
+  	ItemStack[] items = ingredients.get(item);
+  	if(items != null){
+  		ChemicalStorage composition = new ChemicalStorage();
+  		
+  		for(ItemStack ingredient : items){
+  			Map<Molecule, Integer> ic = getItemComposition(ingredient.getItem());
+  			if(ic != null){
+  				//add to composition
+  				for(int i = 0; i < ingredient.stackSize; i++)
+  					composition.addMolecules(new ChemicalStorage(null, ic));
+  			}
+  		}
+  		
+  		if(!composition.isEmpty()){
+  			//optimize by registering computed composition for further calls
+  			registerItemComposition(item, composition.molecules);
+  			
+  			return composition.molecules;
+  		}
+  	}
+  	
+  	// custom composition deductions
+  	
+  	return null;
+  }
+  
   // events
+  
+  /*
+  public void loadConfigAtoms(String path)
+  {
+   	File file = new File(path);
+   	try {
+			FileReader file_reader = new FileReader(file);
+			BufferedReader breader = new BufferedReader(file_reader);
+			String line;
+			try {
+				while ((line = breader.readLine()) != null){
+					String[] parts = line.split(" ");
+					if(parts.length >= 2){
+						try{
+							int an = Integer.parseInt(parts[1]);
+							if(!parts[0].isEmpty())
+								registerElement(parts[0], an);
+						}catch(NumberFormatException e){}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+  }
+  
+  public void loadConfigMolecules(String path)
+  {
+   	File file = new File(path);
+   	try {
+			FileReader file_reader = new FileReader(file);
+			BufferedReader breader = new BufferedReader(file_reader);
+			String line;
+			try {
+				while ((line = breader.readLine()) != null){
+					String[] parts = line.split(" ");
+					if(parts.length >= 2){
+						try{
+							if(!parts[0].isEmpty())
+								registerMolecule(parts[0], parts[1]);
+						}catch(NumberFormatException e){}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+  }
+
+  public void loadConfigItemCompositions(String path)
+  {
+   	File file = new File(path);
+   	try {
+			FileReader file_reader = new FileReader(file);
+			BufferedReader breader = new BufferedReader(file_reader);
+			String line;
+			try {
+				while ((line = breader.readLine()) != null){
+					String[] parts = line.split(" ");
+					if(parts.length >= 2){
+						try{
+							if(!parts[0].isEmpty())
+								registerMolecule(parts[0], parts[1]);
+						}catch(NumberFormatException e){}
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+  }
+  */
   
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
@@ -210,6 +341,11 @@ public class FundamentalChemistry
    	item_vibrant_catalyst_stone = new ItemVibrantCatalystStone();
    	
    	GameRegistry.registerItem(item_vibrant_catalyst_stone, "fundamentalchemistry:vibrant_catalyst_stone");
+   	
+   	//CONFIG
+   	//event.getModConfigurationDirectory().getAbsolutePath();
+  	
+
   }
 
   @EventHandler
@@ -307,35 +443,10 @@ public class FundamentalChemistry
 				"SRS",
 				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot, 'R', Blocks.redstone_block
 		);
+
+
   	
-  	// catalysts
-  	
-  	registerNuclearTransmuterCatalyst(Item.getItemFromBlock(Blocks.cobblestone), 1);
-  	registerNuclearTransmuterCatalyst(Items.redstone, 2);
-  	registerNuclearTransmuterCatalyst(Items.iron_ingot, 3);
-  	registerNuclearTransmuterCatalyst(Items.gold_ingot, 4);
-  	registerNuclearTransmuterCatalyst(Items.diamond, 5);
-  	
-  	// atoms
-  	
-  	registerElement("C", 6);
-  	registerElement("H", 1);
-  	registerElement("O", 8);
-  	registerElement("N", 7);
-  	
-  	// molecules
-  	
-  	registerMolecule("water", "H2O");
-  	registerMolecule("dioxygen", "O2");
-  	registerMolecule("nitrogen", "N2");
-  	registerMolecule("carbon_dioxide", "CO2");
-  	registerMolecule("metal_carbon", "C40");
-  	
-  	// item compositions
-  	
-  	registerItemComposition(Items.water_bucket, "10 water");
-  	registerItemComposition(Items.iron_ingot, "5 metal_carbon");
-  	
+  	FundamentalChemistryData.register();
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
     NetworkRegistry.INSTANCE.registerGuiHandler(FundamentalChemistry.instance, new ForgeGuiHandler());
@@ -376,6 +487,31 @@ public class FundamentalChemistry
 	  	 
       ClientRegistry.bindTileEntitySpecialRenderer(TileLaserRelay.class, new TileLaserRelayRenderer());
     }
+  }
+  
+  @EventHandler
+  public void postInit(FMLPostInitializationEvent evt)
+  {
+  	// register ingredients per outputs from crafting recipes
+  	
+  	for(IRecipe recipe : CraftingManager.getInstance().getRecipeList()){
+  		ItemStack out = recipe.getRecipeOutput();
+  		ItemStack[] items = null;
+  		
+  		if(recipe instanceof ShapedRecipes)
+  			items = ((ShapedRecipes)recipe).recipeItems;
+  		else if(recipe instanceof ShapelessRecipes)
+    		items = ((ShapedRecipes)recipe).recipeItems;
+  		
+  		if(items != null){
+  			//register ingredients divided by output
+  			ItemStack[] _items = new ItemStack[items.length];
+  			for(int i = 0; i < items.length; i++)
+  				_items[i] = new ItemStack(items[i].getItem(), (int)Math.ceil(items[i].stackSize/(float)out.stackSize));
+  			
+  			ingredients.put(out.getItem(), _items);
+  		}
+  	}
   }
   
   @EventHandler
