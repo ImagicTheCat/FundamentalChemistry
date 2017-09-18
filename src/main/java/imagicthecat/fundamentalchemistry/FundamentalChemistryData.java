@@ -140,7 +140,7 @@ public class FundamentalChemistryData {
   	
   	M("water", "H2O");
   	M("dioxygen", "O2");
-  	M("nitrogen", "N2");
+  	M("dinitrogen", "N2");
   	M("carbon_dioxide", "CO2");
   	
   	// item compositions

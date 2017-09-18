@@ -12,6 +12,7 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 * Energy unit notation is E.
+* Use Sneak+right-click on machines and storages to open the block chemical storage view (not dynamic).
 
 Notes:
 
@@ -21,11 +22,15 @@ Notes:
 
 #### Vibrant catalyst stone
 
+![Craft](/doc/images/craft_vibrant_catalyst_stone.png?raw=true)
+
 Item (made of diamond, obsidian and stone) used in most of the other crafts.
 
 ### Blocks
 
 #### Versatile generator
+
+![Craft](/doc/images/craft_versatile_generator.png?raw=true)
 
 * A powerful generator to power the laser network and the machines.
 * Not only combustion, this generator can be used in many ways, like draining power directly from the environment (wind, water flowing, heat source below).
@@ -39,9 +44,13 @@ Technical notes:
 
 #### Energy storage
 
+![Craft](/doc/images/craft_energy_storage.png?raw=true)
+
 * Store generated energy.
 
 #### Versatile extractor
+
+![Craft](/doc/images/craft_versatile_extractor.png?raw=true)
 
 * Extract molecules directly from the environment (air, water).
 
@@ -52,10 +61,13 @@ Technical notes:
 
 #### Laser relay
 
+![Craft](/doc/images/craft_laser_relay.png?raw=true)
+
 * Can be connected to other laser relays to transfer atoms and molecules.
 * Laser relays can be connected to machines or placed on the world to increase the transfer distance.
 * Laser relays can be connected to an unlimited number of relays in range.
 * Connected machines drain things from the laser network when needed.
+* Use right-click from a relay to another to connect/disconnect.
 
 Technical notes:
 
@@ -64,6 +76,8 @@ Technical notes:
 
 #### Item breaker
 
+![Craft](/doc/images/craft_item_breaker.png?raw=true)
+
 Machine to break item into molecules.
 
 Technical notes:
@@ -71,6 +85,8 @@ Technical notes:
 * Consume (atomsum) E.
 
 #### Molecule breaker
+
+![Craft](/doc/images/craft_molecule_breaker.png?raw=true)
 
 Machine to break molecules into atoms.
 
@@ -81,13 +97,19 @@ Technical notes:
 
 #### Molecular storage
 
+![Craft](/doc/images/craft_molecular_storage.png?raw=true)
+
 Store molecules. 
 
 #### Periodic storage
 
+![Craft](/doc/images/craft_periodic_storage.png?raw=true)
+
 Store atoms of the periodic table.
 
 #### Molecule assembler
+
+![Craft](/doc/images/craft_molecule_assembler.png?raw=true)
 
 Assemble atoms to form molecules.
 
@@ -96,6 +118,8 @@ Technical notes:
 * Consume (protonsum) E.
 
 #### Item assembler
+
+![Craft](/doc/images/craft_item_assembler.png?raw=true)
 
 Assemble molecules to form items.
 
@@ -106,10 +130,14 @@ Technical notes:
 
 #### Positive nuclear transmuter
 
+![Craft](/doc/images/craft_positive_nuclear_transmuter.png?raw=true)
+
 "Punch" atoms to increase their proton/electron number (the amount is given by the item used).
 This is an hard task. See nuclear transmutation.
 
 #### Negative nuclear transmuter
+
+![Craft](/doc/images/craft_negative_nuclear_transmuter.png?raw=true)
 
 "Snatch" atoms to decrease their proton/electron number (the amount is given by the item used).
 This is an hard task. See nuclear transmutation.
