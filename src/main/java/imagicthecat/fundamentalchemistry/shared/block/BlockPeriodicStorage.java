@@ -45,8 +45,10 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
 		
 		if(!world.isRemote){
-			if(player.isSneaking())
+			if(player.isSneaking()){
 				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
+    		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
+			}
 			else
 		    player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
 		}

@@ -15,6 +15,7 @@ tile.positive_nuclear_transmuter.name=Positive Nuclear Transmuter
 tile.negative_nuclear_transmuter.name=Negative Nuclear Transmuter
 
 container.periodic_storage=Periodic Storage
+container.chemical_storage=Chemical Storage
 container.molecular_storage=Molecular Storage
 container.item_breaker=Item Breaker
 container.molecule_assembler=Molecule Assembler
@@ -24,7 +25,12 @@ container.positive_nuclear_transmuter=Positive Nuclear Transmuter
 container.negative_nuclear_transmuter=Negative Nuclear Transmuter
 
 item.vibrant_catalyst_stone.name=Vibrant Catalyst Stone
+item.atom_display.name=Atom
+item.molecule_display.name=Molecule
 
+molecule.unknown.name=Unknown
+
+atom.unknown.name=Unknown
 atom.H.name=Hydrogen
 atom.He.name=Helium
 atom.Li.name=Lithium

@@ -33,6 +33,8 @@ import imagicthecat.fundamentalchemistry.shared.block.BlockPositiveNuclearTransm
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileGenerator;
+import imagicthecat.fundamentalchemistry.shared.item.ItemAtomDisplay;
+import imagicthecat.fundamentalchemistry.shared.item.ItemMoleculeDisplay;
 import imagicthecat.fundamentalchemistry.shared.item.ItemVibrantCatalystStone;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileEnergyStorage;
@@ -115,6 +117,8 @@ public class FundamentalChemistry
   // items
   
   public static Item item_vibrant_catalyst_stone;
+  public static Item item_atom_display;
+  public static Item item_molecule_display;
   
   // API
   
@@ -188,11 +192,13 @@ public class FundamentalChemistry
   		ChemicalStorage composition = new ChemicalStorage();
   		
   		for(ItemStack ingredient : items){
-  			Map<Molecule, Integer> ic = getItemComposition(ingredient.getItem());
-  			if(ic != null){
-  				//add to composition
-  				for(int i = 0; i < ingredient.stackSize; i++)
-  					composition.addMolecules(new ChemicalStorage(null, ic));
+  			if(ingredient != null){
+	  			Map<Molecule, Integer> ic = getItemComposition(ingredient.getItem());
+	  			if(ic != null){
+	  				//add to composition
+	  				for(int i = 0; i < ingredient.stackSize; i++)
+	  					composition.addMolecules(new ChemicalStorage(null, ic));
+	  			}
   			}
   		}
   		
@@ -339,13 +345,15 @@ public class FundamentalChemistry
    	//items
    	
    	item_vibrant_catalyst_stone = new ItemVibrantCatalystStone();
+   	item_atom_display = new ItemAtomDisplay();
+   	item_molecule_display = new ItemMoleculeDisplay();
    	
    	GameRegistry.registerItem(item_vibrant_catalyst_stone, "fundamentalchemistry:vibrant_catalyst_stone");
+   	GameRegistry.registerItem(item_atom_display, "fundamentalchemistry:atom_display");
+   	GameRegistry.registerItem(item_molecule_display, "fundamentalchemistry:molecule_display");
    	
    	//CONFIG
    	//event.getModConfigurationDirectory().getAbsolutePath();
-  	
-
   }
 
   @EventHandler
@@ -482,6 +490,10 @@ public class FundamentalChemistry
 	  	.register(Item.getItemFromBlock(block_negative_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:negative_nuclear_transmuter", "inventory"));
 	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	  	.register(item_vibrant_catalyst_stone, 0, new ModelResourceLocation("fundamentalchemistry:vibrant_catalyst_stone", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(item_atom_display, 0, new ModelResourceLocation("fundamentalchemistry:atom_display", "inventory"));
+	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+	  	.register(item_molecule_display, 0, new ModelResourceLocation("fundamentalchemistry:molecule_display", "inventory"));
 	  	
 	  	//tile entity renderers
 	  	 
@@ -500,14 +512,20 @@ public class FundamentalChemistry
   		
   		if(recipe instanceof ShapedRecipes)
   			items = ((ShapedRecipes)recipe).recipeItems;
-  		else if(recipe instanceof ShapelessRecipes)
-    		items = ((ShapedRecipes)recipe).recipeItems;
+  		else if(recipe instanceof ShapelessRecipes){
+  			List<ItemStack> litems = ((ShapelessRecipes)recipe).recipeItems;
+    		items = new ItemStack[litems.size()];
+    		for(int i = 0; i < litems.size(); i++)
+    			items[i] = litems.get(i);
+  	  }
   		
-  		if(items != null){
+  		if(items != null && out != null && out.getItem() != null){
   			//register ingredients divided by output
   			ItemStack[] _items = new ItemStack[items.length];
-  			for(int i = 0; i < items.length; i++)
-  				_items[i] = new ItemStack(items[i].getItem(), (int)Math.ceil(items[i].stackSize/(float)out.stackSize));
+  			for(int i = 0; i < items.length; i++){
+  				if(items[i] != null)
+  					_items[i] = new ItemStack(items[i].getItem(), (int)Math.ceil(items[i].stackSize/(float)out.stackSize));
+  			}
   			
   			ingredients.put(out.getItem(), _items);
   		}

@@ -3,6 +3,7 @@ package imagicthecat.fundamentalchemistry.shared.block;
 import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
@@ -44,8 +45,10 @@ public class BlockEnergyStorage extends Block implements ITileEntityProvider {
 		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
 		
 		if(!world.isRemote){
-			if(player.isSneaking())
+			if(player.isSneaking()){
 				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
+    		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
+			}
 		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
