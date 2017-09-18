@@ -58,6 +58,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
@@ -504,8 +505,24 @@ public class FundamentalChemistry
   @EventHandler
   public void postInit(FMLPostInitializationEvent evt)
   {
-  	// register ingredients per outputs from crafting recipes
+  	// register ingredients per outputs from smelting recipes
   	
+  	Map<ItemStack, ItemStack> smelts = FurnaceRecipes.instance().getSmeltingList();
+  	for(Map.Entry<ItemStack, ItemStack> entry : smelts.entrySet()){
+  		ItemStack out = entry.getValue();
+  		ItemStack in = entry.getKey();
+  		
+			int amount = (int)Math.round(in.stackSize/(float)out.stackSize);
+			if(amount > 0){
+				ItemStack[] items = new ItemStack[1];
+				items[0] = new ItemStack(in.getItem(), amount);
+				
+				ingredients.put(out.getItem(), items);
+			}
+  	}
+  	
+  	// register ingredients per outputs from crafting recipes
+ 
   	for(IRecipe recipe : CraftingManager.getInstance().getRecipeList()){
   		ItemStack out = recipe.getRecipeOutput();
   		ItemStack[] items = null;
@@ -523,8 +540,11 @@ public class FundamentalChemistry
   			//register ingredients divided by output
   			ItemStack[] _items = new ItemStack[items.length];
   			for(int i = 0; i < items.length; i++){
-  				if(items[i] != null)
-  					_items[i] = new ItemStack(items[i].getItem(), (int)Math.ceil(items[i].stackSize/(float)out.stackSize));
+  				if(items[i] != null){
+  					int amount = (int)Math.round(items[i].stackSize/(float)out.stackSize);
+  					if(amount > 0)
+  						_items[i] = new ItemStack(items[i].getItem(), amount);
+  				}
   			}
   			
   			ingredients.put(out.getItem(), _items);

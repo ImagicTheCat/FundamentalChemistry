@@ -24,7 +24,7 @@ Notes:
 
 ![Craft](/doc/images/craft_vibrant_catalyst_stone.png?raw=true)
 
-Item (made of diamond, obsidian and stone) used in most of the other crafts.
+Item (made of diamond, obsidian and stone) used in most of the FundamentalChemistry crafts.
 
 ### Blocks
 
@@ -78,7 +78,7 @@ Technical notes:
 
 ![Craft](/doc/images/craft_item_breaker.png?raw=true)
 
-Machine to break item into molecules.
+Machine to break items into molecules.
 
 Technical notes:
 

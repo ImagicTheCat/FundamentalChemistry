@@ -1,5 +1,6 @@
 package imagicthecat.fundamentalchemistry;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -142,9 +143,37 @@ public class FundamentalChemistryData {
   	M("dioxygen", "O2");
   	M("dinitrogen", "N2");
   	M("carbon_dioxide", "CO2");
+  	M("cellulose", "C6H10O5");
+  	M("phenylalanine", "C9H11NO2");
+  	M("lignin", "C31H34O11");
+  	M("chlorophyll_a", "C55H72O5N4Mg");
+  	M("chlorophyll b", "C55H70O6N4Mg");
+  	M("silica", "SiO2");
+  	M("aluminium_oxide", "Al2O3");
+  	M("potassium_oxide", "K2O");
+  	M("sodium_oxide", "Na2O");
+  	M("calcium_oxide", "CaO");
+  	M("glucose", "C6H12O6");
   	
   	// item compositions
   	
+  	//organic
+  	I(Blocks.log, "2 cellulose", "1 lignin"); //wood
+  	I(Blocks.log2, "2 cellulose", "1 lignin"); //wood
+  	I(Blocks.planks, "1 cellulose"); //planks
+  	I(Blocks.leaves, "1 chlorophyll_a"); //leaf
+  	I(Blocks.sapling, "1 chlorophyll_a", "1 lignin"); //sapling
+  	I(Blocks.red_flower, "1 chlorophyll_b");
+  	I(Blocks.yellow_flower, "1 chlorophyll_b");
+  	I(Blocks.double_plant, "1 chlorophyll_b", "1 chlorophyll_a");
+  	I(Items.reeds, "1 glucose", "1 cellulose", "1 chlorophyll_a");
+  	I(Items.sugar, "1 glucose");
+  	
+  	//ore
+  	I(Blocks.cobblestone, "1 calcium_oxide"); //cobble
+  	I(Blocks.stone, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide"); //stone ore
+  	I(Items.quartz, "10 silica");
+  	I(Blocks.sand, "2 silica");
 	}
 	
 	//register catalyst
@@ -169,6 +198,13 @@ public class FundamentalChemistryData {
 	public static void I(Item item, String... strings)
 	{
 		FundamentalChemistry.registerItemComposition(item, strings);
+	}
+	
+	public static void I(Block block, String... strings)
+	{
+		Item item = Item.getItemFromBlock(block);
+		if(item != null)
+			FundamentalChemistry.registerItemComposition(item, strings);
 	}
 }
 
