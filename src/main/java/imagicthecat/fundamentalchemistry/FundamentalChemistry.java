@@ -77,6 +77,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 @Mod(modid = FundamentalChemistry.MODID, version = FundamentalChemistry.VERSION)
 public class FundamentalChemistry
@@ -181,6 +183,8 @@ public class FundamentalChemistry
   {
   	if(item == null)
   		return null;
+  	
+  	System.out.println("getcompo "+item.getUnlocalizedName());
   	
   	// return registered composition
   	Map<Molecule, Integer> registered = item_compositions.get(item);
@@ -526,15 +530,37 @@ public class FundamentalChemistry
   	for(IRecipe recipe : CraftingManager.getInstance().getRecipeList()){
   		ItemStack out = recipe.getRecipeOutput();
   		ItemStack[] items = null;
+
+  		boolean check = out != null && out.getItem() == Item.getItemFromBlock(Blocks.redstone_block);
   		
   		if(recipe instanceof ShapedRecipes)
   			items = ((ShapedRecipes)recipe).recipeItems;
+  		else if(recipe instanceof ShapedOreRecipe){
+  			Object[] objs = ((ShapedOreRecipe)recipe).getInput();
+  			items = new ItemStack[objs.length];
+    		for(int i = 0; i < objs.length; i++){
+    			if(objs[i] instanceof ItemStack)
+    				items[i] = (ItemStack)objs[i];
+    		}
+  		}
   		else if(recipe instanceof ShapelessRecipes){
   			List<ItemStack> litems = ((ShapelessRecipes)recipe).recipeItems;
     		items = new ItemStack[litems.size()];
     		for(int i = 0; i < litems.size(); i++)
     			items[i] = litems.get(i);
   	  }
+  		else if(recipe instanceof ShapelessOreRecipe){
+  			List<Object> litems = ((ShapelessOreRecipe)recipe).getInput();
+    		items = new ItemStack[litems.size()];
+    		for(int i = 0; i < litems.size(); i++){
+    			if(litems.get(i) instanceof ItemStack)
+    				items[i] = (ItemStack)litems.get(i);
+    		}
+  		}
+  		
+  		if(check){
+  			
+  		}
   		
   		if(items != null && out != null && out.getItem() != null){
   			//register ingredients divided by output
@@ -542,6 +568,8 @@ public class FundamentalChemistry
   			for(int i = 0; i < items.length; i++){
   				if(items[i] != null){
   					int amount = (int)Math.round(items[i].stackSize/(float)out.stackSize);
+  					if(check)
+  						System.out.println(i+" => "+amount);
   					if(amount > 0)
   						_items[i] = new ItemStack(items[i].getItem(), amount);
   				}
