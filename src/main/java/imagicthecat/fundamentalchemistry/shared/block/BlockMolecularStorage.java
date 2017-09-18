@@ -46,10 +46,8 @@ public class BlockMolecularStorage extends Block implements ITileEntityProvider 
 		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
 		
 		if(!world.isRemote){
-			if(player.isSneaking()){ //storage
-				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
-	    	player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
-			}
+			if(player.isSneaking())
+    		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
 			else //machine
 		    player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
 		}

@@ -1,7 +1,9 @@
 package imagicthecat.fundamentalchemistry.shared.block;
 
 import java.util.Random;
+
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileExtractor;
 import net.minecraft.block.Block;
@@ -40,7 +42,7 @@ public class BlockVersatileExtractor extends Block implements ITileEntityProvide
 		
 		if(!world.isRemote){
 			if(player.isSneaking())
-				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
+    		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,

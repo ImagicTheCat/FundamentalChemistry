@@ -15,14 +15,28 @@ import net.minecraft.util.IChatComponent;
 public class ChemicalInventory implements IInventory {
 	protected ItemStack[] slots;
 	
+	public int max_energy;
+	public int max_atoms;
+	public int max_molecules;
+	public int energy;
+	
 	// build chemical inventory (for display only, limited to 54 elements) from chemical storage
 	public ChemicalInventory(ChemicalStorage storage)
 	{
 		slots = new ItemStack[this.getSizeInventory()];
 		
+		this.max_energy = -1;
+		this.max_atoms = -1;
+		this.max_molecules = -1;
+		this.energy = 0;
+		
 		if(storage != null){
-			int index = 0;
+			this.max_energy = storage.max_energy;
+			this.max_molecules = storage.max_molecules;
+			this.max_atoms = storage.max_atoms;
+			this.energy = storage.energy;
 			
+			int index = 0;
 			for(Map.Entry<Integer, Integer> entry : storage.atoms.entrySet()){
 				if(index < this.getSizeInventory()){ //add atom stack
 					ItemStack stack = new ItemStack(FundamentalChemistry.item_atom_display, 1);
@@ -137,16 +151,29 @@ public class ChemicalInventory implements IInventory {
 
 	@Override
 	public int getField(int id) {
+		switch(id){
+			case 0: return max_energy;
+			case 1: return max_atoms;
+			case 2: return max_molecules;
+			case 3: return energy;
+		}
+		
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
+		switch(id){
+			case 0: max_energy = value; break;
+			case 1: max_atoms = value; break;
+			case 2: max_molecules = value; break;
+			case 3: energy = value; break;
+		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 4;
 	}
 
 	@Override

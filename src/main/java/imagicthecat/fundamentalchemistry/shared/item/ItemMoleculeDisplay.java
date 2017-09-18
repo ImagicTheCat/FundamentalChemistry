@@ -43,11 +43,18 @@ public class ItemMoleculeDisplay extends Item {
 			amount = tag.getInteger("quantity");
 		}
 		
+		//notation
 		Molecule m = FundamentalChemistry.molecules.get(name);
 		if(m != null)
 			tooltip.add(m.toNotation());
 		else
 			tooltip.add("???");
+		
+		// atoms and protons
+		if(m != null){
+			tooltip.add(m.countAtoms()+" atoms");
+			tooltip.add(m.countProtons()+" protons");
+		}
   }
 	
 	@Override

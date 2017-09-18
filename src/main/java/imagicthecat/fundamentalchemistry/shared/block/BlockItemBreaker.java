@@ -41,8 +41,12 @@ public class BlockItemBreaker extends Block implements ITileEntityProvider{
 			IBlockState state, EntityPlayer player, EnumFacing side, float hitX,
 			float hitY, float hitZ) 
 	{
-    if (!world.isRemote)
-      player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
+    if (!world.isRemote){
+			if(player.isSneaking())
+    		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
+			else
+				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
+    }
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
 				hitZ);

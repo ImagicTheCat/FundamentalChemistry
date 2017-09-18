@@ -45,10 +45,8 @@ public class BlockEnergyStorage extends Block implements ITileEntityProvider {
 		TileChemicalStorage ent = (TileChemicalStorage)world.getTileEntity(pos);
 		
 		if(!world.isRemote){
-			if(player.isSneaking()){
-				player.addChatMessage(new ChatComponentText(ent.storage.toString()));
+			if(player.isSneaking())
     		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
-			}
 		}
 		
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,

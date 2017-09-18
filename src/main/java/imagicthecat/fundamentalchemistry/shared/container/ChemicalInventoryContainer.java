@@ -3,9 +3,12 @@ package imagicthecat.fundamentalchemistry.shared.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ChemicalInventoryContainer extends Container{
 	IInventory inventory;
@@ -29,4 +32,17 @@ public class ChemicalInventoryContainer extends Container{
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int fromSlot) {
 		return null;
 	}
+	
+	@Override
+  public void onCraftGuiOpened(ICrafting listener)
+  {
+    super.onCraftGuiOpened(listener);
+    listener.sendAllWindowProperties(this, inventory);
+  }
+	
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data)
+  {
+      this.inventory.setField(id, data);
+  }
 }

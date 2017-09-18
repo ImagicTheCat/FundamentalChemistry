@@ -42,6 +42,9 @@ public class BlockMoleculeBreaker extends Block implements ITileEntityProvider{
 			float hitY, float hitZ) 
 	{
 		
+		if(player.isSneaking())
+  		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
+
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
 				hitZ);
 	}
