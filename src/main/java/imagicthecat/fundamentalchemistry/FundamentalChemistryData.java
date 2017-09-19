@@ -226,7 +226,7 @@ public class FundamentalChemistryData {
   	I(Items.quartz, "10 silica");
   	I(Blocks.sand, "2 silica");
   	I(Blocks.clay, "1 kaolinite");
-  	I(Items.iron_ingot, "3 hematite", "3 magnetite", "1 siderite", "1 pyrite");
+  	I(Items.iron_ingot, "2 hematite", "2 magnetite", "1 siderite", "1 pyrite");
   	I(Items.gold_ingot, "2 gold_cluster");
   	I(Items.diamond, "10 diamond_lattice");
   	I(Blocks.obsidian, "100 silica", "20 aluminium_oxide", "20 potassium_oxide", "20 sodium_oxide", "20 calcium_oxide");
