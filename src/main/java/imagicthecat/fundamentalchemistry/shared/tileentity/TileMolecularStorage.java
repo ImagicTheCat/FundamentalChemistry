@@ -1,6 +1,7 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ChemicalFilter;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
 import net.minecraft.item.ItemStack;
@@ -18,17 +19,13 @@ public class TileMolecularStorage extends TileSimpleMachine {
 	{
 		TileLaserRelay relay = this.getAttachedRelay();
 		if(relay != null){
-			ChemicalStorage request = buildRequest();
-			if(request != null)
-				relay.fetch(this.storage, request);
-			else
-				relay.fetch(this.storage, LaserRelayFetch.MOLECULES);
+			relay.fetch(this.storage, LaserRelayFetch.MOLECULES, buildFilter());
 			this.markDirty();
 		}
 	}
 	
-	//build storage request (return null if not filtered)
-	public ChemicalStorage buildRequest()
+	//build storage filter (return null if not filtered)
+	public ChemicalFilter buildFilter()
 	{
 		//get book content
 		ItemStack stack = this.getStackInSlot(0);
@@ -36,21 +33,26 @@ public class TileMolecularStorage extends TileSimpleMachine {
 			NBTTagCompound tag = stack.getTagCompound();
 			if(tag != null && tag.hasKey("pages")){
 				NBTTagList pages = tag.getTagList("pages", 8);
-				ChemicalStorage request = new ChemicalStorage();
+				ChemicalFilter filter = new ChemicalFilter();
 				
 				// one atom per line
 				for(int i = 0; i < pages.tagCount(); i++){
 					String content = pages.getStringTagAt(i);
 					if(content != null){
 						for(String line : content.split("\n")){
+							if(line.length() > 0 && line.charAt(0) == '-'){ //check if blacklist policy
+								filter.policy = false;
+								line = line.substring(1);
+							}
+							
 							Molecule m = Molecule.fromNotation(line);
 							if(m != null)
-								request.addMolecule(m, this.storage.max_molecules);
+								filter.molecules.add(m);
 						}
 					}
 				}
 				
-				return request;
+				return filter;
 			}
 		}
 		

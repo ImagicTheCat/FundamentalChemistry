@@ -1,10 +1,10 @@
 package imagicthecat.fundamentalchemistry.shared;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
-
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-
+import java.util.Set;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ChemicalStorage {
@@ -286,6 +286,33 @@ public class ChemicalStorage {
 		chems.energy = taken;
 		
 		return chems;
+	}
+	
+	//filter can be null
+	public void applyFilter(ChemicalFilter filter)
+	{
+		if(filter != null){
+			Set<Molecule> rmm = new HashSet<Molecule>();
+			Set<Integer> rma = new HashSet<Integer>();
+			
+			for(Map.Entry<Molecule, Integer> entry : molecules.entrySet()){
+				if((filter.policy && !filter.molecules.contains(entry.getKey())) 
+						|| (!filter.policy && filter.molecules.contains(entry.getKey())))
+					rmm.add(entry.getKey());
+			}
+			
+			for(Molecule m : rmm)
+				molecules.remove(m);
+			
+			for(Map.Entry<Integer, Integer> entry : atoms.entrySet()){
+				if((filter.policy && !filter.atoms.contains(entry.getKey())) 
+						|| (!filter.policy && filter.atoms.contains(entry.getKey())))
+					rma.add(entry.getKey());
+			}
+			
+			for(Integer a : rma)
+				atoms.remove(a);
+		}
 	}
 	
 	public boolean contains(ChemicalStorage storage)

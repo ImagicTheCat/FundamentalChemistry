@@ -1,6 +1,7 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+import imagicthecat.fundamentalchemistry.shared.ChemicalFilter;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 
 import java.util.ArrayList;
@@ -81,16 +82,23 @@ public class TileLaserRelay extends TileEntity {
 	// get the maximum of chemicals possible in the network, following the given mode
 	public void fetch(ChemicalStorage out, LaserRelayFetch mode)
 	{
-		fetch(out, null, mode, new HashSet<BlockPos>(), true);
+		fetch(out, null, null, mode, new HashSet<BlockPos>(), true);
+	}
+	
+	// get the maximum of chemicals possible in the network, following the given mode and filter
+	public void fetch(ChemicalStorage out, LaserRelayFetch mode, ChemicalFilter filter)
+	{
+		fetch(out, null, filter, mode, new HashSet<BlockPos>(), true);
 	}
 	
 	// get the maximum of chemicals possible in the network, trying to fulfill the request
 	public void fetch(ChemicalStorage out, ChemicalStorage request)
 	{
-		fetch(out, new ChemicalStorage(request), LaserRelayFetch.REQUEST, new HashSet<BlockPos>(), true);
+		fetch(out, new ChemicalStorage(request), null, LaserRelayFetch.REQUEST, new HashSet<BlockPos>(), true);
 	}
+
 	
-	public void fetch(ChemicalStorage out, ChemicalStorage request, LaserRelayFetch mode, Set<BlockPos> dones, boolean first_ignore_storage)
+	public void fetch(ChemicalStorage out, ChemicalStorage request, ChemicalFilter filter, LaserRelayFetch mode, Set<BlockPos> dones, boolean first_ignore_storage)
 	{
 		dones.add(pos); //prevents circular fetch
 		
@@ -101,21 +109,27 @@ public class TileLaserRelay extends TileEntity {
 			
 			//fetch storage
 			if(mode == LaserRelayFetch.ALL){
-				chems.add(out.add(chems.take(new ChemicalStorage(chems)))); //take everything, return overflow to origin
+				ChemicalStorage transfer = new ChemicalStorage();
+				transfer.add(chems);
+				transfer.applyFilter(filter);
+				chems.add(out.add(chems.take(transfer))); //take everything, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.ATOMS){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addAtoms(chems);
+				transfer.applyFilter(filter);
 				chems.add(out.add(chems.take(transfer))); //take atoms, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.MOLECULES){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addMolecules(chems);
+				transfer.applyFilter(filter);
 				chems.add(out.add(chems.take(transfer))); //take molecules, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.ENERGY){
 				ChemicalStorage transfer = new ChemicalStorage();
 				transfer.addEnergy(chems);
+				transfer.applyFilter(filter);
 				chems.add(out.add(chems.take(transfer))); //take energy, return overflow to origin
 			}
 			else if(mode == LaserRelayFetch.ANY_ATOM){
@@ -123,6 +137,7 @@ public class TileLaserRelay extends TileEntity {
 				
 				if(out.atoms.isEmpty() && !chems.atoms.isEmpty()){
 					transfer.atoms.put(chems.atoms.entrySet().iterator().next().getKey(), 1);
+					transfer.applyFilter(filter);
 					chems.add(out.add(chems.take(transfer))); //take any/one atom, return overflow to origin
 				}
 			}
@@ -131,6 +146,7 @@ public class TileLaserRelay extends TileEntity {
 
 				if(out.molecules.isEmpty() && !chems.molecules.isEmpty()){
 					transfer.molecules.put(chems.molecules.entrySet().iterator().next().getKey(), 1);
+					transfer.applyFilter(filter);
 					chems.add(out.add(chems.take(transfer))); //take any/one molecule, return overflow to origin
 				}
 			}
@@ -145,7 +161,7 @@ public class TileLaserRelay extends TileEntity {
 				TileEntity te = this.worldObj.getTileEntity(pos);
 				if(te != null && te instanceof TileLaserRelay && !dones.contains(pos)){
 					TileLaserRelay ent = (TileLaserRelay)te;
-					ent.fetch(out, request, mode, dones, false);
+					ent.fetch(out, request, filter, mode, dones, false);
 				}
 			}
 		}
