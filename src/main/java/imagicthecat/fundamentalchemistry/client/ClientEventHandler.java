@@ -56,7 +56,8 @@ public class ClientEventHandler extends ForgeEventHandler{
 
 		GlStateManager.disableTexture2D();
 		GlStateManager.disableLighting();
-		GlStateManager.disableCull();
+		
+		int shade_model = GL11.glGetInteger(GL11.GL_SHADE_MODEL);
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
 		
 		GL11.glLineWidth(3);
@@ -103,8 +104,12 @@ public class ClientEventHandler extends ForgeEventHandler{
 		
 		GL11.glEnd();
 		
+		GlStateManager.shadeModel(shade_model);
+		
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableLighting();
+		
 		GlStateManager.popMatrix();
 		GlStateManager.popAttrib();
-		
 	}
 }
