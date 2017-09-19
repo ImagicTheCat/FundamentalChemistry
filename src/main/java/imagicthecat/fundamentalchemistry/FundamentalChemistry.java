@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scala.reflect.io.Path;
 import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
@@ -178,13 +180,18 @@ public class FundamentalChemistry
   	nuclear_transmuter_catalysts.put(item, power);
   }
   
-  // get item composition
   public static Map<Molecule, Integer> getItemComposition(Item item)
   {
-  	if(item == null)
+  	return getItemComposition(item, new HashSet<Item>());
+  }
+  
+  // get item composition
+  public static Map<Molecule, Integer> getItemComposition(Item item, Set<Item> dones)
+  {
+  	if(item == null || dones.contains(item))
   		return null;
   	
-  	System.out.println("getcompo "+item.getUnlocalizedName());
+  	dones.add(item); //prevents infinite recursive composition fetching
   	
   	// return registered composition
   	Map<Molecule, Integer> registered = item_compositions.get(item);
@@ -198,7 +205,7 @@ public class FundamentalChemistry
   		
   		for(ItemStack ingredient : items){
   			if(ingredient != null){
-	  			Map<Molecule, Integer> ic = getItemComposition(ingredient.getItem());
+	  			Map<Molecule, Integer> ic = getItemComposition(ingredient.getItem(), dones);
 	  			if(ic != null){
 	  				//add to composition
 	  				for(int i = 0; i < ingredient.stackSize; i++)
@@ -509,7 +516,7 @@ public class FundamentalChemistry
   @EventHandler
   public void postInit(FMLPostInitializationEvent evt)
   {
-  	// register ingredients per outputs from smelting recipes
+  	// register ingredients per outputs from smelting recipes (two ways)
   	
   	Map<ItemStack, ItemStack> smelts = FurnaceRecipes.instance().getSmeltingList();
   	for(Map.Entry<ItemStack, ItemStack> entry : smelts.entrySet()){
@@ -520,8 +527,14 @@ public class FundamentalChemistry
 			if(amount > 0){
 				ItemStack[] items = new ItemStack[1];
 				items[0] = new ItemStack(in.getItem(), amount);
-				
 				ingredients.put(out.getItem(), items);
+			}
+
+			amount = (int)Math.round(out.stackSize/(float)in.stackSize);
+			if(amount > 0){
+				ItemStack[] items = new ItemStack[1];
+				items[0] = new ItemStack(out.getItem(), amount);
+				ingredients.put(in.getItem(), items);
 			}
   	}
   	
@@ -530,8 +543,6 @@ public class FundamentalChemistry
   	for(IRecipe recipe : CraftingManager.getInstance().getRecipeList()){
   		ItemStack out = recipe.getRecipeOutput();
   		ItemStack[] items = null;
-
-  		boolean check = out != null && out.getItem() == Item.getItemFromBlock(Blocks.redstone_block);
   		
   		if(recipe instanceof ShapedRecipes)
   			items = ((ShapedRecipes)recipe).recipeItems;
@@ -541,6 +552,8 @@ public class FundamentalChemistry
     		for(int i = 0; i < objs.length; i++){
     			if(objs[i] instanceof ItemStack)
     				items[i] = (ItemStack)objs[i];
+    			else if(objs[i] instanceof List)
+    				items[i] = ((List<ItemStack>)objs[i]).get(0);
     		}
   		}
   		else if(recipe instanceof ShapelessRecipes){
@@ -554,28 +567,43 @@ public class FundamentalChemistry
     		items = new ItemStack[litems.size()];
     		for(int i = 0; i < litems.size(); i++){
     			if(litems.get(i) instanceof ItemStack)
-    				items[i] = (ItemStack)litems.get(i);
+    				items[i] = (ItemStack)litems.get(i);    			
+    			else if(litems.get(i) instanceof List)
+      			items[i] = ((List<ItemStack>)litems.get(i)).get(0);
     		}
   		}
   		
-  		if(check){
-  			
-  		}
-  		
   		if(items != null && out != null && out.getItem() != null){
-  			//register ingredients divided by output
-  			ItemStack[] _items = new ItemStack[items.length];
+  			//sum stacks per item type	
+  			Map<Item, Integer> ingredients = new HashMap<Item, Integer>();
+  		
   			for(int i = 0; i < items.length; i++){
-  				if(items[i] != null){
-  					int amount = (int)Math.round(items[i].stackSize/(float)out.stackSize);
-  					if(check)
-  						System.out.println(i+" => "+amount);
-  					if(amount > 0)
-  						_items[i] = new ItemStack(items[i].getItem(), amount);
+  				ItemStack cstack = items[i];
+  				if(cstack != null){
+  					Integer amount = ingredients.get(cstack.getItem());
+  					if(amount != null)
+  						amount += cstack.stackSize;
+  					else
+  						amount = cstack.stackSize;
+  					ingredients.put(cstack.getItem(), amount);
   				}
   			}
   			
-  			ingredients.put(out.getItem(), _items);
+  			if(ingredients.size() > 0){
+	  			//register ingredients divided by output
+	  			ItemStack[] _items = new ItemStack[ingredients.size()];
+	  			int i = 0;
+	  			
+	  			for(Map.Entry<Item, Integer> entry : ingredients.entrySet()){
+	  				int amount = (int)Math.round(entry.getValue()/(float)out.stackSize);
+	  				if(amount > 0){ //add ingredient stack
+	  					_items[i] = new ItemStack(entry.getKey(), amount);
+	  					i++;
+	  				}
+	  			}
+
+	  			FundamentalChemistry.ingredients.put(out.getItem(), _items);
+  			}
   		}
   	}
   }
