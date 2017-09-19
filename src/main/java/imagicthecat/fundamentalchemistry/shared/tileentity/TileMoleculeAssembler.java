@@ -36,7 +36,7 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 		lines = new String[0];
 		
 		this.storage.max_atoms = 100;
-		this.storage.max_molecules = 100;
+		this.storage.max_molecules = 25;
 	}
 	
 	//do machine work

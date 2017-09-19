@@ -15,7 +15,7 @@ public class TileVersatileExtractor extends TileChemicalStorage {
 	
 	public TileVersatileExtractor()
 	{
-		this.storage.max_molecules = 100;
+		this.storage.max_molecules = 25;
 		rand = new Random();
 	}
 	

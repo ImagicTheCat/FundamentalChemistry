@@ -25,7 +25,7 @@ public class TileItemBreaker extends TileSimpleMachine implements IInventory{
 	public TileItemBreaker()
 	{
 		this.storage.max_atoms = 100;
-		this.storage.max_molecules = 100;
+		this.storage.max_molecules = 25;
 	}
 	
 	//do machine work
