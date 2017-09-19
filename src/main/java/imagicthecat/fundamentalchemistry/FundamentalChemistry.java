@@ -21,6 +21,7 @@ import imagicthecat.fundamentalchemistry.shared.Command;
 import imagicthecat.fundamentalchemistry.shared.ForgeCreativeTab;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
+import imagicthecat.fundamentalchemistry.shared.ForgeRegisterHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
 import imagicthecat.fundamentalchemistry.shared.block.BlockEnergyStorage;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemAssembler;
@@ -90,6 +91,9 @@ public class FundamentalChemistry
   
   @SidedProxy(clientSide="imagicthecat.fundamentalchemistry.client.ClientEventHandler", serverSide="imagicthecat.fundamentalchemistry.server.ServerEventHandler")
   public static ForgeEventHandler event_handler;
+  
+  @SidedProxy(clientSide="imagicthecat.fundamentalchemistry.client.RegisterHandler", serverSide="imagicthecat.fundamentalchemistry.server.RegisterHandler")
+  public static ForgeRegisterHandler register_handler;
   
   @Instance(FundamentalChemistry.MODID)
   public static FundamentalChemistry instance;
@@ -470,47 +474,8 @@ public class FundamentalChemistry
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
     NetworkRegistry.INSTANCE.registerGuiHandler(FundamentalChemistry.instance, new ForgeGuiHandler());
-		
-    if(FMLCommonHandler.instance().getSide() == Side.CLIENT){
-    	//inventory renderers
-    	
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_test), 0, new ModelResourceLocation("fundamentalchemistry:test", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_laser_relay), 0, new ModelResourceLocation("fundamentalchemistry:laser_relay", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_periodic_storage), 0, new ModelResourceLocation("fundamentalchemistry:periodic_storage", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_molecular_storage), 0, new ModelResourceLocation("fundamentalchemistry:molecular_storage", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_energy_storage), 0, new ModelResourceLocation("fundamentalchemistry:energy_storage", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_item_breaker), 0, new ModelResourceLocation("fundamentalchemistry:item_breaker", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_molecule_breaker), 0, new ModelResourceLocation("fundamentalchemistry:molecule_breaker", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_molecule_assembler), 0, new ModelResourceLocation("fundamentalchemistry:molecule_assembler", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_item_assembler), 0, new ModelResourceLocation("fundamentalchemistry:item_assembler", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_versatile_generator), 0, new ModelResourceLocation("fundamentalchemistry:versatile_generator", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_versatile_extractor), 0, new ModelResourceLocation("fundamentalchemistry:versatile_extractor", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_positive_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:positive_nuclear_transmuter", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(Item.getItemFromBlock(block_negative_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:negative_nuclear_transmuter", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(item_vibrant_catalyst_stone, 0, new ModelResourceLocation("fundamentalchemistry:vibrant_catalyst_stone", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(item_atom_display, 0, new ModelResourceLocation("fundamentalchemistry:atom_display", "inventory"));
-	  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-	  	.register(item_molecule_display, 0, new ModelResourceLocation("fundamentalchemistry:molecule_display", "inventory"));
-	  	
-	  	//tile entity renderers
-	  	 
-      ClientRegistry.bindTileEntitySpecialRenderer(TileLaserRelay.class, new TileLaserRelayRenderer());
-    }
+    
+    register_handler.register();
   }
   
   @EventHandler
