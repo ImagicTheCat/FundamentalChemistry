@@ -180,8 +180,8 @@ public class FundamentalChemistryData {
   	// item compositions
   	
   	//organic
-  	I(Blocks.log, "2 cellulose", "1 lignin"); //wood
-  	I(Blocks.log2, "2 cellulose", "1 lignin"); //wood
+  	I(Blocks.log, "4 cellulose", "1 lignin"); //wood
+  	I(Blocks.log2, "4 cellulose", "1 lignin"); //wood
   	I(Blocks.planks, "1 cellulose"); //planks
   	I(Blocks.leaves, "1 chlorophyll_a"); //leaf
   	I(Blocks.sapling, "1 chlorophyll_a", "1 lignin"); //sapling
@@ -217,7 +217,7 @@ public class FundamentalChemistryData {
   	I(Items.egg, "1 glycerine", "1 glycine", "1 alanine", "1 water");
   	I(Items.spider_eye, "1 glycerine", "1 glycine", "1 alanine", "1 proline");
   	I(Items.feather, "1 glycine", "1 alanine", "1 serine");
-  	I(Items.coal, "2 cellulose", "1 lignin");
+  	I(Items.coal, "4 cellulose", "1 lignin");
   	
   	//ore
   	I(Blocks.cobblestone, "1 calcium_oxide"); //cobble

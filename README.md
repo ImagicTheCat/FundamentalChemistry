@@ -146,7 +146,8 @@ This is an hard task. See nuclear transmutation.
 
 * Using a catalyst, it is possible to increase or decrease the atomic number of an atom.
 * The chance of success is defined by the power of the catalyst as `50+power*10 % clamped to 99%`.
-* The atom and the catalyst are lost on failure, an atom of atomic number += or -= power is produced on success (if possible).
+* On failure, the atom is lost and the catalyst is lost with 10% chance. 
+* On success, an atom of atomic number += or -= power is produced (if possible).
 * Consume (catalyst_power) E per transmutation.
 
 Following those rules, it is easier to transmute atoms with big jumps (5 by 5) than small jumps like the quantum (1 by 1) which will cause 40% loss per transmutation.
@@ -158,8 +159,8 @@ Examples:
 
 #### Catalysts
 
-* `cobblestone` power 1 => 60% chance => ~2.5 reactions per unit
-* `redstone` power 2 => 70% chance => ~3.33 reactions per unit
-* `iron_ingot` power 3 => 80% chance => ~5 reactions per unit
-* `gold_ingot` power 4 => 90% chance => ~10 reactions per unit
-* `diamond` power 5 => 99% chance => ~100 reactions per unit
+* `cobblestone` power 1 => 60% chance & 10%  => ~25 reactions per unit
+* `redstone` power 2 => 70% chance & 10% => ~33.3 reactions per unit
+* `iron_ingot` power 3 => 80% chance & 10% => ~50 reactions per unit
+* `gold_ingot` power 4 => 90% chance & 10% => ~100 reactions per unit
+* `diamond` power 5 => 99% chance & 10% => ~1000 reactions per unit

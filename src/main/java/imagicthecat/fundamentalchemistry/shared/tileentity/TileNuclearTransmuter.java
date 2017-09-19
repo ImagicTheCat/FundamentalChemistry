@@ -63,8 +63,10 @@ public class TileNuclearTransmuter extends TileSimpleMachine {
 								this.markDirty();
 							}
 						}
-						else // consume catalyst on failure
-							consume = true;
+						else{ // failure
+							if(chance(10)) //consume catalyst on failure with 10% chance
+								consume = true;
+						}
 						
 						this.buffer.take(required); //take reagents
 					}
