@@ -1,6 +1,76 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "fundamentalchemistry:blocks/laser_relay"
-  }
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "blocks/obsidian",
+        "0": "blocks/obsidian",
+        "1": "blocks/diamond_block"
+    },
+    "elements": [
+        {
+            "name": "1p",
+            "from": [ 2.0, 0.0, 2.0 ], 
+            "to": [ 14.0, 2.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 13.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 11.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 12.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "pillar",
+            "from": [ 7.0, 4.0, 7.0 ], 
+            "to": [ 9.0, 8.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 13.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 11.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "1d",
+            "from": [ 4.0, 2.0, 4.0 ], 
+            "to": [ 12.0, 3.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 8.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, 8.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "extrem",
+            "from": [ 7.0, 8.0, 7.0 ], 
+            "to": [ 9.0, 10.0, 9.0 ], 
+            "shade": false,
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "2p",
+            "from": [ 5.0, 3.0, 5.0 ], 
+            "to": [ 11.0, 4.0, 11.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 1.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 7.0, 13.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 11.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 6.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 6.0, 6.0 ] }
+            }
+        }
+    ]
 }

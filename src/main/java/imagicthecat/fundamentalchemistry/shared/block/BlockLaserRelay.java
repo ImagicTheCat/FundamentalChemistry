@@ -66,4 +66,9 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 		
 		super.breakBlock(world, pos, state);
 	}
+	
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
 }

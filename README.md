@@ -68,6 +68,7 @@ Technical notes:
 * Laser relays can be connected to an unlimited number of relays in range.
 * Connected machines drain things from the laser network when needed.
 * Use right-click from a relay to another to connect/disconnect.
+* Connection color direction is green => blue.
 
 Technical notes:
 
