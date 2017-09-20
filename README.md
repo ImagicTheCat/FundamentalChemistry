@@ -12,7 +12,7 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 * Energy unit notation is E.
-* Use Sneak+right-click on machines and storages to open the block chemical storage view (not dynamic).
+* Use Sneak+right-click on machines and storages to open the block chemical storage view.
 
 Notes:
 

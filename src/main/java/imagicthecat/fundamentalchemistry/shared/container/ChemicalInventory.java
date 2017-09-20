@@ -14,6 +14,7 @@ import net.minecraft.util.IChatComponent;
 
 public class ChemicalInventory implements IInventory {
 	protected ItemStack[] slots;
+	protected ChemicalStorage storage;
 	
 	public int max_energy;
 	public int max_atoms;
@@ -23,12 +24,20 @@ public class ChemicalInventory implements IInventory {
 	// build chemical inventory (for display only, limited to 54 elements) from chemical storage
 	public ChemicalInventory(ChemicalStorage storage)
 	{
-		slots = new ItemStack[this.getSizeInventory()];
+		this.storage = storage;
 		
 		this.max_energy = -1;
 		this.max_atoms = -1;
 		this.max_molecules = -1;
 		this.energy = 0;
+		
+		update();
+	}
+	
+	// update the inventory based on the registered chemical storage
+	public void update()
+	{
+		slots = new ItemStack[this.getSizeInventory()];
 		
 		if(storage != null){
 			this.max_energy = storage.max_energy;
