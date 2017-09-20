@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -55,11 +56,18 @@ public class BlockMolecularStorage extends Block implements ITileEntityProvider 
 		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
 				hitZ);
 	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
+	  InventoryHelper.dropInventoryItems(world, pos, (TileSimpleMachine)world.getTileEntity(pos));
+	  super.breakBlock(world, pos, blockstate);
+	}
 	
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS);
 	}
+	
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
