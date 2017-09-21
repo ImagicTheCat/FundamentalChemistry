@@ -8,6 +8,7 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -54,7 +55,7 @@ public class BlockItemBreaker extends Block implements ITileEntityProvider{
 	
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
-		TileItemBreaker ent = (TileItemBreaker) world.getTileEntity(pos);
+		TileSimpleMachine ent = (TileSimpleMachine) world.getTileEntity(pos);
 	  InventoryHelper.dropInventoryItems(world, pos, ent);
 	  
 	  super.breakBlock(world, pos, blockstate);
