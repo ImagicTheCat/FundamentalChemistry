@@ -48,6 +48,7 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 		
 		Molecule scheme = getNextScheme();
 		TileLaserRelay relay = this.getAttachedRelay();
+		
 		if(scheme != null && relay != null 
 				&& FundamentalChemistry.molecules.invget(scheme) != null){ // check if the molecule scheme is registered (is possible)
 			//build atoms request
@@ -78,8 +79,11 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 			if(tag != null && tag.hasKey("pages")){
 				NBTTagList pages = tag.getTagList("pages", 8);
 				
-				if(line_index >= 0 && line_index < lines.length) // next line
-					return Molecule.fromNotation(lines[line_index]);
+				if(line_index >= 0 && line_index < lines.length){ // next line
+					Molecule m = Molecule.fromNotation(lines[line_index]);
+					line_index++;
+					return m;
+				}
 				else{ //book next page
 					lines = new String[0];
 					
@@ -93,8 +97,11 @@ public class TileMoleculeAssembler extends TileSimpleMachine implements IInvento
 						if(content != null)
 							lines = content.split("\n");
 						
-						if(line_index >= 0 && line_index < lines.length) // next line right after book load (prevents machine slowdown)
-							return Molecule.fromNotation(lines[line_index]);
+						if(line_index >= 0 && line_index < lines.length){ // next line right after book load (prevents machine slowdown)
+							Molecule m = Molecule.fromNotation(lines[line_index]);
+							line_index++;
+							return m;
+						}
 					}
 					else // re-init page index
 						page_index = 0;
