@@ -1,5 +1,7 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
+import java.util.Map;
+
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ChemicalFilter;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
@@ -16,6 +18,24 @@ public class TilePeriodicStorage extends TileSimpleMachine {
 	@Override
 	public void tick()
 	{
+		//powered mode (eject overflow in atmosphere, 10% margin)
+		if(this.worldObj.isBlockIndirectlyGettingPowered(this.pos) != 0){
+			this.storage.max_atoms = 1100;
+			
+			//build overflow
+			ChemicalStorage overflow = new ChemicalStorage();
+			for(Map.Entry<Integer, Integer> entry : this.storage.atoms.entrySet()){
+				int aoverflow = entry.getValue()-1000;
+				if(aoverflow > 0)
+					overflow.addAtom(entry.getKey(), aoverflow);
+			}
+			
+			//remove overflow
+			this.storage.take(overflow);
+		}
+		else //normal mode
+			this.storage.max_atoms = 1000;
+		
 		TileLaserRelay relay = this.getAttachedRelay();
 		if(relay != null){
 			relay.fetch(this.storage, LaserRelayFetch.ATOMS, buildFilter());

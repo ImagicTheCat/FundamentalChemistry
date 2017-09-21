@@ -3,11 +3,15 @@ package imagicthecat.fundamentalchemistry.shared.tileentity;
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ChemicalFilter;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
+import imagicthecat.fundamentalchemistry.shared.Molecule;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.init.Blocks;
@@ -26,11 +30,13 @@ import net.minecraftforge.common.util.Constants;
 public class TileLaserRelay extends TileEntity {
 	public Set<BlockPos> inputs;
 	public Set<BlockPos> outputs;
+	protected Random rand;
 	
 	public TileLaserRelay()
 	{
 		inputs = new HashSet<BlockPos>();
 		outputs = new HashSet<BlockPos>();
+		rand = new Random();
 	}
 	
 	public void toUpdate()
@@ -136,7 +142,14 @@ public class TileLaserRelay extends TileEntity {
 				ChemicalStorage transfer = new ChemicalStorage();
 				
 				if(out.atoms.isEmpty() && !chems.atoms.isEmpty()){
-					transfer.atoms.put(chems.atoms.entrySet().iterator().next().getKey(), 1);
+					//take one atom randomly
+					int index = rand.nextInt(chems.atoms.size());
+
+					Iterator<Entry<Integer, Integer>> it = chems.atoms.entrySet().iterator();
+					for(int i = 0; i < index; i++)
+						it.next();
+						
+					transfer.atoms.put(it.next().getKey(), 1);
 					transfer.applyFilter(filter);
 					chems.add(out.add(chems.take(transfer))); //take any/one atom, return overflow to origin
 				}
@@ -145,7 +158,14 @@ public class TileLaserRelay extends TileEntity {
 				ChemicalStorage transfer = new ChemicalStorage();
 
 				if(out.molecules.isEmpty() && !chems.molecules.isEmpty()){
-					transfer.molecules.put(chems.molecules.entrySet().iterator().next().getKey(), 1);
+					//take one molecule randomly
+					int index = rand.nextInt(chems.molecules.size());
+
+					Iterator<Entry<Molecule, Integer>> it = chems.molecules.entrySet().iterator();
+					for(int i = 0; i < index; i++)
+						it.next();
+						
+					transfer.molecules.put(it.next().getKey(), 1);
 					transfer.applyFilter(filter);
 					chems.add(out.add(chems.take(transfer))); //take any/one molecule, return overflow to origin
 				}

@@ -102,17 +102,50 @@ Technical notes:
 
 Store molecules. 
 
+* If powered by redstone, will eject overflow in atmosphere (this is done by increasing the storage by 10% and ejecting what is filling those 10%).
+* Place a book (writable or written) in the slot with a blacklist or whitelist of molecules to be stored. 
+Whitelist (only H2O and CO2)
+```
+H2O
+CO2
+```
+
+Blacklist (everything excepts H2O and CO2)
+```
+-H2O
+-CO2
+```
+
+
 #### Periodic storage
 
 ![Craft](/doc/images/craft_periodic_storage.png?raw=true)
 
 Store atoms of the periodic table.
 
+* If powered by redstone, will eject overflow in atmosphere (this is done by increasing the storage by 10% and ejecting what is filling those 10%).
+
+* Place a book (writable or written) in the slot with a blacklist or whitelist of atoms to be stored. 
+Whitelist (only H and O)
+```
+H
+O
+```
+
+Blacklist (everything excepts H and O)
+```
+-H
+-O
+```
+
+
 #### Molecule assembler
 
 ![Craft](/doc/images/craft_molecule_assembler.png?raw=true)
 
 Assemble atoms to form molecules.
+
+* Place a book (writable or written) in the slot with one molecule to be created per line. The machine will create molecules in the written order, looping.
 
 Technical notes:
 
@@ -123,6 +156,8 @@ Technical notes:
 ![Craft](/doc/images/craft_item_assembler.png?raw=true)
 
 Assemble molecules to form items.
+
+* Use the item placed in the slot as blueprint.
 
 Technical notes:
 
