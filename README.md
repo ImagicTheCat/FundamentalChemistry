@@ -3,6 +3,8 @@ Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation).
 
 The mod doesn't seek realism, it's about taking inspiration from our modern times the same way we take inspiration from ancient era (like water/fire/wind/earth elements, etc).
 
+download: https://minecraft.curseforge.com/projects/fundamentalchemistry
+
 ## WIP 
 
 ![Laser Relay tests](https://i.imgur.com/WicW5if.jpg)
