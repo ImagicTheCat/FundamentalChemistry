@@ -1,10 +1,13 @@
 package imagicthecat.fundamentalchemistry.shared;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ChemicalStorage {
@@ -358,6 +361,48 @@ public class ChemicalStorage {
 			sum += entry.getValue();
 		
 		return sum;
+	}
+	
+	public void toItemStacks(ItemStack[] slots)
+	{
+		int index = 0;
+		for(Map.Entry<Integer, Integer> entry : atoms.entrySet()){
+			if(index < slots.length){ //add atom stack
+				ItemStack stack = new ItemStack(FundamentalChemistry.item_atom_display, 1);
+				NBTTagCompound tag = stack.getTagCompound();
+				if(tag == null){
+					tag = new NBTTagCompound();
+					stack.setTagCompound(tag);
+				}
+				
+				tag.setInteger("atomic_number", entry.getKey());
+				tag.setInteger("quantity", entry.getValue());
+				
+				slots[index] = stack;
+				index++;
+			}
+		}
+		
+		for(Map.Entry<Molecule, Integer> entry : molecules.entrySet()){
+			if(index < slots.length){ //add atom stack
+				ItemStack stack = new ItemStack(FundamentalChemistry.item_molecule_display, 1);
+				NBTTagCompound tag = stack.getTagCompound();
+				if(tag == null){
+					tag = new NBTTagCompound();
+					stack.setTagCompound(tag);
+				}
+				
+				String name = FundamentalChemistry.molecules.invget(entry.getKey());
+				if(name == null)
+					name = "unknown";
+				
+				tag.setString("molecule_name", name);
+				tag.setInteger("quantity", entry.getValue());
+				
+				slots[index] = stack;
+				index++;
+			}
+		}
 	}
 	
 	public String toString()

@@ -184,10 +184,11 @@ public class FundamentalChemistryData {
   	I(Blocks.log2, "4 cellulose", "1 lignin"); //wood
   	I(Blocks.planks, "1 cellulose"); //planks
   	I(Blocks.leaves, "1 chlorophyll_a"); //leaf
-  	I(Blocks.sapling, "1 chlorophyll_a", "1 lignin"); //sapling
-  	I(Items.mushroom_stew, "1 cellulose", "1 lignin", "1 glycerine"); //sapling
-  	I(Blocks.tallgrass, "1 chlorophyll_a", "1 lignin"); //tallgrass
-  	I(Blocks.waterlily, "1 chlorophyll_a", "1 lignin"); //lilypad
+  	I(Blocks.sapling, "1 chlorophyll_a", "1 cellulose"); //sapling
+  	I(Blocks.red_mushroom, "1 cellulose", "1 glycerine"); //mush
+  	I(Blocks.brown_mushroom, "1 cellulose", "1 glycerine"); //mush
+  	I(Blocks.tallgrass, "1 chlorophyll_a", "1 cellulose"); //tallgrass
+  	I(Blocks.waterlily, "1 chlorophyll_a", "1 cellulose"); //lilypad
   	I(Blocks.red_flower, "1 chlorophyll_b");
   	I(Blocks.yellow_flower, "1 chlorophyll_b");
   	I(Blocks.double_plant, "1 chlorophyll_b", "1 chlorophyll_a");

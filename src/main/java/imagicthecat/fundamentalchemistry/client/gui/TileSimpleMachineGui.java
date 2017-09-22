@@ -5,6 +5,7 @@ import imagicthecat.fundamentalchemistry.shared.container.TileSimpleMachineConta
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +37,10 @@ public class TileSimpleMachineGui extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	  String s = this.ent.getDisplayName().getUnformattedText();
 	  this.fontRendererObj.drawString(s, 88 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);            //#404040
+	  this.fontRendererObj.drawString(I18n.format("container.simple_machine.buffer"), 61, 23, 4210752);            //#404040
 	  this.fontRendererObj.drawString(this.player_inv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
+	  
+	  String energy = this.ent.buffer_energy+" E";
+	  this.fontRendererObj.drawString(energy, 168-this.fontRendererObj.getStringWidth(energy), 72, 4210752); //#404040 
 	}
 }

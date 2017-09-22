@@ -45,44 +45,7 @@ public class ChemicalInventory implements IInventory {
 			this.max_atoms = storage.max_atoms;
 			this.energy = storage.energy;
 			
-			int index = 0;
-			for(Map.Entry<Integer, Integer> entry : storage.atoms.entrySet()){
-				if(index < this.getSizeInventory()){ //add atom stack
-					ItemStack stack = new ItemStack(FundamentalChemistry.item_atom_display, 1);
-					NBTTagCompound tag = stack.getTagCompound();
-					if(tag == null){
-						tag = new NBTTagCompound();
-						stack.setTagCompound(tag);
-					}
-					
-					tag.setInteger("atomic_number", entry.getKey());
-					tag.setInteger("quantity", entry.getValue());
-					
-					slots[index] = stack;
-					index++;
-				}
-			}
-			
-			for(Map.Entry<Molecule, Integer> entry : storage.molecules.entrySet()){
-				if(index < this.getSizeInventory()){ //add atom stack
-					ItemStack stack = new ItemStack(FundamentalChemistry.item_molecule_display, 1);
-					NBTTagCompound tag = stack.getTagCompound();
-					if(tag == null){
-						tag = new NBTTagCompound();
-						stack.setTagCompound(tag);
-					}
-					
-					String name = FundamentalChemistry.molecules.invget(entry.getKey());
-					if(name == null)
-						name = "unknown";
-					
-					tag.setString("molecule_name", name);
-					tag.setInteger("quantity", entry.getValue());
-					
-					slots[index] = stack;
-					index++;
-				}
-			}
+			storage.toItemStacks(slots);
 		}
 	}
 	

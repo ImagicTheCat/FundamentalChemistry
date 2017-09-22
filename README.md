@@ -12,7 +12,10 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
 * Energy unit notation is E.
-* Use Sneak+right-click on machines and storages to open the block chemical storage view.
+* Use right-click on machines and storages that require/may require items to work to open the machine view. The machine buffer is also displayed, it is a special internal energy/chemical storage used by the machine, you can't interact with it.
+* Use Sneak+right-click on machines and storages to open the chemical storage view.
+
+There are plenty of ways to create a farm of something, nothing is impossible but some ways are far more better than others. You can turn water into diamond, but it costs lot of energy, logistic and it is a very slow process (mostly because it involves nuclear transmutation). Optimization is the key, just remember that more the process is fundamental, more it costs.
 
 Notes:
 

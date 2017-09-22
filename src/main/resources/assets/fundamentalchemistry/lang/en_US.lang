@@ -18,7 +18,6 @@ container.periodic_storage=Periodic Storage
 container.chemical_storage=Chemical Storage
 container.chemical_storage.max_atoms=Maximum per atom
 container.chemical_storage.max_molecules=Maximum per molecule
-
 container.molecular_storage=Molecular Storage
 container.item_breaker=Item Breaker
 container.molecule_assembler=Molecule Assembler
@@ -26,6 +25,7 @@ container.item_assembler=Item Assembler
 container.versatile_generator=Versatile Generator
 container.positive_nuclear_transmuter=Positive Nuclear Transmuter
 container.negative_nuclear_transmuter=Negative Nuclear Transmuter
+container.simple_machine.buffer=Buffer
 
 item.vibrant_catalyst_stone.name=Vibrant Catalyst Stone
 item.atom_display.name=Atom

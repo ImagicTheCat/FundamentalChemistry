@@ -22,14 +22,25 @@ import net.minecraftforge.common.util.Constants;
 
 public class TileSimpleMachine extends TileChemicalStorage implements IInventory{
 	protected ItemStack input;
+	protected ItemStack[] sbuffer;
+	public int buffer_energy;
 	
 	public TileSimpleMachine()
 	{
+		sbuffer = new ItemStack[12]; //buffer display
+		buffer_energy = 0;
 	}
 	
 	//do machine work
 	public void tick()
 	{
+	}
+	
+	// update the sbuffer inventory based on the chemical storage
+	public void update()
+	{
+		sbuffer = new ItemStack[12];
+		buffer.toItemStacks(sbuffer);
 	}
 	
   @Override
@@ -73,21 +84,23 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 
 	@Override
 	public int getSizeInventory(){
-		return 1;
+		return 13;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		if(index == 0)
 			return input;
-		else
-			return null;
+		else if(index < this.getSizeInventory())
+			return sbuffer[index-1];
+		
+		return null;
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		ItemStack items = getStackInSlot(index);
-		if(items != null){
+		if(items != null && index == 0){
 			if(items.stackSize <= count){
 				setInventorySlotContents(index, null);
 				return items;
@@ -108,14 +121,18 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		ItemStack stack = getStackInSlot(index);
-		setInventorySlotContents(index, null);
-		return stack;
+		if(index == 0){
+			ItemStack stack = getStackInSlot(index);
+			setInventorySlotContents(index, null);
+			return stack;
+		}
+		else
+			return null;
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(index == 0){
+		if(index >= 0 && index < this.getSizeInventory()){
 			if(stack != null){
 				if(stack.stackSize == 0) // remove if empty stack
 					stack = null;
@@ -123,14 +140,17 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 					stack.stackSize = getInventoryStackLimit();
 			}
 			
-			input = stack;
+			if(index == 0)	
+				input = stack;
+			else
+				sbuffer[index-1] = stack;
+				
 			this.markDirty();
 		}
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
 		return 64;
 	}
 
@@ -141,33 +161,32 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 
 	@Override
 	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return true;
+		return index == 0;
 	}
 
 	@Override
 	public int getField(int id) {
+		if(id == 0) return buffer.energy;
+			
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
+		if(id == 0) buffer_energy = value;
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 1;
 	}
 
 	@Override
