@@ -40,8 +40,8 @@ Item (made of diamond, obsidian and stone) used in most of the FundamentalChemis
 
 Technical notes:
 
-* Produce 1E per adjacent flowing water.
-* Produce 1E if in contact with air (only adjacent).
+* Produce 10E per adjacent flowing water.
+* Produce 10E if in contact with air (only adjacent).
 * Produce a variable amount of energy depending of the heat source under the generator.
 * Produce a variable amount of energy depending of the fuel used.
 
