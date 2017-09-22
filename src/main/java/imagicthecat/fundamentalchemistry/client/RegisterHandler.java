@@ -30,6 +30,8 @@ public class RegisterHandler extends ForgeRegisterHandler{
   	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
   	.register(Item.getItemFromBlock(FundamentalChemistry.block_item_breaker), 0, new ModelResourceLocation("fundamentalchemistry:item_breaker", "inventory"));
   	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+  	.register(Item.getItemFromBlock(FundamentalChemistry.block_item_analyzer), 0, new ModelResourceLocation("fundamentalchemistry:item_analyzer", "inventory"));
+  	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
   	.register(Item.getItemFromBlock(FundamentalChemistry.block_molecule_breaker), 0, new ModelResourceLocation("fundamentalchemistry:molecule_breaker", "inventory"));
   	Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
   	.register(Item.getItemFromBlock(FundamentalChemistry.block_molecule_assembler), 0, new ModelResourceLocation("fundamentalchemistry:molecule_assembler", "inventory"));

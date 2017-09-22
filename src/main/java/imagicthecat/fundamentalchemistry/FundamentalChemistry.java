@@ -24,6 +24,7 @@ import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
 import imagicthecat.fundamentalchemistry.shared.ForgeRegisterHandler;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
 import imagicthecat.fundamentalchemistry.shared.block.BlockEnergyStorage;
+import imagicthecat.fundamentalchemistry.shared.block.BlockItemAnalyzer;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.block.BlockItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.block.BlockLaserRelay;
@@ -41,6 +42,7 @@ import imagicthecat.fundamentalchemistry.shared.item.ItemMoleculeDisplay;
 import imagicthecat.fundamentalchemistry.shared.item.ItemVibrantCatalystStone;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileEnergyStorage;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAnalyzer;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAssembler;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
@@ -114,6 +116,7 @@ public class FundamentalChemistry
   public static Block block_periodic_storage;
   public static Block block_molecular_storage;
   public static Block block_energy_storage;
+  public static Block block_item_analyzer;
   public static Block block_item_breaker;
   public static Block block_molecule_breaker;
   public static Block block_molecule_assembler;
@@ -322,6 +325,7 @@ public class FundamentalChemistry
    	block_molecular_storage = new BlockMolecularStorage();
    	block_energy_storage = new BlockEnergyStorage();
    	block_item_breaker = new BlockItemBreaker();
+   	block_item_analyzer = new BlockItemAnalyzer();
    	block_molecule_breaker = new BlockMoleculeBreaker();
    	block_molecule_assembler = new BlockMoleculeAssembler();
    	block_item_assembler = new BlockItemAssembler();
@@ -335,6 +339,7 @@ public class FundamentalChemistry
    	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
   	GameRegistry.registerBlock(block_molecular_storage, "fundamentalchemistry:molecular_storage");
   	GameRegistry.registerBlock(block_energy_storage, "fundamentalchemistry:energy_storage");
+  	GameRegistry.registerBlock(block_item_analyzer, "fundamentalchemistry:item_analyzer");
   	GameRegistry.registerBlock(block_item_breaker, "fundamentalchemistry:item_breaker");
   	GameRegistry.registerBlock(block_molecule_breaker, "fundamentalchemistry:molecule_breaker");
   	GameRegistry.registerBlock(block_molecule_assembler, "fundamentalchemistry:molecule_assembler");
@@ -349,6 +354,7 @@ public class FundamentalChemistry
    	GameRegistry.registerTileEntity(TileMolecularStorage.class, "fundamentalchemistry:molecular_storage");
    	GameRegistry.registerTileEntity(TilePeriodicStorage.class, "fundamentalchemistry:periodic_storage");
    	GameRegistry.registerTileEntity(TileEnergyStorage.class, "fundamentalchemistry:energy_storage");
+   	GameRegistry.registerTileEntity(TileItemAnalyzer.class, "fundamentalchemistry:item_analyzer");
    	GameRegistry.registerTileEntity(TileItemBreaker.class, "fundamentalchemistry:item_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeBreaker.class, "fundamentalchemistry:molecule_breaker");
    	GameRegistry.registerTileEntity(TileMoleculeAssembler.class, "fundamentalchemistry:molecule_assembler");
@@ -424,6 +430,13 @@ public class FundamentalChemistry
 				"CVC",
 				"SCS",
 				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+		);
+		
+		GameRegistry.addRecipe(new ItemStack(block_item_analyzer),
+				"SDS",
+				"SCS",
+				"SVS",
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust, 'D', Blocks.glass
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_item_breaker),

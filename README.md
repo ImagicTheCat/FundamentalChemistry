@@ -78,6 +78,17 @@ Technical notes:
 * Things are taken by input requests (nothing move if nothing needs it).
 * Fetching things in a laser network from a relay will not go further the chemical containers (machines, storages, etc). This means that if a storage is connected behind a machine, unless there is another way, only this machine will be able to fetch the storage.
 
+#### Item analyzer
+
+![Craft](/doc/images/craft_item_analyzer.png?raw=true)
+
+Machine to analyze items (show molecule composition).
+It will not destroy the items.
+
+Technical notes:
+
+* Consume 5 E per analyse.
+
 #### Item breaker
 
 ![Craft](/doc/images/craft_item_breaker.png?raw=true)
