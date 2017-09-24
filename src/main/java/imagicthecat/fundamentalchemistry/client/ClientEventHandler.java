@@ -4,26 +4,58 @@ import org.lwjgl.opengl.GL11;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeEventHandler;
-import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
+import imagicthecat.fundamentalchemistry.shared.capability.IPlayerCapability;
+import imagicthecat.fundamentalchemistry.shared.capability.PlayerProvider;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
+@Mod.EventBusSubscriber
 public class ClientEventHandler extends ForgeEventHandler{
 	public static float laser_height = 0.562f;
 	
 	public ClientEventHandler()
 	{
+	}
+	
+	@SubscribeEvent
+	public static void registerModels(ModelRegistryEvent evt)
+	{
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_test), 0, new ModelResourceLocation("fundamentalchemistry:test", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_laser_relay), 0, new ModelResourceLocation("fundamentalchemistry:laser_relay", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_periodic_storage), 0, new ModelResourceLocation("fundamentalchemistry:periodic_storage", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_molecular_storage), 0, new ModelResourceLocation("fundamentalchemistry:molecular_storage", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_energy_storage), 0, new ModelResourceLocation("fundamentalchemistry:energy_storage", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_item_breaker), 0, new ModelResourceLocation("fundamentalchemistry:item_breaker", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_item_analyzer), 0, new ModelResourceLocation("fundamentalchemistry:item_analyzer", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_molecule_breaker), 0, new ModelResourceLocation("fundamentalchemistry:molecule_breaker", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_molecule_assembler), 0, new ModelResourceLocation("fundamentalchemistry:molecule_assembler", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_item_assembler), 0, new ModelResourceLocation("fundamentalchemistry:item_assembler", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_versatile_generator), 0, new ModelResourceLocation("fundamentalchemistry:versatile_generator", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_versatile_extractor), 0, new ModelResourceLocation("fundamentalchemistry:versatile_extractor", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_positive_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:positive_nuclear_transmuter", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(FundamentalChemistry.block_negative_nuclear_transmuter), 0, new ModelResourceLocation("fundamentalchemistry:negative_nuclear_transmuter", "inventory"));
+	
+		ModelLoader.setCustomModelResourceLocation(FundamentalChemistry.item_vibrant_catalyst_stone, 0, new ModelResourceLocation("fundamentalchemistry:vibrant_catalyst_stone", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(FundamentalChemistry.item_atom_display, 0, new ModelResourceLocation("fundamentalchemistry:atom_display", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(FundamentalChemistry.item_molecule_display, 0, new ModelResourceLocation("fundamentalchemistry:molecule_display", "inventory"));
 	}
 	
 	@SubscribeEvent
@@ -52,12 +84,12 @@ public class ClientEventHandler extends ForgeEventHandler{
 		GL11.glBegin(GL11.GL_LINES);
 		
 		//display link process
-		PlayerProperties props = (PlayerProperties)player.getExtendedProperties(PlayerProperties.ID);
+		IPlayerCapability pcap = (IPlayerCapability)player.getCapability(PlayerProvider.PLAYER_CAPABILITY, null);
 
-		if(props != null && props.p_link != null 
-				&& props.p_link.distanceSq(x,y+1,z) <= FundamentalChemistry.MAX_RELAY_DISTANCE-1f){ //distance check with some margin
+		if(pcap != null && pcap.getLinkPos() != null 
+				&& pcap.getLinkPos().distanceSq(x,y+1,z) <= FundamentalChemistry.MAX_RELAY_DISTANCE-1f){ //distance check with some margin
 			GlStateManager.color(0f,1f,0.5f,1f);
-			GL11.glVertex3d(props.p_link.getX()+0.5, props.p_link.getY()+laser_height, props.p_link.getZ()+0.5);
+			GL11.glVertex3d(pcap.getLinkPos().getX()+0.5,pcap.getLinkPos().getY()+laser_height, pcap.getLinkPos().getZ()+0.5);
 			GlStateManager.color(0f,0.5f,1f,1f);
 			GL11.glVertex3d(x, y+1, z);
 		}

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Command;
@@ -27,6 +28,9 @@ import imagicthecat.fundamentalchemistry.shared.block.BlockPositiveNuclearTransm
 import imagicthecat.fundamentalchemistry.shared.block.BlockTest;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.block.BlockVersatileGenerator;
+import imagicthecat.fundamentalchemistry.shared.capability.IPlayerCapability;
+import imagicthecat.fundamentalchemistry.shared.capability.PlayerCapability;
+import imagicthecat.fundamentalchemistry.shared.capability.PlayerStorage;
 import imagicthecat.fundamentalchemistry.shared.item.ItemAtomDisplay;
 import imagicthecat.fundamentalchemistry.shared.item.ItemMoleculeDisplay;
 import imagicthecat.fundamentalchemistry.shared.item.ItemVibrantCatalystStone;
@@ -56,6 +60,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -95,26 +100,26 @@ public class FundamentalChemistry
 
   // blocks
   
-  public static Block block_test;
-  public static Block block_laser_relay;
-  public static Block block_periodic_storage;
-  public static Block block_molecular_storage;
-  public static Block block_energy_storage;
-  public static Block block_item_analyzer;
-  public static Block block_item_breaker;
-  public static Block block_molecule_breaker;
-  public static Block block_molecule_assembler;
-  public static Block block_item_assembler;
-  public static Block block_versatile_generator;
-  public static Block block_versatile_extractor;
-  public static Block block_positive_nuclear_transmuter;
-  public static Block block_negative_nuclear_transmuter;
+ 	public static Block block_test = new BlockTest();
+ 	public static Block block_laser_relay = new BlockLaserRelay();
+ 	public static Block block_periodic_storage = new BlockPeriodicStorage();
+ 	public static Block block_molecular_storage = new BlockMolecularStorage();
+ 	public static Block block_energy_storage = new BlockEnergyStorage();
+ 	public static Block block_item_breaker = new BlockItemBreaker();
+ 	public static Block block_item_analyzer = new BlockItemAnalyzer();
+ 	public static Block block_molecule_breaker = new BlockMoleculeBreaker();
+ 	public static Block block_molecule_assembler = new BlockMoleculeAssembler();
+ 	public static Block block_item_assembler = new BlockItemAssembler();
+ 	public static Block block_versatile_generator = new BlockVersatileGenerator();
+ 	public static Block block_versatile_extractor = new BlockVersatileExtractor();
+ 	public static Block block_positive_nuclear_transmuter = new BlockPositiveNuclearTransmuter();
+ 	public static Block block_negative_nuclear_transmuter = new BlockNegativeNuclearTransmuter();
   
   // items
   
-  public static Item item_vibrant_catalyst_stone;
-  public static Item item_atom_display;
-  public static Item item_molecule_display;
+ 	public static Item item_vibrant_catalyst_stone = new ItemVibrantCatalystStone();
+ 	public static Item item_atom_display = new ItemAtomDisplay();
+ 	public static Item item_molecule_display = new ItemMoleculeDisplay();
   
   // API
   
@@ -301,38 +306,6 @@ public class FundamentalChemistry
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
-  	//blocks
-  	
-   	block_test = new BlockTest();
-   	block_laser_relay = new BlockLaserRelay();
-   	block_periodic_storage = new BlockPeriodicStorage();
-   	block_molecular_storage = new BlockMolecularStorage();
-   	block_energy_storage = new BlockEnergyStorage();
-   	block_item_breaker = new BlockItemBreaker();
-   	block_item_analyzer = new BlockItemAnalyzer();
-   	block_molecule_breaker = new BlockMoleculeBreaker();
-   	block_molecule_assembler = new BlockMoleculeAssembler();
-   	block_item_assembler = new BlockItemAssembler();
-   	block_versatile_generator = new BlockVersatileGenerator();
-   	block_versatile_extractor = new BlockVersatileExtractor();
-   	block_positive_nuclear_transmuter = new BlockPositiveNuclearTransmuter();
-   	block_negative_nuclear_transmuter = new BlockNegativeNuclearTransmuter();
-   	
-   	GameRegistry.registerBlock(block_test, "fundamentalchemistry:test");
-   	GameRegistry.registerBlock(block_laser_relay, "fundamentalchemistry:laser_relay");
-   	GameRegistry.registerBlock(block_periodic_storage, "fundamentalchemistry:periodic_storage");
-  	GameRegistry.registerBlock(block_molecular_storage, "fundamentalchemistry:molecular_storage");
-  	GameRegistry.registerBlock(block_energy_storage, "fundamentalchemistry:energy_storage");
-  	GameRegistry.registerBlock(block_item_analyzer, "fundamentalchemistry:item_analyzer");
-  	GameRegistry.registerBlock(block_item_breaker, "fundamentalchemistry:item_breaker");
-  	GameRegistry.registerBlock(block_molecule_breaker, "fundamentalchemistry:molecule_breaker");
-  	GameRegistry.registerBlock(block_molecule_assembler, "fundamentalchemistry:molecule_assembler");
-  	GameRegistry.registerBlock(block_item_assembler, "fundamentalchemistry:item_assembler");
-  	GameRegistry.registerBlock(block_versatile_generator, "fundamentalchemistry:versatile_generator");
-  	GameRegistry.registerBlock(block_versatile_extractor, "fundamentalchemistry:versatile_extractor");
-  	GameRegistry.registerBlock(block_positive_nuclear_transmuter, "fundamentalchemistry:positive_nuclear_transmuter");
-  	GameRegistry.registerBlock(block_negative_nuclear_transmuter, "fundamentalchemistry:negative_nuclear_transmuter");
-   	
    	GameRegistry.registerTileEntity(TileLaserRelay.class, "fundamentalchemistry:laser_relay");
    	GameRegistry.registerTileEntity(TileChemicalStorage.class, "fundamentalchemistry:chemical_storage");
    	GameRegistry.registerTileEntity(TileMolecularStorage.class, "fundamentalchemistry:molecular_storage");
@@ -347,17 +320,7 @@ public class FundamentalChemistry
    	GameRegistry.registerTileEntity(TileVersatileExtractor.class, "fundamentalchemistry:versatile_extractor");
    	GameRegistry.registerTileEntity(TilePositiveNuclearTransmuter.class, "fundamentalchemistry:positive_nuclear_transmuter");
    	GameRegistry.registerTileEntity(TileNegativeNuclearTransmuter.class, "fundamentalchemistry:negative_nuclear_transmuter");
-   	
-   	//items
-   	
-   	item_vibrant_catalyst_stone = new ItemVibrantCatalystStone();
-   	item_atom_display = new ItemAtomDisplay();
-   	item_molecule_display = new ItemMoleculeDisplay();
-   	
-   	GameRegistry.registerItem(item_vibrant_catalyst_stone, "fundamentalchemistry:vibrant_catalyst_stone");
-   	GameRegistry.registerItem(item_atom_display, "fundamentalchemistry:atom_display");
-   	GameRegistry.registerItem(item_molecule_display, "fundamentalchemistry:molecule_display");
-   	
+   
    	//CONFIG
    	//event.getModConfigurationDirectory().getAbsolutePath();
   }
@@ -466,11 +429,11 @@ public class FundamentalChemistry
 		);
 
 
-  	
   	FundamentalChemistryData.register();
   	
     MinecraftForge.EVENT_BUS.register(event_handler);
     NetworkRegistry.INSTANCE.registerGuiHandler(FundamentalChemistry.instance, new ForgeGuiHandler());
+    CapabilityManager.INSTANCE.register(IPlayerCapability.class, new PlayerStorage(), PlayerCapability.class);
     
     register_handler.register();
   }

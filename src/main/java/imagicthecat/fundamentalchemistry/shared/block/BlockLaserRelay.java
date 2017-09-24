@@ -3,7 +3,8 @@ package imagicthecat.fundamentalchemistry.shared.block;
 import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
-import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
+import imagicthecat.fundamentalchemistry.shared.capability.IPlayerCapability;
+import imagicthecat.fundamentalchemistry.shared.capability.PlayerProvider;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -26,6 +27,7 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
     super(Material.ROCK);
     this.setHardness(1.5f);
     this.setUnlocalizedName("laser_relay");
+    this.setRegistryName("laser_relay");
     this.setTickRandomly(true);
     this.setCreativeTab(FundamentalChemistry.tab);
   }
@@ -39,21 +41,20 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
-		PlayerProperties props = (PlayerProperties)player.getExtendedProperties(PlayerProperties.ID);
-			
-		if(props != null){
-			if(props.p_link != null){ // already linking, try to link to this one
+		IPlayerCapability pcap = player.getCapability(PlayerProvider.PLAYER_CAPABILITY, null);
+		
+		if(pcap != null){
+			if(pcap.getLinkPos() != null){ // already linking, try to link to this one
 				if(!world.isRemote)
-					ent.toggleConnectFrom(props.p_link);
+					ent.toggleConnectFrom(pcap.getLinkPos());
 					
-				props.p_link = null;
+				pcap.setLinkPos(null);
 			}
-			else{ //not linking, add current coords
-				props.p_link = new BlockPos(pos);
-			}
+			else
+				pcap.setLinkPos(pos);
 		}
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

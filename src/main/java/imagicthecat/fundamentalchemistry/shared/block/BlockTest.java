@@ -20,6 +20,7 @@ public class BlockTest extends Block implements ITileEntityProvider{
     super(Material.ROCK);
     this.setHardness(1.5f);
     this.setUnlocalizedName("test");
+    this.setRegistryName("test");
     this.setCreativeTab(FundamentalChemistry.tab);
   }
 

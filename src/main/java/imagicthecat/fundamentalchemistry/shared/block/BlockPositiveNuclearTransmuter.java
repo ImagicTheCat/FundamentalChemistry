@@ -26,6 +26,7 @@ public class BlockPositiveNuclearTransmuter extends Block implements ITileEntity
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("positive_nuclear_transmuter");
+	  this.setRegistryName("positive_nuclear_transmuter");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -45,7 +46,7 @@ public class BlockPositiveNuclearTransmuter extends Block implements ITileEntity
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+    return true;
 	}
 	
 	@Override

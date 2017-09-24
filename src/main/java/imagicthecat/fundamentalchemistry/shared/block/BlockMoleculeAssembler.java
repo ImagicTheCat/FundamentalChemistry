@@ -30,6 +30,7 @@ public class BlockMoleculeAssembler extends Block implements ITileEntityProvider
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("molecule_assembler");
+	  this.setRegistryName("molecule_assembler");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -49,7 +50,7 @@ public class BlockMoleculeAssembler extends Block implements ITileEntityProvider
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+    return true;
 	}
 	
 	@Override

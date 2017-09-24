@@ -14,6 +14,7 @@ public class ItemMoleculeDisplay extends Item {
 	public ItemMoleculeDisplay()
 	{
     this.setUnlocalizedName("molecule_display");
+    this.setRegistryName("molecule_display");
     this.setCreativeTab(FundamentalChemistry.tab);
 	}
 	

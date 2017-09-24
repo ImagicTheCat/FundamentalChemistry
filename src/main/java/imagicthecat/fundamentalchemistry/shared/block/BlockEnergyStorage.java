@@ -4,17 +4,14 @@ import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
-import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileEnergyStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TilePeriodicStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -29,6 +26,7 @@ public class BlockEnergyStorage extends Block implements ITileEntityProvider {
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("energy_storage");
+	  this.setRegistryName("energy_storage");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -46,7 +44,7 @@ public class BlockEnergyStorage extends Block implements ITileEntityProvider {
     		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

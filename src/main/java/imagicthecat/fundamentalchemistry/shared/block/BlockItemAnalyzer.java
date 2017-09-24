@@ -4,16 +4,12 @@ import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
-import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemAnalyzer;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -29,6 +25,7 @@ public class BlockItemAnalyzer extends Block implements ITileEntityProvider{
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("item_analyzer");
+	  this.setRegistryName("item_analyzer");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -48,7 +45,7 @@ public class BlockItemAnalyzer extends Block implements ITileEntityProvider{
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+    return true;
 	}
 	
 	@Override

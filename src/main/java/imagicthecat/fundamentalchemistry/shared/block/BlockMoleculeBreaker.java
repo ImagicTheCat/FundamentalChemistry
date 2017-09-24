@@ -4,18 +4,12 @@ import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
-import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
-import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileMoleculeBreaker;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -28,6 +22,7 @@ public class BlockMoleculeBreaker extends Block implements ITileEntityProvider{
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("molecule_breaker");
+	  this.setRegistryName("molecule_breaker");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -44,7 +39,7 @@ public class BlockMoleculeBreaker extends Block implements ITileEntityProvider{
 		if(player.isSneaking())
   		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
 
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

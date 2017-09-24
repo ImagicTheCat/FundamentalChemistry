@@ -4,7 +4,6 @@ import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ForgeGuiHandler;
-import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
 import imagicthecat.fundamentalchemistry.shared.tileentity.LaserRelayFetch;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
@@ -30,6 +29,7 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("periodic_storage");
+	  this.setRegistryName("periodic_storage");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -51,7 +51,7 @@ public class BlockPeriodicStorage extends Block implements ITileEntityProvider {
 		    player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

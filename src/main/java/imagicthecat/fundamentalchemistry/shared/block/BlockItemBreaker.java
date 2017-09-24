@@ -29,6 +29,7 @@ public class BlockItemBreaker extends Block implements ITileEntityProvider{
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("item_breaker");
+	  this.setRegistryName("item_breaker");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -48,7 +49,7 @@ public class BlockItemBreaker extends Block implements ITileEntityProvider{
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+    return true;
 	}
 	
 	@Override

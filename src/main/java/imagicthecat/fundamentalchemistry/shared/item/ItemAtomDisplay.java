@@ -13,6 +13,7 @@ public class ItemAtomDisplay extends Item {
 	public ItemAtomDisplay()
 	{
     this.setUnlocalizedName("atom_display");
+    this.setRegistryName("atom_display");
     this.setCreativeTab(FundamentalChemistry.tab);
 	}
 	

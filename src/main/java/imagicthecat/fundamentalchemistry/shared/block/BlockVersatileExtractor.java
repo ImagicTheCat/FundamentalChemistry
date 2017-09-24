@@ -25,6 +25,7 @@ public class BlockVersatileExtractor extends Block implements ITileEntityProvide
 	  super(Material.ROCK);
 	  this.setHardness(1.5f);
 	  this.setUnlocalizedName("versatile_extractor");
+	  this.setRegistryName("versatile_extractor");
 	  this.setTickRandomly(true);
 	  this.setCreativeTab(FundamentalChemistry.tab);
 	}
@@ -44,7 +45,7 @@ public class BlockVersatileExtractor extends Block implements ITileEntityProvide
     		player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.CHEMICAL_STORAGE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		
-		return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

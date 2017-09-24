@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ChemicalInventory implements IInventory {
 	protected ItemStack[] slots;
@@ -57,7 +58,7 @@ public class ChemicalInventory implements IInventory {
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TextComponentString(this.getName());
+		return new TextComponentTranslation(this.getName());
 	}
 
 	@Override
