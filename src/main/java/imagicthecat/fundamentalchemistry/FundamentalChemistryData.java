@@ -208,9 +208,10 @@ public class FundamentalChemistryData {
   	I(Items.skull, "2 proline", "2 glycine", "2 alanine");
   	I(Items.dye, "1 melanin", "1 water");
   	I(Items.leather, "1 proline", "1 glycine", "1 alanine");
+  	I(Items.rabbit_hide, "1 proline", "1 glycine", "1 alanine");
   	I(Blocks.wool, "1 proline", "1 glycine", "1 alanine", "1 serine");
   	I(Items.string, "1 glycine", "1 alanine", "1 serine");
-  	I(Blocks.wheat, "1 cellulose", "1 lignin", "1 glycine");
+  	I(Items.wheat, "2 cellulose", "1 glycine");
   	I(Items.apple, "2 water", "2 glucose");
   	I(Items.carrot, "1 water", "1 cellulose");
   	I(Items.melon, "2 water", "2 glucose");

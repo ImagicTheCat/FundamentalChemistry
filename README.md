@@ -5,9 +5,10 @@ The mod doesn't seek realism, it's about taking inspiration from our modern time
 
 download: https://minecraft.curseforge.com/projects/fundamentalchemistry
 
-## WIP 
+## Screenshots 
 
-![Laser Relay tests](https://i.imgur.com/WicW5if.jpg)
+A gold farm.
+![Gold farm](/doc/images/goldfarm.jpg)
 
 ## Concept
 
