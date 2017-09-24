@@ -51,7 +51,7 @@ public class BlockItemAssembler extends Block implements ITileEntityProvider{
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-    return true;
+		return true;
 	}
 	
 	@Override
