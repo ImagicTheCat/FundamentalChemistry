@@ -24,12 +24,9 @@ import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -77,13 +74,13 @@ public class TileVersatileGenerator extends TileSimpleMachine implements IInvent
 	//check if the block is in contact with air (not up and down)
 	public boolean hasAir()
 	{
-		if(this.worldObj.getBlockState(this.pos.add(1,0,0)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(1,0,0)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(-1,0,0)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(-1,0,0)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(0,0,1)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(0,0,1)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(0,0,-1)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(0,0,-1)).getBlock() == Blocks.AIR)
 			return true;
 		
 		return false;
@@ -109,18 +106,18 @@ public class TileVersatileGenerator extends TileSimpleMachine implements IInvent
 	public boolean isFlowingWater(BlockPos pos)
 	{
 		IBlockState state = this.worldObj.getBlockState(pos);
-		return state.getBlock() == Blocks.water && state.getValue(BlockLiquid.LEVEL) > 0;
+		return state.getBlock() == Blocks.WATER && state.getValue(BlockLiquid.LEVEL) > 0;
 	}
 	
 	//get down heat source value
 	public int getHeatSource()
 	{
 		Block block = this.worldObj.getBlockState(this.pos.add(0,-1,0)).getBlock();
-		if(block == Blocks.fire)
+		if(block == Blocks.FIRE)
 			return 2;
-		else if(block == Blocks.flowing_lava)
+		else if(block == Blocks.FLOWING_LAVA)
 			return 2;
-		else if(block == Blocks.lava)
+		else if(block == Blocks.LAVA)
 			return 5;
 		
 		return 0;

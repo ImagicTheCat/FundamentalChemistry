@@ -1,16 +1,12 @@
 package imagicthecat.fundamentalchemistry.shared.container;
 
-import java.util.Map;
 
-import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
-import imagicthecat.fundamentalchemistry.shared.Molecule;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 public class ChemicalInventory implements IInventory {
 	protected ItemStack[] slots;
@@ -60,8 +56,8 @@ public class ChemicalInventory implements IInventory {
 	}
 
 	@Override
-	public IChatComponent getDisplayName() {
-		return new ChatComponentTranslation(this.getName());
+	public ITextComponent getDisplayName() {
+		return new TextComponentString(this.getName());
 	}
 
 	@Override

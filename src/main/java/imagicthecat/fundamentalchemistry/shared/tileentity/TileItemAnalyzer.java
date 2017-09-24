@@ -22,8 +22,6 @@ public class TileItemAnalyzer extends TileSimpleMachine implements IInventory{
 	//do machine work
 	public void tick()
 	{
-
-		
 		//analyze one item of the input stack
 		ItemStack stack = this.getStackInSlot(0);
 		if(stack != pstack){

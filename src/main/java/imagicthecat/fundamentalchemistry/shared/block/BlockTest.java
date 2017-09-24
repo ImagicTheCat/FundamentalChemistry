@@ -11,16 +11,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
 public class BlockTest extends Block implements ITileEntityProvider{
   public BlockTest()
   {
-    super(Material.rock);
+    super(Material.ROCK);
     this.setHardness(1.5f);
     this.setUnlocalizedName("test");
     this.setCreativeTab(FundamentalChemistry.tab);

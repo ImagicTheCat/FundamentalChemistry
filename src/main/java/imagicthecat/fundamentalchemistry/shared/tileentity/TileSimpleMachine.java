@@ -1,7 +1,6 @@
 package imagicthecat.fundamentalchemistry.shared.tileentity;
 
 import java.util.Map;
-
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Molecule;
@@ -13,11 +12,9 @@ import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.util.Constants;
 
 public class TileSimpleMachine extends TileChemicalStorage implements IInventory{
@@ -44,7 +41,7 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 	}
 	
   @Override
-  public void writeToNBT(NBTTagCompound tag) 
+  public NBTTagCompound writeToNBT(NBTTagCompound tag) 
   {
   	super.writeToNBT(tag);
 
@@ -55,6 +52,8 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
   		items.writeToNBT(tinput);
   		tag.setTag("items", tinput);
   	}
+  	
+  	return tag;
   }
   
   @Override
@@ -78,8 +77,8 @@ public class TileSimpleMachine extends TileChemicalStorage implements IInventory
 	}
 
 	@Override
-	public IChatComponent getDisplayName() {
-		return new ChatComponentTranslation(this.getName());
+	public ITextComponent getDisplayName() {
+		return new TextComponentTranslation(this.getName());
 	}
 
 	@Override

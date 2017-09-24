@@ -14,9 +14,9 @@ public class ForgeEventHandler {
 	@SubscribeEvent
 	public void entityConstruct(EntityEvent.EntityConstructing e){
 		//add custom properties to players
-	  if(e.entity instanceof EntityPlayer){
-	    if(e.entity.getExtendedProperties(PlayerProperties.ID) == null){
-	      e.entity.registerExtendedProperties(PlayerProperties.ID, new PlayerProperties());
+	  if(e.getEntity() instanceof EntityPlayer){
+	    if(e.getEntity().getExtendedProperties(PlayerProperties.ID) == null){
+	      e.getEntity().registerExtendedProperties(PlayerProperties.ID, new PlayerProperties());
 	    }
 	  }
 	}

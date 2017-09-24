@@ -3,8 +3,9 @@ package imagicthecat.fundamentalchemistry.shared.container;
 
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileSimpleMachine;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -50,12 +51,12 @@ public class TileSimpleMachineContainer extends Container {
 	}
 	
 	@Override
-  public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn)
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
   {
 		if(slotId >= 1 && slotId < 13)
 			return null;
 		else
-			return super.slotClick(slotId, clickedButton, mode, playerIn);
+			return super.slotClick(slotId, dragType, clickTypeIn, player);
   }
 	
 	@Override
@@ -94,10 +95,10 @@ public class TileSimpleMachineContainer extends Container {
 	}
 	
 	@Override
-  public void onCraftGuiOpened(ICrafting listener)
+  public void addListener(IContainerListener listener)
   {
 		ent.update();
-    super.onCraftGuiOpened(listener);
+    super.addListener(listener);
     listener.sendAllWindowProperties(this, ent);
   }
 	
@@ -111,9 +112,9 @@ public class TileSimpleMachineContainer extends Container {
 				fields[i] = new_field;
 				
 				//send change
-				for(int j = 0; j < this.crafters.size(); ++j){
-					ICrafting icrafting = (ICrafting)this.crafters.get(j);
-					icrafting.sendProgressBarUpdate(this, i, new_field);
+				for(int j = 0; j < this.listeners.size(); ++j){
+					IContainerListener listener = (IContainerListener)this.listeners.get(j);
+					listener.sendProgressBarUpdate(this, i, new_field);
 				}
 			}
 		}

@@ -1,20 +1,10 @@
 package imagicthecat.fundamentalchemistry;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import scala.reflect.io.Path;
-import imagicthecat.fundamentalchemistry.client.renderer.TileLaserRelayRenderer;
 import imagicthecat.fundamentalchemistry.shared.BiMap;
 import imagicthecat.fundamentalchemistry.shared.ChemicalStorage;
 import imagicthecat.fundamentalchemistry.shared.Command;
@@ -55,8 +45,6 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.TilePositiveNuclearTr
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileExtractor;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileVersatileGenerator;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -67,10 +55,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -81,7 +66,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -387,98 +371,98 @@ public class FundamentalChemistry
 			" S ",
 			"SDS",
 			" O ",
-			'D', Items.diamond, 'O', Blocks.obsidian, 'S', Blocks.stone
+			'D', Items.DIAMOND, 'O', Blocks.OBSIDIAN, 'S', Blocks.STONE
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_laser_relay),
 				"   ",
 				" V ",
 				"SSS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_energy_storage),
 			"SSS",
 			"SCS",
 			"SVS",
-			'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust
+			'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GLOWSTONE_DUST
 		);
 
 		GameRegistry.addRecipe(new ItemStack(block_periodic_storage),
 				"SSS",
 				"SCS",
 				"SVS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GOLD_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_molecular_storage),
 				"SSS",
 				"SCS",
 				"SVS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.IRON_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_versatile_generator),
 				"SCS",
 				"CVC",
 				"SCS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GLOWSTONE_DUST
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_versatile_extractor),
 				"SCS",
 				"CVC",
 				"SCS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.IRON_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_item_analyzer),
 				"SDS",
 				"SCS",
 				"SVS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.glowstone_dust, 'D', Blocks.glass
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GLOWSTONE_DUST, 'D', Blocks.GLASS
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_item_breaker),
 				"SCS",
 				"SVS",
 				"CSC",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.IRON_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_molecule_breaker),
 				"SCS",
 				"SVS",
 				"CSC",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GOLD_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_item_assembler),
 				"SSS",
 				"CVC",
 				"SCS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.iron_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.IRON_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_molecule_assembler),
 				"SSS",
 				"CVC",
 				"SCS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GOLD_INGOT
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_negative_nuclear_transmuter),
 				"CCC",
 				"RVR",
 				"SSS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot, 'R', Blocks.redstone_block
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK
 		);
 		
 		GameRegistry.addRecipe(new ItemStack(block_positive_nuclear_transmuter),
 				"CRC",
 				"RVR",
 				"SRS",
-				'V', item_vibrant_catalyst_stone, 'S', Blocks.stone, 'C', Items.gold_ingot, 'R', Blocks.redstone_block
+				'V', item_vibrant_catalyst_stone, 'S', Blocks.STONE, 'C', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK
 		);
 
 

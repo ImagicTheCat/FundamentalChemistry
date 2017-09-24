@@ -9,12 +9,11 @@ import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,29 +26,15 @@ public class ClientEventHandler extends ForgeEventHandler{
 	{
 	}
 	
-  public static void drawModalRectWithCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight, float z)
-  {
-      float f = 1.0F / textureWidth;
-      float f1 = 1.0F / textureHeight;
-      Tessellator tessellator = Tessellator.getInstance();
-      WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-      worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-      worldrenderer.pos((double)x, (double)(y + height), z).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
-      worldrenderer.pos((double)(x + width), (double)(y + height), z).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
-      worldrenderer.pos((double)(x + width), (double)y, z).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
-      worldrenderer.pos((double)x, (double)y, z).tex((double)(u * f), (double)(v * f1)).endVertex();
-      tessellator.draw();
-  }
-  
 	@SubscribeEvent
 	public void onWorldLastRender(RenderWorldLastEvent evt)
 	{
 		World world = Minecraft.getMinecraft().theWorld;
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
-    double x = player.lastTickPosX + (player.posX - player.lastTickPosX) * evt.partialTicks;
-    double y = player.lastTickPosY + (player.posY - player.lastTickPosY) * evt.partialTicks;
-    double z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * evt.partialTicks;
+    double x = player.lastTickPosX + (player.posX - player.lastTickPosX) * evt.getPartialTicks();
+    double y = player.lastTickPosY + (player.posY - player.lastTickPosY) * evt.getPartialTicks();
+    double z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * evt.getPartialTicks();
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();

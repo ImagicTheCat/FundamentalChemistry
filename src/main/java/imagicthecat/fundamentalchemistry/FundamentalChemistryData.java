@@ -10,11 +10,11 @@ public class FundamentalChemistryData {
 	{
   	// catalysts
   	
-  	C(Item.getItemFromBlock(Blocks.cobblestone), 1);
-  	C(Items.redstone, 2);
-  	C(Items.iron_ingot, 3);
-  	C(Items.gold_ingot, 4);
-  	C(Items.diamond, 5);
+  	C(Item.getItemFromBlock(Blocks.COBBLESTONE), 1);
+  	C(Items.REDSTONE, 2);
+  	C(Items.IRON_INGOT, 3);
+  	C(Items.GOLD_INGOT, 4);
+  	C(Items.DIAMOND, 5);
   	
   	// atoms
   	
@@ -180,80 +180,80 @@ public class FundamentalChemistryData {
   	// item compositions
   	
   	//organic
-  	I(Blocks.log, "4 cellulose", "1 lignin"); //wood
-  	I(Blocks.log2, "4 cellulose", "1 lignin"); //wood
-  	I(Blocks.planks, "1 cellulose"); //planks
-  	I(Blocks.leaves, "1 chlorophyll_a"); //leaf
-  	I(Blocks.sapling, "1 chlorophyll_a", "1 cellulose"); //sapling
-  	I(Blocks.red_mushroom, "1 cellulose", "1 glycerine"); //mush
-  	I(Blocks.brown_mushroom, "1 cellulose", "1 glycerine"); //mush
-  	I(Blocks.tallgrass, "1 chlorophyll_a", "1 cellulose"); //tallgrass
-  	I(Blocks.waterlily, "1 chlorophyll_a", "1 cellulose"); //lilypad
-  	I(Blocks.red_flower, "1 chlorophyll_b");
-  	I(Blocks.yellow_flower, "1 chlorophyll_b");
-  	I(Blocks.double_plant, "1 chlorophyll_b", "1 chlorophyll_a");
-  	I(Blocks.grass, "1 silica", "1 water", "1 cellulose", "1 chlorophyll_a");
-  	I(Blocks.dirt, "1 silica", "1 water", "1 cellulose");
-  	I(Items.reeds, "1 glucose", "1 cellulose", "1 chlorophyll_a", "1 water");
-  	I(Blocks.cactus, "2 water", "1 cellulose", "1 chlorophyll_a");
-  	I(Items.sugar, "1 glucose");
-  	I(Items.chicken, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.beef, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.rabbit, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.fish, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.porkchop, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.mutton, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
-  	I(Items.rotten_flesh, "1 proline", "1 glycine", "1 alanine", "1 water");
-  	I(Items.bone, "1 proline", "1 glycine", "1 alanine");
-  	I(Items.skull, "2 proline", "2 glycine", "2 alanine");
-  	I(Items.dye, "1 melanin", "1 water");
-  	I(Items.leather, "1 proline", "1 glycine", "1 alanine");
-  	I(Items.rabbit_hide, "1 proline", "1 glycine", "1 alanine");
-  	I(Blocks.wool, "1 proline", "1 glycine", "1 alanine", "1 serine");
-  	I(Items.string, "1 glycine", "1 alanine", "1 serine");
-  	I(Items.wheat, "2 cellulose", "1 glycine");
-  	I(Items.apple, "2 water", "2 glucose");
-  	I(Items.carrot, "1 water", "1 cellulose");
-  	I(Items.melon, "2 water", "2 glucose");
-  	I(Blocks.pumpkin, "1 cellulose", "2 water", "1 glucose");
-  	I(Items.egg, "1 glycerine", "1 glycine", "1 alanine", "1 water");
-  	I(Items.spider_eye, "1 glycerine", "1 glycine", "1 alanine", "1 proline");
-  	I(Items.feather, "1 glycine", "1 alanine", "1 serine");
-  	I(Items.coal, "4 cellulose", "1 lignin");
+  	I(Blocks.LOG, "4 cellulose", "1 lignin"); //wood
+  	I(Blocks.LOG2, "4 cellulose", "1 lignin"); //wood
+  	I(Blocks.PLANKS, "1 cellulose"); //planks
+  	I(Blocks.LEAVES, "1 chlorophyll_a"); //leaf
+  	I(Blocks.SAPLING, "1 chlorophyll_a", "1 cellulose"); //sapling
+  	I(Blocks.RED_MUSHROOM, "1 cellulose", "1 glycerine"); //mush
+  	I(Blocks.BROWN_MUSHROOM, "1 cellulose", "1 glycerine"); //mush
+  	I(Blocks.TALLGRASS, "1 chlorophyll_a", "1 cellulose"); //tallgrass
+  	I(Blocks.WATERLILY, "1 chlorophyll_a", "1 cellulose"); //lilypad
+  	I(Blocks.RED_FLOWER, "1 chlorophyll_b");
+  	I(Blocks.YELLOW_FLOWER, "1 chlorophyll_b");
+  	I(Blocks.DOUBLE_PLANT, "1 chlorophyll_b", "1 chlorophyll_a");
+  	I(Blocks.GRASS, "1 silica", "1 water", "1 cellulose", "1 chlorophyll_a");
+  	I(Blocks.DIRT, "1 silica", "1 water", "1 cellulose");
+  	I(Items.REEDS, "1 glucose", "1 cellulose", "1 chlorophyll_a", "1 water");
+  	I(Blocks.CACTUS, "2 water", "1 cellulose", "1 chlorophyll_a");
+  	I(Items.SUGAR, "1 glucose");
+  	I(Items.CHICKEN, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.BEEF, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.RABBIT, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.FISH, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.PORKCHOP, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.MUTTON, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "2 water");
+  	I(Items.ROTTEN_FLESH, "1 proline", "1 glycine", "1 alanine", "1 water");
+  	I(Items.BONE, "1 proline", "1 glycine", "1 alanine");
+  	I(Items.SKULL, "2 proline", "2 glycine", "2 alanine");
+  	I(Items.DYE, "1 melanin", "1 water");
+  	I(Items.LEATHER, "1 proline", "1 glycine", "1 alanine");
+  	I(Items.RABBIT_HIDE, "1 proline", "1 glycine", "1 alanine");
+  	I(Blocks.WOOL, "1 proline", "1 glycine", "1 alanine", "1 serine");
+  	I(Items.STRING, "1 glycine", "1 alanine", "1 serine");
+  	I(Items.WHEAT, "2 cellulose", "1 glycine");
+  	I(Items.APPLE, "2 water", "2 glucose");
+  	I(Items.CARROT, "1 water", "1 cellulose");
+  	I(Items.MELON, "2 water", "2 glucose");
+  	I(Blocks.PUMPKIN, "1 cellulose", "2 water", "1 glucose");
+  	I(Items.EGG, "1 glycerine", "1 glycine", "1 alanine", "1 water");
+  	I(Items.SPIDER_EYE, "1 glycerine", "1 glycine", "1 alanine", "1 proline");
+  	I(Items.FEATHER, "1 glycine", "1 alanine", "1 serine");
+  	I(Items.COAL, "4 cellulose", "1 lignin");
   	
   	//ore
-  	I(Blocks.cobblestone, "1 calcium_oxide"); //cobble
-  	I(Blocks.stone, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide"); //stone ore
-  	I(Blocks.gravel, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
-  	I(Items.quartz, "10 silica");
-  	I(Blocks.sand, "2 silica");
-  	I(Blocks.clay, "1 kaolinite");
-  	I(Items.iron_ingot, "2 hematite", "2 magnetite", "1 siderite", "1 pyrite");
-  	I(Items.gold_ingot, "2 gold_cluster");
-  	I(Items.diamond, "10 diamond_lattice");
-  	I(Blocks.obsidian, "100 silica", "20 aluminium_oxide", "20 potassium_oxide", "20 sodium_oxide", "20 calcium_oxide");
-  	I(Items.emerald, "1 beryl", "1 vanadium_pentoxide", "1 chromite");
-  	I(Items.redstone, "1 fluorescein");
-  	I(Items.glowstone_dust, "1 fluorescein", "1 acridine_yellow");
+  	I(Blocks.COBBLESTONE, "1 calcium_oxide"); //cobble
+  	I(Blocks.STONE, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide"); //stone ore
+  	I(Blocks.GRAVEL, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
+  	I(Items.QUARTZ, "10 silica");
+  	I(Blocks.SAND, "2 silica");
+  	I(Blocks.CLAY, "1 kaolinite");
+  	I(Items.IRON_INGOT, "2 hematite", "2 magnetite", "1 siderite", "1 pyrite");
+  	I(Items.GOLD_INGOT, "2 gold_cluster");
+  	I(Items.DIAMOND, "10 diamond_lattice");
+  	I(Blocks.OBSIDIAN, "100 silica", "20 aluminium_oxide", "20 potassium_oxide", "20 sodium_oxide", "20 calcium_oxide");
+  	I(Items.EMERALD, "1 beryl", "1 vanadium_pentoxide", "1 chromite");
+  	I(Items.REDSTONE, "1 fluorescein");
+  	I(Items.GLOWSTONE_DUST, "1 fluorescein", "1 acridine_yellow");
   	
   	//misc
-  	I(Items.snowball, "1 water");
-  	I(Items.paper, "1 cellulose");
-  	I(Items.water_bucket, "1 water");
-  	I(Items.lava_bucket, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
-  	I(Items.milk_bucket, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "5 water");
-  	I(Items.gunpowder, "1 cellulose", "1 saltpetre", "1 cyclooctasulfur");
+  	I(Items.SNOWBALL, "1 water");
+  	I(Items.PAPER, "1 cellulose");
+  	I(Items.WATER_BUCKET, "1 water");
+  	I(Items.LAVA_BUCKET, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
+  	I(Items.MILK_BUCKET, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "5 water");
+  	I(Items.GUNPOWDER, "1 cellulose", "1 saltpetre", "1 cyclooctasulfur");
   	
   	//surnatural (imaginative composition)
-  	I(Items.ender_pearl, "100 silica", "10 diamond_lattice", "1 chlorophyll_a");
-  	I(Blocks.netherrack, "1 silica", "1 saltpetre");
-  	I(Blocks.soul_sand, "1 silica", "2 cyclooctasulfur");
-  	I(Items.slime_ball, "1 polyvinyl_acetate");
-  	I(Items.ghast_tear, "1 sodium_chloride", "1 water");
-  	I(Items.blaze_rod, "10 saltpetre", "50 cyclooctasulfur");
-  	I(Items.nether_wart, "1 fluorescein", "1 lignin");
-  	I(Items.prismarine_crystals, "1 chlorophyll_a", "1 cellulose", "1 water");
-  	I(Items.prismarine_shard, "1 chlorophyll_a", "1 cellulose", "1 water");
+  	I(Items.ENDER_PEARL, "100 silica", "10 diamond_lattice", "1 chlorophyll_a");
+  	I(Blocks.NETHERRACK, "1 silica", "1 saltpetre");
+  	I(Blocks.SOUL_SAND, "1 silica", "2 cyclooctasulfur");
+  	I(Items.SLIME_BALL, "1 polyvinyl_acetate");
+  	I(Items.GHAST_TEAR, "1 sodium_chloride", "1 water");
+  	I(Items.BLAZE_ROD, "10 saltpetre", "50 cyclooctasulfur");
+  	I(Items.NETHER_WART, "1 fluorescein", "1 lignin");
+  	I(Items.PRISMARINE_CRYSTALS, "1 chlorophyll_a", "1 cellulose", "1 water");
+  	I(Items.PRISMARINE_SHARD, "1 chlorophyll_a", "1 cellulose", "1 water");
 	}
 	
 	//register catalyst

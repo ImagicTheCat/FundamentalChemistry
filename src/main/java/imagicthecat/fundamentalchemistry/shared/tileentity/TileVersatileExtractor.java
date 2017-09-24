@@ -8,7 +8,7 @@ import imagicthecat.fundamentalchemistry.shared.Molecule;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 public class TileVersatileExtractor extends TileChemicalStorage {
 	private Random rand;
@@ -90,19 +90,19 @@ public class TileVersatileExtractor extends TileChemicalStorage {
 	public boolean isStaticWater(BlockPos pos)
 	{
 		IBlockState state = this.worldObj.getBlockState(pos);
-		return state.getBlock() == Blocks.water && state.getValue(BlockLiquid.LEVEL) == 0;
+		return state.getBlock() == Blocks.WATER && state.getValue(BlockLiquid.LEVEL) == 0;
 	}
 	
   //check if the block is in contact with air (not up and down)
 	public boolean hasAir()
 	{
-		if(this.worldObj.getBlockState(this.pos.add(1,0,0)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(1,0,0)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(-1,0,0)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(-1,0,0)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(0,0,1)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(0,0,1)).getBlock() == Blocks.AIR)
 			return true;
-		if(this.worldObj.getBlockState(this.pos.add(0,0,-1)).getBlock() == Blocks.air)
+		if(this.worldObj.getBlockState(this.pos.add(0,0,-1)).getBlock() == Blocks.AIR)
 			return true;
 		
 		return false;

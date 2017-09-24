@@ -21,10 +21,9 @@ import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 
 public class TileLaserRelay extends TileEntity {
@@ -42,7 +41,7 @@ public class TileLaserRelay extends TileEntity {
 	public void toUpdate()
 	{
 		if(!this.worldObj.isRemote){
-			this.worldObj.markBlockForUpdate(this.pos);
+			this.worldObj.notifyBlockUpdate(this.pos, this.worldObj.getBlockState(this.pos), this.worldObj.getBlockState(this.pos), 2);
 			this.markDirty();
 		}
 	}
@@ -223,7 +222,7 @@ public class TileLaserRelay extends TileEntity {
 	}
 	
   @Override
-  public void writeToNBT(NBTTagCompound tag) 
+  public NBTTagCompound writeToNBT(NBTTagCompound tag) 
   {
   	super.writeToNBT(tag);
   	
@@ -253,6 +252,8 @@ public class TileLaserRelay extends TileEntity {
   	}
   	
   	tag.setTag("out", list);
+  	
+  	return tag;
   }
   
   @Override
@@ -283,15 +284,25 @@ public class TileLaserRelay extends TileEntity {
   }
   
   @Override
-  public Packet getDescriptionPacket() 
+  public NBTTagCompound getUpdateTag()
   {
-    NBTTagCompound tag = new NBTTagCompound();
-    writeToNBT(tag);
-    return new S35PacketUpdateTileEntity(this.pos, 1, tag);
+  	return writeToNBT(new NBTTagCompound());
   }
   
   @Override
-  public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
+  public void handleUpdateTag(NBTTagCompound tag)
+  {
+  	readFromNBT(tag);
+  }
+  
+  @Override
+  public SPacketUpdateTileEntity getUpdatePacket() 
+  {
+    return new SPacketUpdateTileEntity(this.pos, 1, writeToNBT(new NBTTagCompound()));
+  }
+  
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) 
   {
     readFromNBT(pkt.getNbtCompound());
   }

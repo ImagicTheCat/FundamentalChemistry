@@ -5,11 +5,9 @@ import org.lwjgl.opengl.GL11;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 
 public class TileLaserRelayRenderer extends TileEntitySpecialRenderer{
 

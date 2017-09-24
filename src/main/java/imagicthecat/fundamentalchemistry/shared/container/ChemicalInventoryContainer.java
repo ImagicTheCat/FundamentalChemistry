@@ -3,7 +3,7 @@ package imagicthecat.fundamentalchemistry.shared.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -39,9 +39,9 @@ public class ChemicalInventoryContainer extends Container{
 	}
 	
 	@Override
-  public void onCraftGuiOpened(ICrafting listener)
+  public void addListener(IContainerListener listener)
   {
-    super.onCraftGuiOpened(listener);
+    super.addListener(listener);
     listener.sendAllWindowProperties(this, inventory);
   }
 	
@@ -55,9 +55,9 @@ public class ChemicalInventoryContainer extends Container{
 				fields[i] = new_field;
 				
 				//send change
-				for(int j = 0; j < this.crafters.size(); ++j){
-					ICrafting icrafting = (ICrafting)this.crafters.get(j);
-					icrafting.sendProgressBarUpdate(this, i, new_field);
+				for(int j = 0; j < this.listeners.size(); ++j){
+					IContainerListener listener = (IContainerListener)this.listeners.get(j);
+					listener.sendProgressBarUpdate(this, i, new_field);
 				}
 			}
 		}

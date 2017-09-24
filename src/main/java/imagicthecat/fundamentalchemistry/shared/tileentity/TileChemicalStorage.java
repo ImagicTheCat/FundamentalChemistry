@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileChemicalStorage extends TileEntity  {
@@ -29,7 +29,7 @@ public class TileChemicalStorage extends TileEntity  {
 	}
 	
   @Override
-  public void writeToNBT(NBTTagCompound tag) 
+  public NBTTagCompound writeToNBT(NBTTagCompound tag) 
   {
   	super.writeToNBT(tag);
   	
@@ -41,6 +41,8 @@ public class TileChemicalStorage extends TileEntity  {
   	
   	tag.setTag("storage", tstorage);
   	tag.setTag("buffer", tbuffer);
+  	
+  	return tag;
   }
   
   @Override
@@ -53,17 +55,27 @@ public class TileChemicalStorage extends TileEntity  {
     NBTTagCompound tbuffer = tag.getCompoundTag("buffer");
     buffer.read(tbuffer);
   }
-	
+  
   @Override
-  public Packet getDescriptionPacket() 
+  public NBTTagCompound getUpdateTag()
   {
-    NBTTagCompound tag = new NBTTagCompound();
-    writeToNBT(tag);
-    return new S35PacketUpdateTileEntity(this.pos, 1, tag);
+  	return writeToNBT(new NBTTagCompound());
   }
   
   @Override
-  public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
+  public void handleUpdateTag(NBTTagCompound tag)
+  {
+  	readFromNBT(tag);
+  }
+  
+  @Override
+  public SPacketUpdateTileEntity getUpdatePacket() 
+  {
+    return new SPacketUpdateTileEntity(this.pos, 1, writeToNBT(new NBTTagCompound()));
+  }
+  
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) 
   {
     readFromNBT(pkt.getNbtCompound());
   }
