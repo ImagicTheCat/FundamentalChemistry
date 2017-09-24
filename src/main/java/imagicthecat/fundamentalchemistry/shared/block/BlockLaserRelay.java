@@ -54,8 +54,7 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 			}
 		}
 		
-		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
-				hitZ);
+		return true;
 	}
 	
 	@Override

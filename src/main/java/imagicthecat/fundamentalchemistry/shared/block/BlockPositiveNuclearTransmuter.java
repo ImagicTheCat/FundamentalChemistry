@@ -45,8 +45,7 @@ public class BlockPositiveNuclearTransmuter extends Block implements ITileEntity
 				player.openGui(FundamentalChemistry.instance, ForgeGuiHandler.SIMPLE_MACHINE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 		
-		return super.onBlockActivated(world, pos, state, player, side, hitX, hitY,
-				hitZ);
+		return true;
 	}
 	
 	@Override

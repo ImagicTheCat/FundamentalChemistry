@@ -7,7 +7,7 @@ download: https://minecraft.curseforge.com/projects/fundamentalchemistry
 
 ## Screenshots 
 
-A gold farm.
+A gold farm (transformation from silicon [Si] to gold [Au]).
 ![Gold farm](/doc/images/goldfarm.jpg)
 
 ## Concept
