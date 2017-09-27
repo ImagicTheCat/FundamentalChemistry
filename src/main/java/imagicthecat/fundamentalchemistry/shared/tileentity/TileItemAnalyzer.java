@@ -22,8 +22,6 @@ public class TileItemAnalyzer extends TileSimpleMachine implements IInventory{
 	//do machine work
 	public void tick()
 	{
-
-		
 		//analyze one item of the input stack
 		ItemStack stack = this.getStackInSlot(0);
 		if(stack != pstack){
@@ -35,13 +33,13 @@ public class TileItemAnalyzer extends TileSimpleMachine implements IInventory{
 				TileLaserRelay relay = this.getAttachedRelay();
 				if(relay != null){
 					ChemicalStorage request = new ChemicalStorage();
-					request.addEnergy(5);
+					request.addEnergy(25);
 					request.take(buffer);
 					
 					relay.fetch(buffer, request);
 				}
 				
-				if(this.buffer.containsEnergy(new ChemicalStorage(null, null, 5))){
+				if(this.buffer.containsEnergy(new ChemicalStorage(null, null, 25))){
 					//find composition
 					Map<Molecule, Integer> molecules = FundamentalChemistry.getItemComposition(stack.getItem());
 					if(molecules != null)

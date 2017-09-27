@@ -166,7 +166,7 @@ public class FundamentalChemistryData {
   	M("siderite", "FeCO3");
   	M("pyrite", "FeS2");
   	M("gold_cluster", "Au10");
-  	M("diamond_lattice", "C18");
+  	M("diamond_lattice", "C8");
   	M("fluorescein", "C20H12O5");
   	M("acridine_yellow", "C15H15N3");
   	M("beryl", "Be3Al2Si6O18");
@@ -230,7 +230,7 @@ public class FundamentalChemistryData {
   	I(Blocks.clay, "1 kaolinite");
   	I(Items.iron_ingot, "2 hematite", "2 magnetite", "1 siderite", "1 pyrite");
   	I(Items.gold_ingot, "2 gold_cluster");
-  	I(Items.diamond, "10 diamond_lattice");
+  	I(Items.diamond, "50 diamond_lattice");
   	I(Blocks.obsidian, "100 silica", "20 aluminium_oxide", "20 potassium_oxide", "20 sodium_oxide", "20 calcium_oxide");
   	I(Items.emerald, "1 beryl", "1 vanadium_pentoxide", "1 chromite");
   	I(Items.redstone, "1 fluorescein");

@@ -31,9 +31,9 @@ public class TileVersatileExtractor extends TileChemicalStorage {
 			BlockPos wpos = findWater();
 
 			if(has_air)
-				required_energy.addEnergy(2);
+				required_energy.addEnergy(20);
 			if(wpos != null)
-				required_energy.addEnergy(3);
+				required_energy.addEnergy(30);
 			
 			ChemicalStorage request = new ChemicalStorage();
 			request.addEnergy(required_energy);

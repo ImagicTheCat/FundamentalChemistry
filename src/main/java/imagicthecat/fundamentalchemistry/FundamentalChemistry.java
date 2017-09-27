@@ -89,7 +89,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class FundamentalChemistry
 {
   public static final String MODID = "fundamentalchemistry";
-  public static final String VERSION = "0.1";
+  public static final String VERSION = "0.2";
   
   @SidedProxy(clientSide="imagicthecat.fundamentalchemistry.client.ClientEventHandler", serverSide="imagicthecat.fundamentalchemistry.server.ServerEventHandler")
   public static ForgeEventHandler event_handler;
