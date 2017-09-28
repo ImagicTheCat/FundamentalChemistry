@@ -225,6 +225,7 @@ public class FundamentalChemistryData {
   	I(Blocks.cobblestone, "1 calcium_oxide"); //cobble
   	I(Blocks.stone, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide"); //stone ore
   	I(Blocks.gravel, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
+  	I(Items.flint, "5 silica");
   	I(Items.quartz, "10 silica");
   	I(Blocks.sand, "2 silica");
   	I(Blocks.clay, "1 kaolinite");
