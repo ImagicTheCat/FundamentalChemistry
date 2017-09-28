@@ -104,6 +104,7 @@ public class FundamentalChemistry
   
   public static float MAX_RELAY_DISTANCE = 200f;
   public static int RELAY_TICKS = 40;
+  public static float LASER_HEIGHT = 0.562f;
   
   // creative tab 
 

@@ -24,6 +24,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.Constants;
 
@@ -195,6 +196,27 @@ public class TileLaserRelay extends TileEntity {
 			return (TileChemicalStorage)te;
 		
 		return null;
+	}
+	
+	public void check() //called to check the connections (ex: disconnect on obstruction)
+	{	
+		if(!this.worldObj.isRemote){
+			Set<BlockPos> rmlist = new HashSet<BlockPos>();
+			
+			for(BlockPos pos : inputs){
+				//raytrace input laser
+				
+				Vec3 start = new Vec3(pos).addVector(0.5, FundamentalChemistry.LASER_HEIGHT, 0.5);
+				Vec3 end = new Vec3(this.pos).addVector(0.5, FundamentalChemistry.LASER_HEIGHT, 0.5);
+				
+				MovingObjectPosition r = this.worldObj.rayTraceBlocks(start, end, false, true, false);
+				if(r != null) //not equal to this laser relay
+					rmlist.add(pos);
+			}
+			
+			for(BlockPos pos : rmlist)
+				toggleConnectFrom(pos);
+		}
 	}
 	
 	public void destroy() //called when the relay is destroyed

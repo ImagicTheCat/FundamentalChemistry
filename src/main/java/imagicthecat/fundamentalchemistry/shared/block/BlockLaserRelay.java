@@ -4,20 +4,17 @@ import java.util.Random;
 
 import imagicthecat.fundamentalchemistry.FundamentalChemistry;
 import imagicthecat.fundamentalchemistry.shared.properties.PlayerProperties;
+import imagicthecat.fundamentalchemistry.shared.tileentity.TileItemBreaker;
 import imagicthecat.fundamentalchemistry.shared.tileentity.TileLaserRelay;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -89,4 +86,17 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
   {
     return null;
   }
+	
+	@Override
+	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS*5);
+	}
+
+	@Override
+	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
+		world.scheduleUpdate(pos, this, FundamentalChemistry.RELAY_TICKS*5); //schedule next update
+		
+		TileLaserRelay ent = (TileLaserRelay)world.getTileEntity(pos);
+		ent.check();
+	}
 }

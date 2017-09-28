@@ -21,8 +21,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class ClientEventHandler extends ForgeEventHandler{
-	public static float laser_height = 0.562f;
-	
 	public ClientEventHandler()
 	{
 	}
@@ -72,7 +70,7 @@ public class ClientEventHandler extends ForgeEventHandler{
 		if(props != null && props.p_link != null 
 				&& props.p_link.distanceSq(x,y+1,z) <= FundamentalChemistry.MAX_RELAY_DISTANCE-1f){ //distance check with some margin
 			GlStateManager.color(0f,1f,0.5f,1f);
-			GL11.glVertex3d(props.p_link.getX()+0.5, props.p_link.getY()+laser_height, props.p_link.getZ()+0.5);
+			GL11.glVertex3d(props.p_link.getX()+0.5, props.p_link.getY()+FundamentalChemistry.LASER_HEIGHT, props.p_link.getZ()+0.5);
 			GlStateManager.color(0f,0.5f,1f,1f);
 			GL11.glVertex3d(x, y+1, z);
 		}
@@ -96,9 +94,9 @@ public class ClientEventHandler extends ForgeEventHandler{
 						
 						//draw connection
 						GlStateManager.color(0f,0.5f,1f,1f);
-						GL11.glVertex3d(cpos.getX()+0.5, cpos.getY()+laser_height-shift, cpos.getZ()+0.5);
+						GL11.glVertex3d(cpos.getX()+0.5, cpos.getY()+FundamentalChemistry.LASER_HEIGHT-shift, cpos.getZ()+0.5);
 						GlStateManager.color(0f,1f,0.5f,1f);
-						GL11.glVertex3d(pos.getX()+0.5, pos.getY()+laser_height-shift, pos.getZ()+0.5);
+						GL11.glVertex3d(pos.getX()+0.5, pos.getY()+FundamentalChemistry.LASER_HEIGHT-shift, pos.getZ()+0.5);
 					}
 				}
 			}
