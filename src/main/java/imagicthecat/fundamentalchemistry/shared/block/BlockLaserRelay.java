@@ -13,10 +13,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLaserRelay extends Block implements ITileEntityProvider{
@@ -70,4 +72,21 @@ public class BlockLaserRelay extends Block implements ITileEntityProvider{
 	public boolean isOpaqueCube() {
 		return false;
 	}
+	
+	@Override
+	public boolean isFullCube() {
+		return false;
+	}
+	
+	@Override
+  public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
+  {
+    return true;
+  }
+	
+	@Override
+  public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
+  {
+    return null;
+  }
 }

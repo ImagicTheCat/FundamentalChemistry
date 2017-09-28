@@ -239,8 +239,8 @@ public class FundamentalChemistryData {
   	//misc
   	I(Items.snowball, "1 water");
   	I(Items.paper, "1 cellulose");
-  	I(Items.water_bucket, "1 water");
-  	I(Items.lava_bucket, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide");
+  	I(Items.water_bucket, "1 water", "6 hematite", "6 magnetite", "3 siderite", "3 pyrite");
+  	I(Items.lava_bucket, "1 silica", "1 aluminium_oxide", "1 potassium_oxide", "1 sodium_oxide", "1 calcium_oxide", "6 hematite", "6 magnetite", "3 siderite", "3 pyrite");
   	I(Items.milk_bucket, "1 glycerine", "1 proline", "1 glycine", "1 alanine", "5 water");
   	I(Items.gunpowder, "1 cellulose", "1 saltpetre", "1 cyclooctasulfur");
   	
