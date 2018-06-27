@@ -1,16 +1,25 @@
-# FundamentalChemistry
-Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation).
+= FundamentalChemistry
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc: left
+:toclevels: 3
 
+Minecraft forge mod of fundamental chemistry (molecular/nuclear manipulation). +
 The mod doesn't seek realism, it's about taking inspiration from our modern times the same way we take inspiration from ancient era (like water/fire/wind/earth elements, etc).
 
 download: https://minecraft.curseforge.com/projects/fundamentalchemistry
 
-## Screenshots 
+== Screenshots 
 
-A gold farm (transformation from silicon [Si] to gold [Au]).
-![Gold farm](/doc/images/goldfarm.jpg)
+.A gold farm (transformation from silicon [Si] to gold [Au]).
+image::doc/images/goldfarm.jpg[]
 
-## Concept
+== Concept
 
 * Inspired from the periodic table.
 * Every atoms/molecules quantities are expressed as mole unit. The quantum is the mole.
@@ -18,56 +27,58 @@ A gold farm (transformation from silicon [Si] to gold [Au]).
 * Use right-click on machines and storages that require/may require items to work to open the machine view. The machine buffer is also displayed, it is a special internal energy/chemical storage used by the machine, you can't interact with it.
 * Use Sneak+right-click on machines and storages to open the chemical storage view.
 
-There are plenty of ways to create a farm of something, nothing is impossible but some ways are far more better than others. You can turn water into diamond, but it costs lot of energy, logistic and it is a very slow process (mostly because it involves nuclear transmutation). Optimization is the key, just remember that more the process is fundamental, more it costs.
+TIP: There are plenty of ways to create a farm of something, nothing is impossible but some ways are far more better than others. You can turn water into diamond, but it costs lot of energy, logistic and it is a very slow process (mostly because it involves nuclear transmutation). Optimization is the key, just remember that more the process is fundamental, more it costs.
 
-Notes:
+NOTE: A machine stops working when its own storage is full (for a specific chemical to produce).
 
-* A machine stops working when its own storage is full (for a specific chemical to produce).
+=== Items
 
-### Items
+==== Vibrant catalyst stone
 
-#### Vibrant catalyst stone
-
-![Craft](/doc/images/craft_vibrant_catalyst_stone.png?raw=true)
+image::doc/images/craft_vibrant_catalyst_stone.png?raw=true[]
 
 Item (made of diamond, obsidian and stone) used in most of the FundamentalChemistry crafts.
 
-### Blocks
+=== Blocks
 
-#### Versatile generator
+==== Versatile generator
 
-![Craft](/doc/images/craft_versatile_generator.png?raw=true)
+image::doc/images/craft_versatile_generator.png?raw=true[]
 
 * A powerful generator to power the laser network and the machines.
 * Not only combustion, this generator can be used in many ways, like draining power directly from the environment (wind, water flowing, heat source below).
 
-Technical notes:
-
+[NOTE]
+.Technichal notes
+--
 * Produce 10E per adjacent flowing water.
 * Produce 10E if in contact with air (only adjacent).
 * Produce a variable amount of energy depending of the heat source under the generator.
 * Produce a variable amount of energy depending of the fuel used.
+--
 
-#### Energy storage
+==== Energy storage
 
-![Craft](/doc/images/craft_energy_storage.png?raw=true)
+image::doc/images/craft_energy_storage.png?raw=true[]
 
 * Store generated energy.
 
-#### Versatile extractor
+==== Versatile extractor
 
-![Craft](/doc/images/craft_versatile_extractor.png?raw=true)
+image::doc/images/craft_versatile_extractor.png?raw=true[]
 
 * Extract molecules directly from the environment (air, water).
 
-Technical notes:
-
+[NOTE]
+.Technical notes
+--
 * Consume 2E to extract adjacent air.
 * Consume 3E to extract adjacent water.
+--
 
-#### Laser relay
+==== Laser relay
 
-![Craft](/doc/images/craft_laser_relay.png?raw=true)
+image::doc/images/craft_laser_relay.png?raw=true[]
 
 * Can be connected to other laser relays to transfer atoms and molecules.
 * Laser relays can be connected to machines or placed on the world to increase the transfer distance.
@@ -76,126 +87,142 @@ Technical notes:
 * Use right-click from a relay to another to connect/disconnect.
 * Connection color direction is green => blue.
 
-Technical notes:
-
+[NOTE]
+.Technical notes
+--
 * Things are taken by input requests (nothing move if nothing needs it).
 * Fetching things in a laser network from a relay will not go further the chemical containers (machines, storages, etc). This means that if a storage is connected behind a machine, unless there is another way, only this machine will be able to fetch the storage.
+--
 
-#### Item analyzer
+==== Item analyzer
 
-![Craft](/doc/images/craft_item_analyzer.png?raw=true)
+image::doc/images/craft_item_analyzer.png?raw=true[]
 
 Machine to analyze items (show molecule composition).
 It will not destroy the items.
 
-Technical notes:
-
+[NOTE]
+.Technical notes
+--
 * Consume 5 E per analyse.
+--
 
-#### Item breaker
+==== Item breaker
 
-![Craft](/doc/images/craft_item_breaker.png?raw=true)
+image::doc/images/craft_item_breaker.png?raw=true[]
 
 Machine to break items into molecules.
 
-Technical notes:
-
+.Technical notes
+[NOTE]
+--
 * Consume (atomsum) E.
+--
 
-#### Molecule breaker
+==== Molecule breaker
 
-![Craft](/doc/images/craft_molecule_breaker.png?raw=true)
+image::doc/images/craft_molecule_breaker.png?raw=true[]
 
 Machine to break molecules into atoms.
 
-Technical notes:
-
+.Technical notes
+[NOTE]
+--
 * Since the breaker will fetch any molecule, if its own chemical container is full, the molecule will get stuck in the machine until the container has available space.
 * Consume (protonsum) E.
+--
 
-#### Molecular storage
+==== Molecular storage
 
-![Craft](/doc/images/craft_molecular_storage.png?raw=true)
+image::doc/images/craft_molecular_storage.png?raw=true[]
 
 Store molecules. 
 
 * If powered by redstone, will eject overflow in atmosphere (this is done by increasing the storage by 10% and ejecting what is filling those 10%).
 * Place a book (writable or written) in the slot with a blacklist or whitelist of molecules to be stored. 
 Whitelist (only H2O and CO2)
-```
++
+....
 H2O
 CO2
-```
-
+....
++
 Blacklist (everything excepts H2O and CO2)
-```
++
+....
 -H2O
 -CO2
-```
+....
 
 
-#### Periodic storage
+==== Periodic storage
 
-![Craft](/doc/images/craft_periodic_storage.png?raw=true)
+image::doc/images/craft_periodic_storage.png?raw=true[]
 
 Store atoms of the periodic table.
 
 * If powered by redstone, will eject overflow in atmosphere (this is done by increasing the storage by 10% and ejecting what is filling those 10%).
-
++
 * Place a book (writable or written) in the slot with a blacklist or whitelist of atoms to be stored. 
 Whitelist (only H and O)
-```
++
+....
 H
 O
-```
-
+....
++
 Blacklist (everything excepts H and O)
-```
++
+....
 -H
 -O
-```
+....
 
 
-#### Molecule assembler
+==== Molecule assembler
 
-![Craft](/doc/images/craft_molecule_assembler.png?raw=true)
+image::doc/images/craft_molecule_assembler.png?raw=true[]
 
 Assemble atoms to form molecules.
 
 * Place a book (writable or written) in the slot with one molecule to be created per line. The machine will create molecules in the written order, looping.
 
-Technical notes:
-
+.Technical notes
+[NOTE]
+--
 * Consume (protonsum) E.
+--
 
-#### Item assembler
+==== Item assembler
 
-![Craft](/doc/images/craft_item_assembler.png?raw=true)
+image::doc/images/craft_item_assembler.png?raw=true[]
 
 Assemble molecules to form items.
 
 * Use the item placed in the slot as blueprint.
 
-Technical notes:
-
+.Technical notes
+[NOTE]
+--
 * Consume (atomsum) E.
 * The produced items are dropped on the ground or added to an adjacent chest.
+--
 
-#### Positive nuclear transmuter
+==== Positive nuclear transmuter
 
-![Craft](/doc/images/craft_positive_nuclear_transmuter.png?raw=true)
+image::doc/images/craft_positive_nuclear_transmuter.png?raw=true[]
 
 "Punch" atoms to increase their proton/electron number (the amount is given by the item used).
 This is an hard task. See nuclear transmutation.
 
-#### Negative nuclear transmuter
+==== Negative nuclear transmuter
 
-![Craft](/doc/images/craft_negative_nuclear_transmuter.png?raw=true)
+image::doc/images/craft_negative_nuclear_transmuter.png?raw=true[]
 
 "Snatch" atoms to decrease their proton/electron number (the amount is given by the item used).
 This is an hard task. See nuclear transmutation.
 
-### Nuclear transmutation
+=== Nuclear transmutation
 
 * Using a catalyst, it is possible to increase or decrease the atomic number of an atom.
 * The chance of success is defined by the power of the catalyst as `50+power*10 % clamped to 99%`.
@@ -205,15 +232,16 @@ This is an hard task. See nuclear transmutation.
 
 Following those rules, it is easier to transmute atoms with big jumps (5 by 5) than small jumps like the quantum (1 by 1) which will cause 40% loss per transmutation.
 
-Examples: 
+.Examples
 * doing +1 +1 +1 +1 +1 +1 +1 +1 +1 (+9) => 0.60^9 => ~1% success
 * doing +5 +5 -1 (+9) => 0.99x0.99x0.60 => ~60% success
 * doing +5 +4 (+9) => 0.99x0.90 => ~90% success
 
-#### Catalysts
+==== Catalysts
 
-* `cobblestone` power 1 => 60% chance & 10%  => ~25 reactions per unit
-* `redstone` power 2 => 70% chance & 10% => ~33.3 reactions per unit
-* `iron_ingot` power 3 => 80% chance & 10% => ~50 reactions per unit
-* `gold_ingot` power 4 => 90% chance & 10% => ~100 reactions per unit
-* `diamond` power 5 => 99% chance & 10% => ~1000 reactions per unit
+[horizontal]
+cobblestone:: power 1 => 60% chance & 10%  => ~25 reactions per unit
+redstone:: power 2 => 70% chance & 10% => ~33.3 reactions per unit
+iron_ingot:: power 3 => 80% chance & 10% => ~50 reactions per unit
+gold_ingot:: power 4 => 90% chance & 10% => ~100 reactions per unit
+diamond:: power 5 => 99% chance & 10% => ~1000 reactions per unit
